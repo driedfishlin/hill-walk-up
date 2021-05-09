@@ -11,6 +11,11 @@ module.exports = {
 					light: '#91e6c4',
 					dark: '#2cc185',
 				},
+				't-gray': {
+					dark: '#323232',
+					normal: '#aaaaaa',
+					light: '#f4f4f4',
+				},
 			},
 			fontFamily: {
 				'noto-sans': "'Noto Sans TC', sans-serif",
@@ -18,7 +23,10 @@ module.exports = {
 		},
 	},
 	variants: {
-		extend: {},
+		extend: {
+			borderColor: ['active'],
+			textColor: ['active'],
+		},
 	},
 	plugins: [],
 };

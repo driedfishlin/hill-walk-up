@@ -13,7 +13,7 @@ const Button = function(): React.Node {
 
 const Header = function(): React.Node {
 	return (
-		<header className="flex justify-between items-center px-3 py-2 bg-t-green">
+		<header className="flex justify-between items-center px-6 py-4 bg-t-gray-dark">
 			<h1 className="text-xl text-white tracking-wider noto-sans font-medium">
 				走走山岳
 				<span className="block text-xs tracking-wide">

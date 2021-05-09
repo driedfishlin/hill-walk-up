@@ -3,19 +3,19 @@
 // @flow
 // ↑ Avoid flow checking '@googlemaps/js-api-loader' by creating a library definition.
 import * as React from 'react';
-import { Loader } from '@googlemaps/js-api-loader';
-import KEY from '../../../utilities/private/google_key';
+// import { Loader } from '@googlemaps/js-api-loader';
+// import KEY from '../../../utilities/private/google_key';
 
 //SECTION> Google Maps API
 
-const loader = new Loader({
-	apiKey: KEY,
-	version: 'weekly',
-	region: 'TW',
-});
+// const loader = new Loader({
+// 	apiKey: KEY,
+// 	version: 'weekly',
+// 	region: 'TW',
+// });
 
-// 視覺上台灣島的中心點
-const centerPoint = { lat: 23.80546, lng: 120.98001 };
+// // 視覺上台灣島的中心點
+// const centerPoint = { lat: 23.80546, lng: 120.98001 };
 
 // 沒有錯誤處理？
 // loader.load().then(() => {
