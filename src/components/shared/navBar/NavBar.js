@@ -25,11 +25,17 @@ const mapDispatchToProps = dispatch => {
 const NavBar = function({ NavBarState, setNavBar }): React.Node {
 	return (
 		<div className="z-40">
-			<div className="absolute h-full w-full bg-black opacity-20" />
+			<div
+				className={`${
+					NavBarState ? 'block' : 'hidden'
+				} absolute h-full w-full bg-black opacity-20`}
+			/>
 			<nav
-				className={`absolute ${
-					NavBarState ? 'right-0' : '-right-full'
-				} h-full w-80 bg-t-gray-light  flex flex-col shadow-2xl`}
+				className={`absolute right-0 h-full w-80 bg-t-gray-light  flex flex-col shadow-2xl ${
+					NavBarState
+						? 'transform translate-x-0'
+						: 'transform translate-x-full'
+				} transition-transform`}
 			>
 				<div className="p-8">
 					<NavBarHeader setNavBar={setNavBar} />

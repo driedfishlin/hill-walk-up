@@ -12,7 +12,7 @@ export const createToggleNavBarAction = command => ({
 
 // 儲存頁面狀態的 state
 const initUIState = {
-	isNavBarOpen: true,
+	isNavBarOpen: false,
 };
 
 const UIStateReducer = (prevState = initUIState, action) => {

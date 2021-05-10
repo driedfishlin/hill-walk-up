@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap');
+
+@layer utilities {
+	@responsive {
+		.scrolling-touch {
+			-webkit-overflow-scrolling: touch;
+		}
+		.scrolling-auto {
+			-webkit-overflow-scrolling: auto;
+		}
+	}
+}

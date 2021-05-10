@@ -1,15 +1,35 @@
 // @flow
 import * as React from 'react';
 
-const Button = function(): React.Node {
+import { connect } from 'react-redux';
+import { createToggleNavBarAction } from '../../store';
+
+const mapDispatchToProps = dispatch => {
+	return {
+		setNavBar: command => {
+			dispatch(createToggleNavBarAction(command));
+		},
+	};
+};
+
+//SECTION>
+const Button = function({ setNavBar }): React.Node {
 	return (
-		<button className="flex flex-col justify-between py-2 px-1.5 text-white w-8 h-8 focus:outline-none">
+		<button
+			onClick={() => {
+				console.log(123);
+				setNavBar(true);
+			}}
+			className="flex flex-col justify-between py-2 px-1.5 text-white w-8 h-8 focus:outline-none"
+		>
 			<div className="w-full h-0.5 bg-white rounded-sm" />
 			<div className="w-full h-0.5 bg-white rounded-sm" />
 			<div className="w-full h-0.5 bg-white rounded-sm" />
 		</button>
 	);
 };
+
+const ConnectedButton = connect(null, mapDispatchToProps)(Button);
 
 const Header = function(): React.Node {
 	return (
@@ -20,7 +40,7 @@ const Header = function(): React.Node {
 					HELL WALK UP
 				</span>
 			</h1>
-			<Button />
+			<ConnectedButton />
 		</header>
 	);
 };
