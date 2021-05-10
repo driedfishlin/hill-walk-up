@@ -44,6 +44,7 @@
 		"web-vitals": "^1.0.1"
 	},
 	"devDependencies": {
+		"@tailwindcss/forms": "^0.3.2",
 		"@tailwindcss/postcss7-compat": "^2.1.2",
 		"autoprefixer": "^9.8.6",
 		"flow-bin": "^0.150.1",

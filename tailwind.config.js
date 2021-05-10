@@ -19,13 +19,17 @@ module.exports = {
 			fontFamily: {
 				'noto-sans': "'Noto Sans TC', sans-serif",
 			},
+			minHeight: {
+				auto: 'auto',
+			},
 		},
 	},
 	variants: {
 		extend: {
 			borderColor: ['active'],
 			textColor: ['active'],
+			backgroundColor: ['active'],
 		},
 	},
-	plugins: [],
+	plugins: [require('@tailwindcss/forms')],
 };
