@@ -3,18 +3,69 @@ import * as React from 'react';
 import { useRef, useEffect } from 'react';
 
 // dummy info
-const data = 60;
+const data = 50;
 
 const DragButton = ({ buttonRef, bubbleRef }): React.Node => {
 	useEffect(() => {
 		// calculate the drag distance and decide whether to close the message box
 		const button = buttonRef.current;
 		const bubble = bubbleRef.current;
-		let clickPosition = null;
-		let bubbleHeight = null;
+
+		// -- event test
+		// window.addEventListener('click', () => console.log('click'));
+		// window.addEventListener('touchstart', () => console.log('touchstart'));
+		// window.addEventListener('touchmove', () => console.log('touchmove'));
+		// window.addEventListener('touchend', () => console.log('touchend'));
+		// window.addEventListener('mousedown', () => console.log('mousedown'));
+		// window.addEventListener('mousemove', () => console.log('mousemove'));
+		// window.addEventListener('mouseup', () => console.log('mouseup'));
+		//
+
+		// -- use touch events (on Mobile)
+		let touchPosition = null;
+		let bubbleHeightOnMobile = null;
+		const onTouchStart = event => {
+			touchPosition = event.touches[0].pageY;
+			bubbleHeightOnMobile = parseFloat(
+				window.getComputedStyle(bubble).height
+			);
+			window.addEventListener('touchmove', onTouchMove);
+			window.addEventListener('touchend', onTouchEnd);
+		};
+		const onTouchEnd = () => {
+			const distance = parseFloat(
+				bubble.style.transform
+					.replace('translateY(', '')
+					.replace('px)', '')
+			);
+			window.removeEventListener('touchmove', onTouchMove);
+			window.removeEventListener('touchend', onTouchEnd);
+			if (distance > (bubbleHeightOnMobile * 2) / 3) {
+				button.removeEventListener('touchstart', onTouchStart);
+				bubble.style.transition = 'transform 0.5s';
+				bubble.style.transform = 'translateY(120%)';
+			} else {
+				bubble.style.transition = 'transform 0.5s';
+				bubble.style.transform = 'translateY(0)';
+				setTimeout(() => (bubble.style.transition = ''), 500);
+			}
+		};
+		const onTouchMove = event => {
+			const num = event.touches[0].pageY - touchPosition;
+			if (num > 0) {
+				bubble.style.transform = `translateY(${num}px)`;
+			}
+		};
+		button.addEventListener('touchstart', onTouchStart);
+
+		// -- use mouse events (on Table)
+		let MousePosition = null;
+		let bubbleHeightOnTable = null;
 		const onMouseDown = event => {
-			clickPosition = event.pageY;
-			bubbleHeight = parseFloat(window.getComputedStyle(bubble).height);
+			MousePosition = event.pageY;
+			bubbleHeightOnTable = parseFloat(
+				window.getComputedStyle(bubble).height
+			);
 			window.addEventListener('mousemove', onMouseMove);
 			window.addEventListener('mouseup', onMouseUp);
 		};
@@ -26,7 +77,7 @@ const DragButton = ({ buttonRef, bubbleRef }): React.Node => {
 			);
 			window.removeEventListener('mousemove', onMouseMove);
 			window.removeEventListener('mouseup', onMouseUp);
-			if (distance > (bubbleHeight * 2) / 3) {
+			if (distance > (bubbleHeightOnTable * 2) / 3) {
 				button.removeEventListener('mousedown', onMouseDown);
 				bubble.style.transition = 'transform 0.5s';
 				bubble.style.transform = 'translateY(120%)';
@@ -37,14 +88,17 @@ const DragButton = ({ buttonRef, bubbleRef }): React.Node => {
 			}
 		};
 		const onMouseMove = event => {
-			const num = event.pageY - clickPosition;
+			const num = event.pageY - MousePosition;
 			if (num > 0) {
 				bubble.style.transform = `translateY(${num}px)`;
 			}
 		};
 		button.addEventListener('mousedown', onMouseDown);
+
+		//
 		return () => {
 			button.removeEventListener('mousedown', onMouseDown);
+			button.removeEventListener('touchstart', onTouchStart);
 		};
 	}, [buttonRef, bubbleRef]);
 	return (
@@ -62,7 +116,7 @@ const ProgressBar = (): React.Node => {
 		<div className="relative h-7 w-full rounded-xl bg-t-gray-light shadow-inner overflow-hidden">
 			<div
 				className="absolute bg-t-green shadow-inner top-0 left-0  h-7 w-full rounded-lg transform rotate-360 overflow-hidden"
-				style={{ left: -100 + data }}
+				style={{ left: `-${100 - data}%` }}
 			>
 				<div className="w-max">
 					{Array.from({ length: 10 }, (_, index) => (
@@ -90,11 +144,13 @@ const MessageBubble = (): React.Node => {
 			className="absolute bottom-0 bg-white w-full flex justify-between items-center p-7 px-6 opacity-90"
 		>
 			<div className="flex-grow pr-5">
-				<p className="text-sm font-medium mb-2 ml-1">百岳完攻進度：</p>
+				<p className="text-sm text-t-gray-dark opacity-70 font-medium mb-2 ml-1">
+					百岳完攻進度：
+				</p>
 				<ProgressBar />
 			</div>
 			<div>
-				<p className="text-xl font-medium transform translate-y-1">
+				<p className="text-xl text-t-green-dark font-medium transform translate-y-1">
 					<span className="text-3xl">{data}</span>
 					{' %'}
 				</p>
