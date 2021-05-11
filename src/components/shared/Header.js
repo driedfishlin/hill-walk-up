@@ -23,7 +23,6 @@ const Button = function({ setNavBar }): React.Node {
 		<div className=" flex-grow">
 			<button
 				onClick={() => {
-					console.log(123);
 					setNavBar(true);
 				}}
 				className="float-right flex flex-col justify-between py-2 px-1.5 text-white w-8 h-8 focus:outline-none"

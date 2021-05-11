@@ -33,7 +33,7 @@ export const createToggleLoginFormShowAction = (command: boolean): Actions => ({
 // 儲存頁面狀態的 state
 const initUIState = {
 	navBar: {
-		isOpen: true,
+		isOpen: false,
 		isFormOpen: false,
 	},
 };

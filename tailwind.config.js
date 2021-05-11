@@ -22,6 +22,10 @@ module.exports = {
 			minHeight: {
 				auto: 'auto',
 			},
+			rotate: {
+				'30': '30deg',
+				'360': '360deg',
+			},
 		},
 	},
 	variants: {

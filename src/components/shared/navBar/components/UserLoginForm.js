@@ -4,7 +4,7 @@ import * as React from 'react';
 import RegularButton from '../../components/UIElement/RegularButton';
 
 const labelClass = `block text-t-gray-dark mb-2 text-sm`;
-const inputClass = `block w-full h-10 mb-3 border border-t-gray-normal opacity-80 rounded-lg focus:outline-none focus:border-t-green focus:ring-t-green focus:ring-1`;
+const inputClass = `block w-full h-10 mb-3 border border-t-gray-normal opacity-80 rounded-lg shadow-inner focus:outline-none focus:border-t-green focus:ring-t-green focus:ring-1`;
 
 const UserLoginForm = (): React.Node => {
 	return (
