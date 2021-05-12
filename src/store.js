@@ -8,8 +8,11 @@ const TOGGLE_IS_LOGIN = 'TOGGLE_IS_LOGIN';
 const TOGGLE_LOGIN_FORM_SHOW = 'TOGGLE_LOGIN_FORM_SHOW';
 const HOMEPAGE_BUBBLE_MESSAGE_SHOW = 'HOMEPAGE_BUBBLE_MESSAGE_SHOW';
 const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR';
+const SEARCH_INPUT_CHANGE = 'SEARCH_INPUT_CHANGE';
 
-type ActionsType = { type: string, command: boolean };
+type ActionsType =
+	| { type: string, command: boolean }
+	| { type: 'SEARCH_INPUT_CHANGE', command: string };
 
 // type ActionsType =
 // 	| { type: 'TOGGLE_NAV_BAR', command: boolean }
@@ -46,6 +49,12 @@ export const createToggleSearchBarAction = (command: boolean): ActionsType => ({
 	type: TOGGLE_SEARCH_BAR,
 	command,
 });
+export const createSearchInputChangeAction = (
+	command: string
+): ActionsType => ({
+	type: SEARCH_INPUT_CHANGE,
+	command,
+});
 
 //SECTION> DATA STRUCTURE
 
@@ -76,6 +85,13 @@ const initUserState = {
 };
 type userStateType = {
 	isLogin: boolean,
+};
+// 紀錄地圖與公開資料
+const initMapState = {
+	searchInput: '',
+};
+type initMapType = {
+	searchInput: string,
 };
 
 //SECTION> REDUCERS
@@ -119,9 +135,22 @@ const userStateReducer = (
 	}
 };
 
+const mapStateReducer = (
+	prevState: initMapType = initMapState,
+	action: ActionsType
+) => {
+	switch (action.type) {
+		case 'SEARCH_INPUT_CHANGE':
+			return { searchInput: action.command };
+		default:
+			return prevState;
+	}
+};
+
 const reducers = combineReducers({
 	UIState: UIStateReducer,
 	userState: userStateReducer,
+	mapState: mapStateReducer,
 });
 
 //SECTION> STORE

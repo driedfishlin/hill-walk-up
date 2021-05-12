@@ -36,6 +36,11 @@ module.exports = {
 				height: 'height',
 				width: 'width',
 			},
+			transitionDelay: {
+				'0': '0ms',
+				'1200': '1200ms',
+				'2000': '2000ms',
+			},
 		},
 	},
 	variants: {

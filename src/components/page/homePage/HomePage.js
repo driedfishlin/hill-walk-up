@@ -8,10 +8,12 @@ import MessageBubble from './components/MessageBubble';
 
 import { createCloseHomePageBubbleAction } from '../../../store';
 import { createToggleSearchBarAction } from '../../../store';
+import { createSearchInputChangeAction } from '../../../store';
 
 //SECTION>
-const mapStateToProps = State => ({
-	UIState: State.UIState,
+const mapStateToProps = state => ({
+	UIState: state.UIState,
+	mapState: state.mapState,
 });
 const mapDispatchToProps = dispatch => {
 	return {
@@ -22,12 +24,14 @@ const mapDispatchToProps = dispatch => {
 			setSearchBar: command => {
 				dispatch(createToggleSearchBarAction(command));
 			},
+			setSearchInput: command =>
+				dispatch(createSearchInputChangeAction(command)),
 		},
 	};
 };
 
 //SECTION>
-const HomePage = function({ UIState, setFns }): React.Node {
+const HomePage = function({ UIState, setFns, mapState }): React.Node {
 	return (
 		<main className="relative bg-gray-200 flex-grow">
 			<Map />
@@ -35,7 +39,11 @@ const HomePage = function({ UIState, setFns }): React.Node {
 				setBubble={setFns.setBubble}
 				bubbleState={UIState.homePage.bubble}
 			/>
-			<SearchSystem UIState={UIState} setFns={setFns} />
+			<SearchSystem
+				UIState={UIState}
+				mapState={mapState}
+				setFns={setFns}
+			/>
 		</main>
 	);
 };

@@ -4,19 +4,27 @@ import { useRef } from 'react';
 
 import SearchButton from './SearchButton';
 
-type propsType = { searchBarState: boolean, setFns: Object };
+type propsType = { searchBarState: boolean, setFns: Object, mapState: Object };
 
-const SearchBar = ({ searchBarState, setFns }: propsType): React.Node => {
+const SearchBar = ({
+	searchBarState,
+	setFns,
+	mapState,
+}: propsType): React.Node => {
 	const bar = useRef(null);
 	return (
-		<div className={`absolute top-7`}>
+		<div
+			className={`absolute transition-transform delay-300 duration-300 transform ${
+				searchBarState ? '-translate-y-12' : 'translate-y-7'
+			}`}
+		>
 			<div
 				className={`absolute w-screen px-7 
 				${searchBarState ? '' : 'invisible'}`}
 			>
 				<div
 					ref={bar}
-					className={`w-full h-12 overflow-hidden rounded-full`}
+					className={`w-full h-12 overflow-hidden rounded-full shadow-md`}
 				>
 					<div
 						className={`relative h-12 w-full bg-white shadow-xl transition-transform duration-300 transform ${
@@ -35,6 +43,10 @@ const SearchBar = ({ searchBarState, setFns }: propsType): React.Node => {
 							className={`h-12 text-lg text-t-gray-dark border-none focus:outline-none focus:ring-transparent`}
 							type="text"
 							placeholder={'附近有什麼山呢？'}
+							value={mapState.searchInput}
+							onChange={event =>
+								setFns.setSearchInput(event.target.value)
+							}
 						/>
 					</div>
 				</div>
