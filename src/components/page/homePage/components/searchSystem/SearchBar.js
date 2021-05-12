@@ -24,10 +24,12 @@ const SearchBar = ({
 			>
 				<div
 					ref={bar}
-					className={`w-full h-12 overflow-hidden rounded-full shadow-md`}
+					className={`w-full h-12 overflow-hidden rounded-full transition-shadow delay-300 ${
+						searchBarState ? 'shadow-md' : 'shadow-none'
+					}`}
 				>
 					<div
-						className={`relative h-12 w-full bg-white shadow-xl transition-transform duration-300 transform ${
+						className={`relative h-12 w-full bg-white shadow-xl transition-transform duration-400 transform ${
 							searchBarState
 								? 'translate-x-0'
 								: '-translate-x-full'
@@ -35,12 +37,16 @@ const SearchBar = ({
 					>
 						<button
 							onClick={() => setFns.setSearchBar(false)}
-							className={`h-12 w-8 pl-3 -mr-1 transform text-2xl text-t-gray-normal focus:outline-none`}
+							className={`h-12 w-8 pl-3 -mr-1 transform text-2xl text-t-gray-normal focus:outline-none transition-opacity delay-400 duration-300 ${
+								searchBarState ? 'opacity-1' : 'opacity-0'
+							}`}
 						>
 							×
 						</button>
 						<input
-							className={`h-12 text-lg text-t-gray-dark border-none focus:outline-none focus:ring-transparent`}
+							className={`h-12 text-lg text-t-gray-dark border-none focus:outline-none focus:ring-transparent transition-opacity delay-400 duration-300 ${
+								searchBarState ? 'opacity-1' : 'opacity-0'
+							}`}
 							type="text"
 							placeholder={'附近有什麼山呢？'}
 							value={mapState.searchInput}

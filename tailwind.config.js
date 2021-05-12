@@ -36,8 +36,14 @@ module.exports = {
 				height: 'height',
 				width: 'width',
 			},
+			transitionDuration: {
+				'0': '0ms',
+				'400': '400ms',
+				'2000': '2000ms',
+			},
 			transitionDelay: {
 				'0': '0ms',
+				'400': '400ms',
 				'1200': '1200ms',
 				'2000': '2000ms',
 			},
