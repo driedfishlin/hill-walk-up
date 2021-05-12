@@ -1,4 +1,4 @@
-// @!flow
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 
@@ -15,10 +15,10 @@ const mapStateToProps = State => ({
 });
 const mapDispatchToProps = dispatch => {
 	return {
-		setBubble: command => {
-			dispatch(createCloseHomePageBubbleAction(command));
-		},
 		setFns: {
+			setBubble: command => {
+				dispatch(createCloseHomePageBubbleAction(command));
+			},
 			setSearchBar: command => {
 				dispatch(createToggleSearchBarAction(command));
 			},
@@ -27,13 +27,12 @@ const mapDispatchToProps = dispatch => {
 };
 
 //SECTION>
-const HomePage = function({ setBubble, UIState, setFns }): React.Node {
+const HomePage = function({ UIState, setFns }): React.Node {
 	return (
 		<main className="relative bg-gray-200 flex-grow">
 			<Map />
-			{/* <SearchButton UIState={UIState} /> */}
 			<MessageBubble
-				setBubble={setBubble}
+				setBubble={setFns.setBubble}
 				bubbleState={UIState.homePage.bubble}
 			/>
 			<SearchSystem UIState={UIState} setFns={setFns} />

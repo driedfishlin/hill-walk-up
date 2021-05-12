@@ -1,11 +1,16 @@
-// @!flow
+// @flow
 import * as React from 'react';
 import SearchBar from './SearchBar';
 
-const SearchSystem = ({ UIState, setFns }): React.Node => {
+type propsType = { UIState: Object, setFns: Object };
+
+const SearchSystem = ({ UIState, setFns }: propsType): React.Node => {
 	return (
-		<div className={`absolute top-0 left-0 w-full`}>
-			<SearchBar UIState={UIState} setFns={setFns} />
+		<div className={`absolute top-0 left-0`}>
+			<SearchBar
+				searchBarState={UIState.homePage.searchMode}
+				setFns={setFns}
+			/>
 		</div>
 	);
 };

@@ -1,10 +1,10 @@
-// @!flow
+// @flow
 import { createStore, combineReducers } from 'redux';
 
 //SECTION> ACTIONS
 
 const TOGGLE_NAV_BAR = 'TOGGLE_NAV_BAR';
-const TOGGLE_IS_LOGIN = 'TOGGLE_LOGIN';
+const TOGGLE_IS_LOGIN = 'TOGGLE_IS_LOGIN';
 const TOGGLE_LOGIN_FORM_SHOW = 'TOGGLE_LOGIN_FORM_SHOW';
 const HOMEPAGE_BUBBLE_MESSAGE_SHOW = 'HOMEPAGE_BUBBLE_MESSAGE_SHOW';
 const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR';
@@ -42,7 +42,7 @@ export const createCloseHomePageBubbleAction = (
 	command,
 });
 // toggle search bar show
-export const createToggleSearchBarAction = command => ({
+export const createToggleSearchBarAction = (command: boolean): ActionsType => ({
 	type: TOGGLE_SEARCH_BAR,
 	command,
 });
@@ -57,13 +57,17 @@ const initUIState = {
 	},
 	homePage: {
 		bubble: true,
-		search: false,
+		searchMode: false,
 	},
 };
 type UIStateType = {
 	navBar: {
 		isOpen: boolean,
 		isFormOpen: boolean,
+	},
+	homePage: {
+		bubble: boolean,
+		searchMode: boolean,
 	},
 };
 // 紀錄使用者個人狀態的 state
@@ -96,7 +100,7 @@ const UIStateReducer = (
 			return newState;
 		case 'TOGGLE_SEARCH_BAR':
 			newState = JSON.parse(JSON.stringify(prevState));
-			newState.homePage.searchBar = action.command;
+			newState.homePage.searchMode = action.command;
 			return newState;
 		default:
 			return prevState;
@@ -107,8 +111,8 @@ const userStateReducer = (
 	prevState: userStateType = initUserState,
 	action: ActionsType
 ) => {
-	switch (action) {
-		case 'TOGGLE_LOGIN':
+	switch (action.type) {
+		case 'TOGGLE_IS_LOGIN':
 			return { ...prevState, isLogin: action.command };
 		default:
 			return prevState;
