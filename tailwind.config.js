@@ -32,6 +32,13 @@ module.exports = {
 				'75%': '75%',
 				'80%': '80%',
 			},
+			maxHeight: {
+				'25%': '25%',
+				'50%': '50%',
+				'60%': '60%',
+				'75%': '75%',
+				'80%': '80%',
+			},
 			transitionProperty: {
 				height: 'height',
 				width: 'width',

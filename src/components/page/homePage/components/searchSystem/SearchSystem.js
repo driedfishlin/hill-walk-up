@@ -11,6 +11,7 @@ const SearchSystem = ({ UIState, setFns, mapState }: propsType): React.Node => {
 			<ResultBoard
 				searchMode={UIState.homePage.searchMode}
 				setFns={setFns}
+				inputState={mapState.searchInput}
 			/>
 			<SearchBar
 				searchBarState={UIState.homePage.searchMode}

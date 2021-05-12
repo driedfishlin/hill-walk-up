@@ -1610,4 +1610,6 @@ const final = DATA_3.map(i => {
 	return obj;
 });
 
+// console.table(final);
+
 export default final;

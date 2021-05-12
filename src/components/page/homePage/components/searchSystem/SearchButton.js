@@ -7,20 +7,21 @@ import { faSearch as icon } from '@fortawesome/free-solid-svg-icons/faSearch.js'
 type propsType = {
 	setFns: Object,
 	searchBarState: boolean,
-	sibling: Object,
+	siblings: Object,
 };
 
 const SearchButton = ({
 	setFns,
 	searchBarState,
-	sibling,
+	siblings,
 }: propsType): React.Node => {
-	window.bbb = sibling;
 	return (
 		<button
 			onClick={() => {
 				setFns.setSearchBar(true);
 				setFns.setBubble(false);
+				if (siblings.inputDOM.current)
+					setTimeout(() => siblings.inputDOM.current.focus(), 500);
 			}}
 			className={`absolute ml-7 h-12 w-12 bg-t-green rounded-full flex justify-center items-center transition-transform duration-300 focus:outline-none ${
 				searchBarState ? '' : 'shadow-lg'
@@ -28,11 +29,12 @@ const SearchButton = ({
 			// 螢幕尺寸變動時需調整位置
 			style={{
 				transform:
-					sibling.current === null
+					siblings.barDOM.current === null
 						? ''
 						: searchBarState
 						? `translateX(${parseFloat(
-								window.getComputedStyle(sibling.current).width
+								window.getComputedStyle(siblings.barDOM.current)
+									.width
 						  ) - 48}px)`
 						: 'translateX(0px)',
 			}}

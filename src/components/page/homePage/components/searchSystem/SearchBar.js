@@ -11,7 +11,9 @@ const SearchBar = ({
 	setFns,
 	mapState,
 }: propsType): React.Node => {
-	const bar = useRef(null);
+	const barDOM = useRef(null);
+	const inputDOM = useRef(null);
+	window.aaa = inputDOM;
 	return (
 		<div
 			className={`absolute transition-transform delay-300 duration-300 transform ${
@@ -23,35 +25,39 @@ const SearchBar = ({
 				${searchBarState ? '' : 'invisible'}`}
 			>
 				<div
-					ref={bar}
+					ref={barDOM}
 					className={`w-full h-12 overflow-hidden rounded-full transition-shadow delay-300 ${
 						searchBarState ? 'shadow-md' : 'shadow-none'
 					}`}
 				>
 					<div
-						className={`relative h-12 w-full bg-white shadow-xl transition-transform duration-400 transform ${
+						className={`flex items-center relative h-12 w-full bg-white shadow-xl transition-transform duration-400 transform ${
 							searchBarState
 								? 'translate-x-0'
 								: '-translate-x-full'
 						}`}
 					>
 						<button
-							onClick={() => setFns.setSearchBar(false)}
-							className={`h-12 w-8 pl-3 -mr-1 transform text-2xl text-t-gray-normal focus:outline-none transition-opacity delay-400 duration-300 ${
+							onClick={() => {
+								setFns.setSearchBar(false);
+								setFns.setSearchInput('');
+							}}
+							className={`h-12 w-8 pl-3 -mr-1 relative bottom-0.5 text-2xl text-t-gray-normal focus:outline-none transition-opacity delay-400 duration-300 ${
 								searchBarState ? 'opacity-1' : 'opacity-0'
 							}`}
 						>
 							×
 						</button>
 						<input
+							ref={inputDOM}
 							className={`h-12 text-lg text-t-gray-dark border-none focus:outline-none focus:ring-transparent transition-opacity delay-400 duration-300 ${
 								searchBarState ? 'opacity-1' : 'opacity-0'
 							}`}
 							type="text"
-							placeholder={'附近有什麼山呢？'}
+							placeholder={'輸入地區或山岳名稱'}
 							value={mapState.searchInput}
 							onChange={event =>
-								setFns.setSearchInput(event.target.value)
+								setFns.setSearchInput(event.target.value.trim())
 							}
 						/>
 					</div>
@@ -60,7 +66,7 @@ const SearchBar = ({
 			<SearchButton
 				setFns={setFns}
 				searchBarState={searchBarState}
-				sibling={bar}
+				siblings={{ barDOM, inputDOM }}
 			/>
 		</div>
 	);
