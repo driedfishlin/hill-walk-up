@@ -6,25 +6,44 @@ import { createStore, combineReducers } from 'redux';
 const TOGGLE_NAV_BAR = 'TOGGLE_NAV_BAR';
 const TOGGLE_IS_LOGIN = 'TOGGLE_LOGIN';
 const TOGGLE_LOGIN_FORM_SHOW = 'TOGGLE_LOGIN_FORM_SHOW';
+const HOMEPAGE_BUBBLE_MESSAGE_SHOW = 'HOMEPAGE_BUBBLE_MESSAGE_SHOW';
+const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR';
 
-type ActionsType =
-	| { type: 'TOGGLE_NAV_BAR', command: boolean }
-	| { type: 'TOGGLE_IS_LOGIN', command: boolean }
-	| { type: 'TOGGLE_LOGIN_FORM_SHOW', command: boolean };
+type ActionsType = { type: string, command: boolean };
+
+// type ActionsType =
+// 	| { type: 'TOGGLE_NAV_BAR', command: boolean }
+// 	| { type: 'TOGGLE_IS_LOGIN', command: boolean }
+// 	| { type: 'TOGGLE_LOGIN_FORM_SHOW', command: boolean }
+// 	| { type: 'HOMEPAGE_BUBBLE_MESSAGE_SHOW', command: boolean };
 
 // toggle navigation bar display
-export const createToggleNavBarAction = (command: boolean): Actions => ({
+export const createToggleNavBarAction = (command: boolean): ActionsType => ({
 	type: TOGGLE_NAV_BAR,
 	command,
 });
 // switch user login status
-export const createToggleIsLoginAction = (command: boolean): Actions => ({
+export const createToggleIsLoginAction = (command: boolean): ActionsType => ({
 	type: TOGGLE_IS_LOGIN,
 	command,
 });
 // toggle login field display
-export const createToggleLoginFormShowAction = (command: boolean): Actions => ({
+export const createToggleLoginFormShowAction = (
+	command: boolean
+): ActionsType => ({
 	type: TOGGLE_LOGIN_FORM_SHOW,
+	command,
+});
+// close the home Page bubble massage
+export const createCloseHomePageBubbleAction = (
+	command: boolean
+): ActionsType => ({
+	type: HOMEPAGE_BUBBLE_MESSAGE_SHOW,
+	command,
+});
+// toggle search bar show
+export const createToggleSearchBarAction = command => ({
+	type: TOGGLE_SEARCH_BAR,
 	command,
 });
 
@@ -35,6 +54,10 @@ const initUIState = {
 	navBar: {
 		isOpen: false,
 		isFormOpen: false,
+	},
+	homePage: {
+		bubble: true,
+		search: false,
 	},
 };
 type UIStateType = {
@@ -66,6 +89,14 @@ const UIStateReducer = (
 		case 'TOGGLE_LOGIN_FORM_SHOW':
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.navBar.isFormOpen = action.command;
+			return newState;
+		case 'HOMEPAGE_BUBBLE_MESSAGE_SHOW':
+			newState = JSON.parse(JSON.stringify(prevState));
+			newState.homePage.bubble = action.command;
+			return newState;
+		case 'TOGGLE_SEARCH_BAR':
+			newState = JSON.parse(JSON.stringify(prevState));
+			newState.homePage.searchBar = action.command;
 			return newState;
 		default:
 			return prevState;

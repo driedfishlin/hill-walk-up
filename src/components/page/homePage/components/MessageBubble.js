@@ -5,7 +5,7 @@ import { useRef, useEffect } from 'react';
 // dummy info
 const data = 50;
 
-const DragButton = ({ buttonRef, bubbleRef }): React.Node => {
+const DragButton = ({ buttonRef, bubbleRef, setBubble }): React.Node => {
 	useEffect(() => {
 		// calculate the drag distance and decide whether to close the message box
 		const button = buttonRef.current;
@@ -44,6 +44,7 @@ const DragButton = ({ buttonRef, bubbleRef }): React.Node => {
 				button.removeEventListener('touchstart', onTouchStart);
 				bubble.style.transition = 'transform 0.5s';
 				bubble.style.transform = 'translateY(120%)';
+				setBubble(false);
 			} else {
 				bubble.style.transition = 'transform 0.5s';
 				bubble.style.transform = 'translateY(0)';
@@ -81,6 +82,7 @@ const DragButton = ({ buttonRef, bubbleRef }): React.Node => {
 				button.removeEventListener('mousedown', onMouseDown);
 				bubble.style.transition = 'transform 0.5s';
 				bubble.style.transform = 'translateY(120%)';
+				setBubble(false);
 			} else {
 				bubble.style.transition = 'transform 0.5s';
 				bubble.style.transform = 'translateY(0)';
@@ -100,7 +102,7 @@ const DragButton = ({ buttonRef, bubbleRef }): React.Node => {
 			button.removeEventListener('mousedown', onMouseDown);
 			button.removeEventListener('touchstart', onTouchStart);
 		};
-	}, [buttonRef, bubbleRef]);
+	}, [buttonRef, bubbleRef, setBubble]);
 	return (
 		<div
 			ref={buttonRef}
@@ -135,13 +137,20 @@ const ProgressBar = (): React.Node => {
 	);
 };
 
-const MessageBubble = (): React.Node => {
+type propsType = {
+	setBubble: Function,
+	bubbleState: boolean,
+};
+
+const MessageBubble = ({ setBubble, bubbleState }: propsType): React.Node => {
 	const bubble = useRef(null);
 	const button = useRef(null);
 	return (
 		<div
 			ref={bubble}
-			className="absolute bottom-0 bg-white w-full flex justify-between items-center p-7 px-6 opacity-90"
+			className={`absolute bottom-0 bg-white w-full flex justify-between items-center p-7 px-6 opacity-90 ${
+				bubbleState ? '' : 'hidden'
+			}`}
 		>
 			<div className="flex-grow pr-5">
 				<p className="text-sm text-t-gray-dark opacity-70 font-medium mb-2 ml-1">
@@ -155,7 +164,11 @@ const MessageBubble = (): React.Node => {
 					{' %'}
 				</p>
 			</div>
-			<DragButton buttonRef={button} bubbleRef={bubble} />
+			<DragButton
+				buttonRef={button}
+				bubbleRef={bubble}
+				setBubble={setBubble}
+			/>
 		</div>
 	);
 };

@@ -26,6 +26,16 @@ module.exports = {
 				'30': '30deg',
 				'360': '360deg',
 			},
+			maxWidth: {
+				'25%': '25%',
+				'50%': '50%',
+				'75%': '75%',
+				'80%': '80%',
+			},
+			transitionProperty: {
+				height: 'height',
+				width: 'width',
+			},
 		},
 	},
 	variants: {

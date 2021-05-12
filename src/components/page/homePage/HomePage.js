@@ -1,18 +1,44 @@
-// @flow
+// @!flow
 import * as React from 'react';
+import { connect } from 'react-redux';
 
 import Map from './components/Map';
-import SearchButton from './components/SearchButton';
+import SearchSystem from './components/searchSystem/SearchSystem';
 import MessageBubble from './components/MessageBubble';
 
-const HomePage = function(): React.Node {
+import { createCloseHomePageBubbleAction } from '../../../store';
+import { createToggleSearchBarAction } from '../../../store';
+
+//SECTION>
+const mapStateToProps = State => ({
+	UIState: State.UIState,
+});
+const mapDispatchToProps = dispatch => {
+	return {
+		setBubble: command => {
+			dispatch(createCloseHomePageBubbleAction(command));
+		},
+		setFns: {
+			setSearchBar: command => {
+				dispatch(createToggleSearchBarAction(command));
+			},
+		},
+	};
+};
+
+//SECTION>
+const HomePage = function({ setBubble, UIState, setFns }): React.Node {
 	return (
-		<main className="bg-gray-200 flex-grow">
+		<main className="relative bg-gray-200 flex-grow">
 			<Map />
-			<SearchButton />
-			<MessageBubble />
+			{/* <SearchButton UIState={UIState} /> */}
+			<MessageBubble
+				setBubble={setBubble}
+				bubbleState={UIState.homePage.bubble}
+			/>
+			<SearchSystem UIState={UIState} setFns={setFns} />
 		</main>
 	);
 };
 
-export default HomePage;
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
