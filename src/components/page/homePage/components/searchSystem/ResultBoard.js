@@ -47,32 +47,36 @@ const ResultBoard = ({
 	setFns: Object,
 	inputState: string,
 }): React.Node => {
-	const [resultList, setResultList] = useState([]);
+	const [resultList, setResultList] = useState(TaiwanPeaksList);
+	// const [resultList, setResultList] = useState([]);
 
 	useEffect(() => {
-		const result = TaiwanPeaksList.filter(
-			item =>
-				item.name.includes(inputState) ||
-				item.location.includes(inputState)
-		);
-		if (inputState.length === 0 || result.length === 0)
-			return setResultList([]);
+		// show search result based on user input
+		// const result = TaiwanPeaksList.filter(
+		// 	item =>
+		// 		item.name.includes(inputState) ||
+		// 		item.location.includes(inputState)
+		// );
+		// if (inputState.length === 0 || result.length === 0)
+		// 	return setResultList(TaiwanPeaksList);
+		// return setResultList([]);
 		// 限制資料顯示筆數
-		result.length = 20;
-		setResultList(result);
+		// result.length = 20;
+		// setResultList(result);
+		setResultList(TaiwanPeaksList);
 	}, [inputState]);
 
 	return (
 		// location point
 		<div
-			className={`fixed top-0 left-0 w-full h-full transform ${
+			className={`fixed top-0 left-0 w-full h-1/2 transform ${
 				searchMode
 					? 'translate-y-0'
 					: '-translate-y-full transition-transform delay-1200'
 			}`}
 		>
 			{/* // background */}
-			<div
+			{/* <div
 				onClick={() => {
 					setFns.setSearchBar(false);
 					setFns.setSearchInput('');
@@ -80,10 +84,10 @@ const ResultBoard = ({
 				className={`absolute top-0 left-0 w-full h-full bg-t-gray-dark bg-opacity-30 ${
 					searchMode ? 'block' : 'hidden'
 				}`}
-			></div>
+			></div> */}
 			{/* main */}
 			<div
-				className={` absolute top-0 w-full left-0 h-1/2 bg-t-gray-light rounded-b-2xl shadow-lg overflow-hidden transition-transform duration-500  transform ${
+				className={`absolute top-0 w-full left-0 h-full bg-t-gray-light rounded-b-2xl shadow-lg overflow-hidden transition-transform duration-500  transform ${
 					searchMode
 						? 'translate-y-0 delay-700'
 						: '-translate-y-full delay-0'

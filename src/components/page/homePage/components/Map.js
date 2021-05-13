@@ -3,7 +3,7 @@ import * as React from 'react';
 import { initMap } from '../../../utilities/map/mapAPI';
 
 //SECTION> Google Maps API
-// initMap();
+initMap();
 
 //SECTION> React Component
 const Map = function(): React.Node {

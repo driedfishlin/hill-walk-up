@@ -7,7 +7,14 @@ type propsType = { UIState: Object, setFns: Object, mapState: Object };
 
 const SearchSystem = ({ UIState, setFns, mapState }: propsType): React.Node => {
 	return (
-		<div className={`absolute top-0 left-0`}>
+		<div
+			className={`absolute top-0 left-0 ${
+				UIState.homePage.background.icon ||
+				UIState.homePage.infoBox.show
+					? 'pointer-events-none opacity-50'
+					: ''
+			}`}
+		>
 			<ResultBoard
 				searchMode={UIState.homePage.searchMode}
 				setFns={setFns}
@@ -17,6 +24,7 @@ const SearchSystem = ({ UIState, setFns, mapState }: propsType): React.Node => {
 				searchBarState={UIState.homePage.searchMode}
 				setFns={setFns}
 				mapState={mapState}
+				UIState={UIState}
 			/>
 		</div>
 	);

@@ -6,11 +6,14 @@ import Map from './components/Map';
 import SearchSystem from './components/searchSystem/SearchSystem';
 import MessageBubble from './components/MessageBubble';
 import InfoBox from './components/InfoBox';
+import OverlayBackground from '../../shared/components/OverlayBackground';
 
 import { createCloseHomePageBubbleAction } from '../../../store';
 import { createToggleSearchBarAction } from '../../../store';
 import { createSearchInputChangeAction } from '../../../store';
 import { createToggleInfoBoxShowAction } from '.././../../store';
+import { createToggleBackgroundAction } from '../../../store';
+import { createRemoveSearchTargetAction } from '../../../store';
 
 //SECTION>
 const mapStateToProps = state => ({
@@ -26,8 +29,16 @@ const mapDispatchToProps = dispatch => {
 				dispatch(createToggleSearchBarAction(command)),
 			setSearchInput: command =>
 				dispatch(createSearchInputChangeAction(command)),
-			setInfoBox: (command, position) =>
-				dispatch(createToggleInfoBoxShowAction(command, position)),
+			setInfoBox: (command, position, targetInfo) =>
+				dispatch(
+					createToggleInfoBoxShowAction(command, position, targetInfo)
+				),
+			setBackground: (command, clickable, icon) =>
+				dispatch(
+					createToggleBackgroundAction(command, clickable, icon)
+				),
+			setRemoveMark: (command: string) =>
+				dispatch(createRemoveSearchTargetAction(command)),
 		},
 	};
 };
@@ -37,6 +48,7 @@ const HomePage = function({ UIState, setFns, mapState }): React.Node {
 	return (
 		<main className="relative bg-gray-200 flex-grow">
 			<Map />
+			<OverlayBackground UIState={UIState} setFns={setFns} />
 			<MessageBubble
 				setBubble={setFns.setBubble}
 				bubbleState={UIState.homePage.bubble}

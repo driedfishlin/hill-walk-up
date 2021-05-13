@@ -1,6 +1,15 @@
 // @flow
+// import * as React from 'react';
+// import { useEffect } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import KEY from '../private/google_key';
+
+import store from '../../../store';
+import { createToggleInfoBoxShowAction } from '../../../store';
+import { createToggleBackgroundAction } from '../../../store';
+import { createAddSearchTargetAction } from '../../../store';
+
+import TaiwanPeaksList from '../data/100_peaks_of_taiwan';
 
 /* google map 官方 api：
 	    1. 瞬間移動移動地圖 => setCenter()
@@ -83,26 +92,53 @@ export const zoomMap = (
 
 const onMapMarkClick = event => {
 	if (GOOGLE_MAP.map === null) return console.log('無法取得地圖資料');
-	console.log(event.domEvent.path[1].ariaLabel);
+	const targetName = event.domEvent.path[1].title;
 	const position = event.latLng.toJSON();
-	zoomMap(position, true);
-	// get mark position of screen
 
-	// 時間須以 map zoom 做優化（1200）
+	let openInfoBoxDelay = 1600;
+	switch (GOOGLE_MAP.map.getZoom()) {
+		case 8:
+			openInfoBoxDelay = 1600;
+			break;
+		case 9:
+			openInfoBoxDelay = 1400;
+			break;
+		case 10:
+			openInfoBoxDelay = 1200;
+			break;
+		case 11:
+			openInfoBoxDelay = 1000;
+			break;
+		case 12:
+			openInfoBoxDelay = 800;
+			break;
+		case 13:
+			openInfoBoxDelay = 800;
+			break;
+		default:
+			openInfoBoxDelay = 1600;
+	}
+	// console.log(GOOGLE_MAP.map.getZoom());
+
+	zoomMap(position, true);
+	const targetData = TaiwanPeaksList.filter(item => item.name === targetName);
+	store.dispatch(createToggleBackgroundAction(true, false, true));
+
+	// get mark position of screen after animation ends
 	setTimeout(() => {
 		const markDOMPositionInfo = event.domEvent.target.getBoundingClientRect();
 		const markPosition = {
 			x: markDOMPositionInfo.x,
 			y: markDOMPositionInfo.y,
 		};
-		console.log(markPosition);
-		// const markDOMStyle = window.getComputedStyle(event.domEvent.target);
-		// console.log(markDOMStyle.pageX);
-		// console.log(event.domEvent.target);
-	}, 1500);
+		store.dispatch(
+			createToggleInfoBoxShowAction(true, markPosition, targetData)
+		);
+		store.dispatch(createToggleBackgroundAction(true, true, false));
+	}, openInfoBoxDelay);
 };
 
-// const marksList = []
+export const mapMarksList: Array<Object> = [];
 
 type createMapMarkTypes = {
 	name: string,
@@ -115,10 +151,12 @@ type createMapMarkTypes = {
 };
 
 // 參數僅接受 100_peaks_of_taiwan.js 之格式
-//FIXME> 如果畫面上已經有該地點，不建立新地標
-export const createMapMark = (item: createMapMarkTypes): HTMLElement | void => {
+export const createMapMark = (item: createMapMarkTypes): Object => {
 	if (GOOGLE_MAP.map === null) return console.log('無法取得地圖資料');
 	if (setIcon === null) return console.log('圖標設定錯誤');
+	// 如果已經有該地點，不建立新地標
+	if (store.getState().mapState.searchTargets.includes(item.name)) return;
+	store.dispatch(createAddSearchTargetAction(item.name));
 	const mark = new window.google.maps.Marker({
 		position: {
 			lat: item.coordinate.lat,
@@ -129,5 +167,13 @@ export const createMapMark = (item: createMapMarkTypes): HTMLElement | void => {
 		title: item.name,
 	});
 	mark.addListener('click', onMapMarkClick);
+	mapMarksList.push(mark);
 	return mark;
 };
+
+/* connected component */
+// type propsType = { children: Object, store: Object };
+// export const MapProvider = ({ children, store }: propsType): React.Node => {
+// 	console.log(store);
+// 	return <React.Fragment>{children}</React.Fragment>;
+// };

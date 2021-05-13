@@ -6,20 +6,19 @@ import { faSearch as icon } from '@fortawesome/free-solid-svg-icons/faSearch.js'
 
 type propsType = {
 	setFns: Object,
-	searchBarState: boolean,
+	UIState: Object,
 	siblings: Object,
 };
 
-const SearchButton = ({
-	setFns,
-	searchBarState,
-	siblings,
-}: propsType): React.Node => {
+const SearchButton = ({ setFns, UIState, siblings }: propsType): React.Node => {
+	const searchBarState = UIState.homePage.searchMode;
 	return (
 		<button
 			onClick={() => {
 				setFns.setSearchBar(true);
 				setFns.setBubble(false);
+				setFns.setBackground(true, false);
+				setTimeout(() => setFns.setBackground(true, true), 700);
 				if (siblings.inputDOM.current)
 					setTimeout(() => siblings.inputDOM.current.focus(), 500);
 			}}

@@ -54,6 +54,18 @@ module.exports = {
 				'1200': '1200ms',
 				'2000': '2000ms',
 			},
+			keyframes: {
+				'jump-out': {
+					'0%': { transform: 'rotate(-20deg)' },
+					'25%': { transform: 'rotate(5deg)' },
+					'50%': { transform: 'rotate(-3deg)' },
+					'75%': { transform: 'rotate(1deg)' },
+					'100%': { transform: 'rotate(0deg)' },
+				},
+			},
+			animation: {
+				'jump-out': 'jump-out 0.7s ease-in-out',
+			},
 		},
 	},
 	variants: {

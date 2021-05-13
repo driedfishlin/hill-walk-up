@@ -8,7 +8,7 @@ import {
 	zoomMap,
 } from '../../../../utilities/map/mapAPI';
 
-const onItemClick = event => {
+const onItemClick = (event, setFns) => {
 	const Map = GOOGLE_MAP.map;
 	const searchTarget = event.target.querySelector('p').innerText;
 	const searchResult = TaiwanPeaksList.find(
@@ -18,8 +18,65 @@ const onItemClick = event => {
 		console.log('無法取得地圖資料');
 	} else {
 		createMapMark(searchResult);
+
+		let openInfoBoxDelay = 1600;
+		switch (GOOGLE_MAP.map.getZoom()) {
+			case 8:
+				openInfoBoxDelay = 1600;
+				break;
+			case 9:
+				openInfoBoxDelay = 1400;
+				break;
+			case 10:
+				openInfoBoxDelay = 1200;
+				break;
+			case 11:
+				openInfoBoxDelay = 1000;
+				break;
+			case 12:
+				openInfoBoxDelay = 1000;
+				break;
+			case 13:
+				openInfoBoxDelay = 1000;
+				break;
+			default:
+				openInfoBoxDelay = 1600;
+		}
+
 		zoomMap(searchResult.coordinate, true);
 		// Map.panTo(searchResult.coordinate);
+		//
+
+		setFns.setSearchBar(false);
+		setFns.setSearchInput('');
+		setFns.setBackground(true, false, true);
+
+		const searchMarkDOM = () =>
+			setTimeout(() => {
+				// adding map_mark_DOM to the UI is asynchronous.
+				const markDOM = document.querySelector(
+					`div[title="${searchTarget}"]`
+				);
+				if (!markDOM) {
+					searchMarkDOM();
+					return;
+				}
+				setTimeout(() => {
+					const positionInfo = markDOM.getBoundingClientRect();
+					setFns.setInfoBox(
+						true,
+						{
+							x: positionInfo.x,
+							y: positionInfo.y,
+						},
+						searchResult
+					);
+					setFns.setBackground(true, true, false);
+				}, openInfoBoxDelay); // 決定何時開啟彈窗
+			}, 200);
+
+		searchMarkDOM();
+		// let markDOM = searchMarkDOM(searchTarget)
 	}
 };
 
@@ -32,11 +89,16 @@ const ResultItem = ({ item, setFns }: propsType): React.Node => {
 	return (
 		<li className={`py-1`}>
 			<button
-				onClick={event => {
-					onItemClick(event);
-					setFns.setSearchBar(false);
-					setFns.setSearchInput('');
-				}}
+				onClick={event => onItemClick(event, setFns)}
+				// onClick={event => {
+				// 	onItemClick(event);
+				// setFns.setSearchBar(false);
+				// setFns.setSearchInput('');
+				// setFns.setBackground(true, false, true);
+				// setTimeout(() => {
+				// 	setFns.setBackground(true, true, false);
+				// }, 2000); // 決定何時開啟彈窗
+				// }}
 				className={`flex items-end justify-between w-full py-1 tracking-widest font-light focus:outline-none`}
 			>
 				<p

@@ -10,6 +10,9 @@ const HOMEPAGE_BUBBLE_MESSAGE_SHOW = 'HOMEPAGE_BUBBLE_MESSAGE_SHOW';
 const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR';
 const SEARCH_INPUT_CHANGE = 'SEARCH_INPUT_CHANGE';
 const TOGGLE_INFO_BOX_SHOW = 'TOGGLE_INFO_BOX_SHOW';
+const TOGGLE_BACKGROUND_SHOW = 'TOGGLE_BACKGROUND_SHOW';
+const ADD_SEARCH_TARGET = 'ADD_SEARCH_TARGET';
+const REMOVE_SEARCH_TARGET = 'REMOVE_SEARCH_TARGET';
 
 // type ActionsType =
 // 	| { type: string, command: boolean }
@@ -34,7 +37,16 @@ type ActionsType =
 			type: 'TOGGLE_INFO_BOX_SHOW',
 			position: { x: number, y: number } | null,
 			command: boolean,
-	  };
+			targetInfo?: Object,
+	  }
+	| {
+			type: 'TOGGLE_BACKGROUND_SHOW',
+			command: boolean,
+			clickable: boolean,
+			icon?: boolean,
+	  }
+	| { type: 'ADD_SEARCH_TARGET', command: string }
+	| { type: 'REMOVE_SEARCH_TARGET', command: string };
 
 // toggle navigation bar display
 export const createToggleNavBarAction = (command: boolean): ActionsType => ({
@@ -73,10 +85,32 @@ export const createSearchInputChangeAction = (
 });
 export const createToggleInfoBoxShowAction = (
 	command: boolean,
-	position?: { x: number, y: number } | null = null
+	position?: { x: number, y: number } | null = null,
+	targetInfo?: Object
 ): ActionsType => ({
 	type: TOGGLE_INFO_BOX_SHOW,
 	position,
+	command,
+	targetInfo,
+});
+export const createToggleBackgroundAction = (
+	command: boolean,
+	clickable: boolean,
+	icon?: boolean
+): ActionsType => ({
+	type: TOGGLE_BACKGROUND_SHOW,
+	command,
+	clickable,
+	icon,
+});
+export const createAddSearchTargetAction = (command: string): ActionsType => ({
+	type: ADD_SEARCH_TARGET,
+	command,
+});
+export const createRemoveSearchTargetAction = (
+	command: string
+): ActionsType => ({
+	type: REMOVE_SEARCH_TARGET,
 	command,
 });
 
@@ -89,6 +123,11 @@ const initUIState = {
 		isFormOpen: false,
 	},
 	homePage: {
+		background: {
+			clickable: true,
+			show: false,
+			icon: false,
+		},
 		bubble: true,
 		searchMode: false,
 		infoBox: {
@@ -97,6 +136,7 @@ const initUIState = {
 				y: 0,
 			},
 			show: false,
+			targetInfo: {},
 		},
 	},
 };
@@ -106,6 +146,11 @@ type UIStateType = {
 		isFormOpen: boolean,
 	},
 	homePage: {
+		background: {
+			clickable: boolean,
+			show: boolean,
+			icon: boolean,
+		},
 		bubble: boolean,
 		searchMode: boolean,
 		infoBox: {
@@ -114,6 +159,7 @@ type UIStateType = {
 				y: number,
 			},
 			show: boolean,
+			targetInfo?: Object,
 		},
 	},
 };
@@ -127,9 +173,11 @@ type userStateType = {
 // 紀錄地圖與公開資料
 const initMapState = {
 	searchInput: '',
+	searchTargets: [],
 };
 type initMapType = {
 	searchInput: string,
+	searchTargets: Array<string>,
 };
 
 //SECTION> REDUCERS
@@ -138,7 +186,7 @@ const UIStateReducer = (
 	prevState: UIStateType = initUIState,
 	action: ActionsType
 ) => {
-	let newState;
+	let newState = null;
 	switch (action.type) {
 		case 'TOGGLE_NAV_BAR':
 			newState = JSON.parse(JSON.stringify(prevState));
@@ -157,7 +205,6 @@ const UIStateReducer = (
 			newState.homePage.searchMode = action.command;
 			return newState;
 		case 'TOGGLE_INFO_BOX_SHOW':
-			console.log(action);
 			newState = JSON.parse(JSON.stringify(prevState));
 			if (action.position)
 				newState.homePage.infoBox.position = {
@@ -165,6 +212,16 @@ const UIStateReducer = (
 					y: action.position.y,
 				};
 			newState.homePage.infoBox.show = action.command;
+			if (action.targetInfo !== undefined)
+				newState.homePage.infoBox.targetInfo = action.targetInfo;
+			return newState;
+		case 'TOGGLE_BACKGROUND_SHOW':
+			newState = JSON.parse(JSON.stringify(prevState));
+			newState.homePage.background.show = action.command;
+			newState.homePage.background.clickable = action.clickable;
+			if (action.icon !== undefined)
+				newState.homePage.background.icon = action.icon;
+
 			return newState;
 		default:
 			return prevState;
@@ -187,9 +244,23 @@ const mapStateReducer = (
 	prevState: initMapType = initMapState,
 	action: ActionsType
 ) => {
+	let newState = null;
 	switch (action.type) {
 		case 'SEARCH_INPUT_CHANGE':
-			return { searchInput: action.command };
+			newState = JSON.parse(JSON.stringify(prevState));
+			newState.searchInput = action.command;
+			return newState;
+		case 'ADD_SEARCH_TARGET':
+			newState = JSON.parse(JSON.stringify(prevState));
+			newState.searchTargets.push(action.command);
+			return newState;
+		case 'REMOVE_SEARCH_TARGET':
+			newState = JSON.parse(JSON.stringify(prevState));
+			newState.searchTargets.splice(
+				newState.searchTargets.indexOf(action.command),
+				1
+			);
+			return newState;
 		default:
 			return prevState;
 	}

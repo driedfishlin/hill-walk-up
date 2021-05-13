@@ -4,16 +4,12 @@ import { useRef } from 'react';
 
 import SearchButton from './SearchButton';
 
-type propsType = { searchBarState: boolean, setFns: Object, mapState: Object };
+type propsType = { UIState: Object, setFns: Object, mapState: Object };
 
-const SearchBar = ({
-	searchBarState,
-	setFns,
-	mapState,
-}: propsType): React.Node => {
+const SearchBar = ({ UIState, setFns, mapState }: propsType): React.Node => {
 	const barDOM = useRef(null);
 	const inputDOM = useRef(null);
-	window.aaa = inputDOM;
+	const searchBarState = UIState.homePage.searchMode;
 	return (
 		<div
 			className={`absolute transition-transform delay-300 duration-300 transform ${
@@ -64,8 +60,8 @@ const SearchBar = ({
 				</div>
 			</div>
 			<SearchButton
+				UIState={UIState}
 				setFns={setFns}
-				searchBarState={searchBarState}
 				siblings={{ barDOM, inputDOM }}
 			/>
 		</div>
