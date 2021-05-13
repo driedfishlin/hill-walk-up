@@ -9,16 +9,32 @@ const TOGGLE_LOGIN_FORM_SHOW = 'TOGGLE_LOGIN_FORM_SHOW';
 const HOMEPAGE_BUBBLE_MESSAGE_SHOW = 'HOMEPAGE_BUBBLE_MESSAGE_SHOW';
 const TOGGLE_SEARCH_BAR = 'TOGGLE_SEARCH_BAR';
 const SEARCH_INPUT_CHANGE = 'SEARCH_INPUT_CHANGE';
-
-type ActionsType =
-	| { type: string, command: boolean }
-	| { type: 'SEARCH_INPUT_CHANGE', command: string };
+const TOGGLE_INFO_BOX_SHOW = 'TOGGLE_INFO_BOX_SHOW';
 
 // type ActionsType =
-// 	| { type: 'TOGGLE_NAV_BAR', command: boolean }
-// 	| { type: 'TOGGLE_IS_LOGIN', command: boolean }
-// 	| { type: 'TOGGLE_LOGIN_FORM_SHOW', command: boolean }
-// 	| { type: 'HOMEPAGE_BUBBLE_MESSAGE_SHOW', command: boolean };
+// 	| { type: string, command: boolean }
+// 	| { type: 'SEARCH_INPUT_CHANGE', command: string }
+// 	| {
+// 			type: 'TOGGLE_INFO_BOX_SHOW',
+// 			position: {
+// 				x: number,
+// 				y: number,
+// 			},
+// 			command: boolean,
+// 	  };
+
+type ActionsType =
+	| { type: 'TOGGLE_NAV_BAR', command: boolean }
+	| { type: 'TOGGLE_IS_LOGIN', command: boolean }
+	| { type: 'TOGGLE_LOGIN_FORM_SHOW', command: boolean }
+	| { type: 'HOMEPAGE_BUBBLE_MESSAGE_SHOW', command: boolean }
+	| { type: 'TOGGLE_SEARCH_BAR', command: boolean }
+	| { type: 'SEARCH_INPUT_CHANGE', command: string }
+	| {
+			type: 'TOGGLE_INFO_BOX_SHOW',
+			position: { x: number, y: number } | null,
+			command: boolean,
+	  };
 
 // toggle navigation bar display
 export const createToggleNavBarAction = (command: boolean): ActionsType => ({
@@ -55,6 +71,14 @@ export const createSearchInputChangeAction = (
 	type: SEARCH_INPUT_CHANGE,
 	command,
 });
+export const createToggleInfoBoxShowAction = (
+	command: boolean,
+	position?: { x: number, y: number } | null = null
+): ActionsType => ({
+	type: TOGGLE_INFO_BOX_SHOW,
+	position,
+	command,
+});
 
 //SECTION> DATA STRUCTURE
 
@@ -67,6 +91,13 @@ const initUIState = {
 	homePage: {
 		bubble: true,
 		searchMode: false,
+		infoBox: {
+			position: {
+				x: 0,
+				y: 0,
+			},
+			show: false,
+		},
 	},
 };
 type UIStateType = {
@@ -77,6 +108,13 @@ type UIStateType = {
 	homePage: {
 		bubble: boolean,
 		searchMode: boolean,
+		infoBox: {
+			position: {
+				x: number,
+				y: number,
+			},
+			show: boolean,
+		},
 	},
 };
 // 紀錄使用者個人狀態的 state
@@ -117,6 +155,16 @@ const UIStateReducer = (
 		case 'TOGGLE_SEARCH_BAR':
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.homePage.searchMode = action.command;
+			return newState;
+		case 'TOGGLE_INFO_BOX_SHOW':
+			console.log(action);
+			newState = JSON.parse(JSON.stringify(prevState));
+			if (action.position)
+				newState.homePage.infoBox.position = {
+					x: action.position.x,
+					y: action.position.y,
+				};
+			newState.homePage.infoBox.show = action.command;
 			return newState;
 		default:
 			return prevState;

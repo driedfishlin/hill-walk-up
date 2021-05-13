@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import Map from './components/Map';
 import SearchSystem from './components/searchSystem/SearchSystem';
 import MessageBubble from './components/MessageBubble';
+import InfoBox from './components/InfoBox';
 
 import { createCloseHomePageBubbleAction } from '../../../store';
 import { createToggleSearchBarAction } from '../../../store';
 import { createSearchInputChangeAction } from '../../../store';
+import { createToggleInfoBoxShowAction } from '.././../../store';
 
 //SECTION>
 const mapStateToProps = state => ({
@@ -18,14 +20,14 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
 	return {
 		setFns: {
-			setBubble: command => {
-				dispatch(createCloseHomePageBubbleAction(command));
-			},
-			setSearchBar: command => {
-				dispatch(createToggleSearchBarAction(command));
-			},
+			setBubble: command =>
+				dispatch(createCloseHomePageBubbleAction(command)),
+			setSearchBar: command =>
+				dispatch(createToggleSearchBarAction(command)),
 			setSearchInput: command =>
 				dispatch(createSearchInputChangeAction(command)),
+			setInfoBox: (command, position) =>
+				dispatch(createToggleInfoBoxShowAction(command, position)),
 		},
 	};
 };
@@ -44,6 +46,7 @@ const HomePage = function({ UIState, setFns, mapState }): React.Node {
 				mapState={mapState}
 				setFns={setFns}
 			/>
+			<InfoBox UIState={UIState} setFns={setFns} />
 		</main>
 	);
 };

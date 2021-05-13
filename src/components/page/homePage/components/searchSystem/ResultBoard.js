@@ -2,6 +2,9 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import TaiwanPeaksList from '../../../../utilities/data/100_peaks_of_taiwan';
+
+import ResultItem from './ResultItem';
+
 const errorMessages = [
 	'找不到符合條件的山喔',
 	'沒有結果 OQ',
@@ -14,6 +17,7 @@ const greetingMessages = [
 	'最近上山了嗎？',
 	'多久沒出去走走了？',
 ];
+
 const Message = ({ inputState, searchMode }) => {
 	return (
 		<div
@@ -31,37 +35,6 @@ const Message = ({ inputState, searchMode }) => {
 					  ]}
 			</p>
 		</div>
-	);
-};
-
-const ResultItem = ({ item }) => {
-	return (
-		<li className={`py-1`}>
-			<button
-				className={`flex items-end justify-between w-full py-1 tracking-widest font-light focus:outline-none`}
-			>
-				<p
-					className={` text-center ${
-						item.name.length < 5
-							? 'text-2xl'
-							: item.name.length < 6
-							? 'text-xl'
-							: 'text-lg'
-					}`}
-				>
-					{item.name}
-				</p>
-				<div className={`text-right text-md`}>
-					<p>
-						{item.elevation}{' '}
-						<span className={`text-right text-sm  tracking-tight`}>
-							公尺
-						</span>
-					</p>
-					<p className={`text-xs tracking-tight`}>{item.location}</p>
-				</div>
-			</button>
-		</li>
 	);
 };
 
@@ -131,7 +104,12 @@ const ResultBoard = ({
 							/>
 						) : (
 							resultList.map(item => (
-								<ResultItem item={item} key={item.id} />
+								<ResultItem
+									item={item}
+									key={item.id}
+									TaiwanPeaksList={TaiwanPeaksList}
+									setFns={setFns}
+								/>
 							))
 						)}
 					</ul>
