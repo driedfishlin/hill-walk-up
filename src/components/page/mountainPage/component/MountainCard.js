@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MountainElement from '../../../shared/components/UIElement/MountainElement';
 
 import { faMapMarkerAlt as markerIcon } from '@fortawesome/free-solid-svg-icons/faMapMarkerAlt';
+import { faChevronCircleRight as arrow } from '@fortawesome/free-solid-svg-icons/faChevronCircleRight';
 
 const info_p_class = `text-sm flex justify-between mt-1`;
 const info_span_class = `text-t-green`;
@@ -19,9 +20,9 @@ const MountainCard = (): React.Node => {
 				<div>
 					<a
 						href="#"
-						className={`text-t-gray-dark opacity-40 border border-t-gray-dark opacity-40 py-0.5 px-1 rounded-md text-xs float-right mb-3`}
+						className={`text-t-gray-dark opacity-70 py-0.5 px-1 rounded-md text-xs float-right mb-3`}
 					>
-						返回地圖 →
+						返回地圖 <FontAwesomeIcon icon={arrow} />
 					</a>
 				</div>
 				<div>
@@ -69,7 +70,10 @@ const MountainCard = (): React.Node => {
 				<p className={`text-white `}>
 					sdfjksh faksdjf lsdgfhj akegfak seloremsdf jkshfaksdjfl
 					sdgfhjakegfa kseygfdgsdf gdfgdflor emsdfjkshfaksd
-					jflsdgfhjakegfaks eygfdgsdfg dfgdflorem sdfjkshfaks
+					jflsdgfhjakegfaks eygfdgsdfg gfdgsdf gdfgdflor
+					emsdfjkshfaksd jflsdgfhjakegfaks eygfdgsdfg gfdgsdf
+					gdfgdflor emsdfjkshfaksd jflsdgfhjakegfaks eygfdgsdfg
+					dfgdflorem sdfjkshfaks
 				</p>
 				<a href="#" className={`text-white text-xs float-right mt-3`}>
 					資料來源： 維基百科 →
