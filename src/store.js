@@ -13,6 +13,7 @@ const TOGGLE_INFO_BOX_SHOW = 'TOGGLE_INFO_BOX_SHOW';
 const TOGGLE_BACKGROUND_SHOW = 'TOGGLE_BACKGROUND_SHOW';
 const ADD_SEARCH_TARGET = 'ADD_SEARCH_TARGET';
 const REMOVE_SEARCH_TARGET = 'REMOVE_SEARCH_TARGET';
+const SPECIFY_ACTIVE_MOUNTAIN = 'SPECIFY_ACTIVE_MOUNTAIN';
 
 // type ActionsType =
 // 	| { type: string, command: boolean }
@@ -46,7 +47,8 @@ type ActionsType =
 			icon?: boolean,
 	  }
 	| { type: 'ADD_SEARCH_TARGET', command: string }
-	| { type: 'REMOVE_SEARCH_TARGET', command: string };
+	| { type: 'REMOVE_SEARCH_TARGET', command: string }
+	| { type: 'SPECIFY_ACTIVE_MOUNTAIN', command: string };
 
 // toggle navigation bar display
 export const createToggleNavBarAction = (command: boolean): ActionsType => ({
@@ -111,6 +113,10 @@ export const createRemoveSearchTargetAction = (
 	command: string
 ): ActionsType => ({
 	type: REMOVE_SEARCH_TARGET,
+	command,
+});
+export const createActiveMountainAction = (command: string): ActionsType => ({
+	type: SPECIFY_ACTIVE_MOUNTAIN,
 	command,
 });
 
@@ -223,7 +229,6 @@ const UIStateReducer = (
 			newState.homePage.background.clickable = action.clickable;
 			if (action.icon !== undefined)
 				newState.homePage.background.icon = action.icon;
-
 			return newState;
 		default:
 			return prevState;
@@ -263,6 +268,10 @@ const mapStateReducer = (
 				1
 			);
 			return newState;
+		case 'SPECIFY_ACTIVE_MOUNTAIN':
+			newState = JSON.parse(JSON.stringify(prevState));
+			newState.activeMountain = action.command;
+			return newState;
 		default:
 			return prevState;
 	}
@@ -275,6 +284,6 @@ const reducers = combineReducers({
 });
 
 //SECTION> STORE
-const store = createStore(reducers);
+const store: Object = createStore(reducers);
 export default store;
 window.STORE = store;

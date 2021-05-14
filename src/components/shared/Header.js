@@ -39,8 +39,8 @@ const ConnectedButton = connect(null, mapDispatchToProps)(Button);
 
 const Header = function(): React.Node {
 	return (
-		<div className={`fixed top-0 left-0 w-full h-20 z-10`}>
-			<header className="flex items-center h-full px-6 py-4 bg-t-gray-dark">
+		<header className={`fixed top-0 left-0 w-full h-20 z-10`}>
+			<div className="flex items-center h-full px-6 py-4 bg-t-gray-dark">
 				<a className="flex items-center">
 					<FontAwesomeIcon
 						icon={logo}
@@ -54,8 +54,8 @@ const Header = function(): React.Node {
 					</h1>
 				</a>
 				<ConnectedButton />
-			</header>
-		</div>
+			</div>
+		</header>
 	);
 };
 

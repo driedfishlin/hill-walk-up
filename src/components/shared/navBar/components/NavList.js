@@ -8,7 +8,7 @@ import { faFileSignature as write } from '@fortawesome/free-solid-svg-icons/faFi
 import { faAddressCard as about } from '@fortawesome/free-solid-svg-icons/faAddressCard';
 
 const list = [
-	{ text: '首頁', icon: file, private: false },
+	{ text: '地圖', icon: file, private: false },
 	{ text: '口袋名單', icon: folder, private: true },
 	{ text: '我的筆記', icon: file, private: true },
 	{ text: '新增筆記', icon: write, private: true },

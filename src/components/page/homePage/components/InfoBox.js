@@ -1,5 +1,7 @@
 // @flow
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+
 import { mapMarksList } from '../../../utilities/map/mapAPI';
 
 import MountainElement from '../../../shared/components/UIElement/MountainElement';
@@ -76,11 +78,20 @@ const InfoBox = ({ UIState, setFns }: propsType): React.Node => {
 						>
 							移除座標
 						</button>
-						<button
-							className={`text-xs border-t-green-dark text-t-green-dark border rounded-md px-1 py-0.5 focus:outline-none`}
-						>
-							更多資料→
-						</button>
+						<Link to={`/mountains/${markTargetInfo?.name || null}`}>
+							<button
+								onClick={() => {
+									setFns.setInfoBox(false);
+									setFns.setBackground(false, false);
+									setFns.setActiveMountain(
+										markTargetInfo?.name
+									);
+								}}
+								className={`text-xs border-t-green-dark text-t-green-dark border rounded-md px-1 py-0.5 focus:outline-none`}
+							>
+								更多資料→
+							</button>
+						</Link>
 					</div>
 				</section>
 				<MountainElement />

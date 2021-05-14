@@ -22,5 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# vscode
+.vscode
+
 # google maps api key
 /src/components/utilities/google_key.js
