@@ -5,7 +5,7 @@ const trySearch = async () => {
 			origin: '*',
 			action: 'parse',
 			format: 'json',
-			page: '玉山',
+			page: '大霸尖山',
 		});
 	try {
 		const req = await fetch(url);
@@ -13,6 +13,7 @@ const trySearch = async () => {
 		// console.log(json.parse.text['*']);
 		const t = json.parse.text['*'];
 		const t1 = t.split('<p>')[1].split('</p>')[0];
+		const t11 = t1.split('</p>')[0];
 		console.log(t1);
 		function removeHTMLTag(str) {
 			return str.replace(/<[^>]+>|&[^>]+;/g, '');

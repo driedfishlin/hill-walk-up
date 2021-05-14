@@ -83,9 +83,6 @@ const InfoBox = ({ UIState, setFns }: propsType): React.Node => {
 								onClick={() => {
 									setFns.setInfoBox(false);
 									setFns.setBackground(false, false);
-									setFns.setActiveMountain(
-										markTargetInfo?.name
-									);
 								}}
 								className={`text-xs border-t-green-dark text-t-green-dark border rounded-md px-1 py-0.5 focus:outline-none`}
 							>

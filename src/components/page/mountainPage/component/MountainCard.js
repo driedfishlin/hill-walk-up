@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -10,25 +11,34 @@ import TaiwanPeaksList from '../../../utilities/data/100_peaks_of_taiwan';
 import { faMapMarkerAlt as markerIcon } from '@fortawesome/free-solid-svg-icons/faMapMarkerAlt';
 import { faChevronCircleRight as arrow } from '@fortawesome/free-solid-svg-icons/faChevronCircleRight';
 
+import DetailBlock from './DetailBlock';
+
 const info_p_class = `text-sm flex justify-between mt-1`;
 const info_span_class = `text-t-green`;
 const info_sub_span_class = ``;
-// const info_sm_span_class = `text-t-green text-sm`;
 
-const MountainCard = ({ mapState }): React.Node => {
+const MountainCard = ({
+	setFns,
+	mapState,
+}: {
+	setFns: Object,
+	mapState: Object,
+}): React.Node => {
 	const params = useParams();
 	const activeMountain = params.mountain;
 	const activeMountainInfo = TaiwanPeaksList.filter(item => {
-		console.log(item.name, activeMountain, item.name === activeMountain);
 		return item.name === activeMountain;
 	});
+	useEffect(() => {
+		setFns.setActiveMountain(activeMountain);
+	}, [setFns, activeMountain]);
 
-	//TODO> 要做網址的錯誤處理
+	//TODO> 要做網址的錯誤處理(非符合條件的網址)
 
 	return (
 		<article className={`relative z-0`}>
 			<div
-				className={`relative bg-white text-t-gray-dark p-7 flex flex-col justify-between rounded-2xl z-10 shadow-lg pb-24 overflow-hidden`}
+				className={`relative bg-white text-t-gray-dark p-7 flex flex-col justify-between rounded-3xl z-10 shadow-lg pb-24 overflow-hidden`}
 			>
 				<div>
 					<Link
@@ -73,7 +83,7 @@ const MountainCard = ({ mapState }): React.Node => {
 							<span className={` ${info_sub_span_class}`}>
 								位置
 							</span>
-							<span className={`  ${info_span_class}`}>
+							<span className={`${info_span_class}`}>
 								{activeMountainInfo[0]?.location || null}
 							</span>
 						</p>
@@ -83,21 +93,11 @@ const MountainCard = ({ mapState }): React.Node => {
 					</div>
 				</div>
 			</div>
-			<div
-				className={`relative bg-t-green transform -translate-y-5 rounded-b-2xl w-full px-7 py-10 pb-12 shadow-lg`}
-			>
-				<p className={`text-white `}>
-					sdfjksh faksdjf lsdgfhj akegfak seloremsdf jkshfaksdjfl
-					sdgfhjakegfa kseygfdgsdf gdfgdflor emsdfjkshfaksd
-					jflsdgfhjakegfaks eygfdgsdfg gfdgsdf gdfgdflor
-					emsdfjkshfaksd jflsdgfhjakegfaks eygfdgsdfg gfdgsdf
-					gdfgdflor emsdfjkshfaksd jflsdgfhjakegfaks eygfdgsdfg
-					dfgdflorem sdfjkshfaks
-				</p>
-				<a href="#" className={`text-white text-xs float-right mt-3`}>
-					資料來源： 維基百科 →
-				</a>
-			</div>
+			<DetailBlock
+				mountain={activeMountain}
+				setFns={setFns}
+				mountainText={mapState.mountainDetailText}
+			/>
 		</article>
 	);
 };

@@ -14,6 +14,7 @@ const TOGGLE_BACKGROUND_SHOW = 'TOGGLE_BACKGROUND_SHOW';
 const ADD_SEARCH_TARGET = 'ADD_SEARCH_TARGET';
 const REMOVE_SEARCH_TARGET = 'REMOVE_SEARCH_TARGET';
 const SPECIFY_ACTIVE_MOUNTAIN = 'SPECIFY_ACTIVE_MOUNTAIN';
+const SUBMIT_MOUNTAIN_DETAIL = 'SUBMIT_MOUNTAIN_DETAIL';
 
 // type ActionsType =
 // 	| { type: string, command: boolean }
@@ -48,7 +49,8 @@ type ActionsType =
 	  }
 	| { type: 'ADD_SEARCH_TARGET', command: string }
 	| { type: 'REMOVE_SEARCH_TARGET', command: string }
-	| { type: 'SPECIFY_ACTIVE_MOUNTAIN', command: string };
+	| { type: 'SPECIFY_ACTIVE_MOUNTAIN', command: string }
+	| { type: 'SUBMIT_MOUNTAIN_DETAIL', command: string };
 
 // toggle navigation bar display
 export const createToggleNavBarAction = (command: boolean): ActionsType => ({
@@ -119,6 +121,12 @@ export const createActiveMountainAction = (command: string): ActionsType => ({
 	type: SPECIFY_ACTIVE_MOUNTAIN,
 	command,
 });
+export const createSubmitMountainDetailAction = (
+	command: string
+): ActionsType => ({
+	type: SUBMIT_MOUNTAIN_DETAIL,
+	command,
+});
 
 //SECTION> DATA STRUCTURE
 
@@ -181,11 +189,13 @@ const initMapState = {
 	searchInput: '',
 	searchTargets: [],
 	activeMountain: '',
+	mountainDetailText: '',
 };
 type initMapType = {
 	searchInput: string,
 	searchTargets: Array<string>,
 	activeMountain: string,
+	mountainDetailText: string,
 };
 
 //SECTION> REDUCERS
@@ -271,6 +281,10 @@ const mapStateReducer = (
 		case 'SPECIFY_ACTIVE_MOUNTAIN':
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.activeMountain = action.command;
+			return newState;
+		case 'SUBMIT_MOUNTAIN_DETAIL':
+			newState = JSON.parse(JSON.stringify(prevState));
+			newState.mountainDetailText = action.command;
 			return newState;
 		default:
 			return prevState;
