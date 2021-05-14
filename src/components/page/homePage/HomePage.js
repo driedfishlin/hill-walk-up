@@ -46,7 +46,7 @@ const mapDispatchToProps = dispatch => {
 //SECTION>
 const HomePage = function({ UIState, setFns, mapState }): React.Node {
 	return (
-		<main className="relative bg-gray-200 flex-grow">
+		<main className="relative bg-gray-200 flex-grow mt-20 z-20">
 			<Map />
 			<OverlayBackground UIState={UIState} setFns={setFns} />
 			<MessageBubble

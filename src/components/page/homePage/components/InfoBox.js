@@ -2,6 +2,8 @@
 import * as React from 'react';
 import { mapMarksList } from '../../../utilities/map/mapAPI';
 
+import MountainElement from '../../../shared/components/UIElement/MountainElement';
+
 const onRemoveButtonClick = targetName => {
 	const targetIndex = mapMarksList.findIndex(
 		item => item.title === targetName
@@ -81,24 +83,7 @@ const InfoBox = ({ UIState, setFns }: propsType): React.Node => {
 						</button>
 					</div>
 				</section>
-				<div
-					className={`w-full h-full absolute top-0 left-0 pointer-events-none`}
-				>
-					<div
-						className={`bg-t-green-light absolute bottom-0 transform rotate-45 translate-y-2/3 left-1/2 -translate-x-3/4`}
-						style={{
-							width: '100px',
-							height: '100px',
-						}}
-					></div>
-					<div
-						className={`bg-t-green absolute bottom-0 transform rotate-45 translate-y-1/2 left-1/2 -translate-x-1/4`}
-						style={{
-							width: '100px',
-							height: '100px',
-						}}
-					></div>
-				</div>
+				<MountainElement />
 			</div>
 			<div
 				className={`absolute w-0 h-0 transform -translate-x-1/2 border-t-green border-solid`}

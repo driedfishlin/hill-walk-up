@@ -6,21 +6,20 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
-import Header from './components/shared/Header';
-import HomePage from './components/page/homePage/HomePage';
 import NavBar from './components/shared/navBar/NavBar';
+import Header from './components/shared/Header';
+// import HomePage from './components/page/homePage/HomePage';
+import MountainPage from './components/page/mountainPage/MountainPage';
 
 const App = function(): React.Node {
 	return (
 		<>
 			<Provider store={store}>
-				{/* {console.log(
-					store.getState().UIState.homePage.infoBox.position
-				)} */}
 				{/* <MapProvider store={store}> */}
 				<NavBar />
 				<Header />
-				<HomePage />
+				{/* <HomePage /> */}
+				<MountainPage />
 				{/* </MapProvider> */}
 			</Provider>
 		</>

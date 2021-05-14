@@ -174,10 +174,12 @@ type userStateType = {
 const initMapState = {
 	searchInput: '',
 	searchTargets: [],
+	activeMountain: '',
 };
 type initMapType = {
 	searchInput: string,
 	searchTargets: Array<string>,
+	activeMountain: string,
 };
 
 //SECTION> REDUCERS
