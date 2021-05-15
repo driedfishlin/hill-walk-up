@@ -16,6 +16,7 @@ const OverlayBackground = ({ setFns, UIState }: propsType): React.Node => {
 					setFns.setSearchInput('');
 				}
 			}}
+			// backdrop-filter backdrop-blur-sm
 			className={`absolute top-0 left-0 w-full h-full bg-t-gray-dark bg-opacity-30 flex items-center justify-center ${
 				UIState.homePage.background.show ? 'block' : 'hidden'
 			} 

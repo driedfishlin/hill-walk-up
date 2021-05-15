@@ -17,16 +17,15 @@ const UserLoginForm = (): React.Node => {
 			<label className={labelClass}>密碼</label>
 			<input type="password" className={inputClass} />
 
+			<RegularButton customClass={'mt-4'} green>
+				登入
+			</RegularButton>
 			<RegularButton
-				text={'登入'}
-				customClass={
-					'mt-4 bg-t-gray-dark text-t-gray-light active:bg-t-green'
-				}
-			/>
-			<RegularButton
-				text={'註冊'}
-				customClass={'mt-4 text-t-gray-dark active:text-t-green'}
-			/>
+				customClass={'mt-4 active:border-t-green active:text-t-green'}
+				transparent
+			>
+				註冊
+			</RegularButton>
 		</form>
 	);
 };

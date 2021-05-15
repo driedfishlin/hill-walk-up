@@ -13,6 +13,7 @@ import NavBar from './components/shared/navBar/NavBar';
 import Header from './components/shared/Header';
 import HomePage from './components/page/homePage/HomePage';
 import MountainPage from './components/page/mountainPage/MountainPage';
+import UserPages from './components/page/userPages/UserPages';
 
 // initMap();
 
@@ -28,6 +29,9 @@ const App = function(): React.Node {
 					<Switch>
 						<Route path="/mountains/:mountain" exact>
 							<MountainPage />
+						</Route>
+						<Route path="/user">
+							<UserPages />
 						</Route>
 						<Route path="/" />
 					</Switch>

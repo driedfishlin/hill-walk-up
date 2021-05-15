@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -41,7 +42,7 @@ const Header = function(): React.Node {
 	return (
 		<header className={`fixed top-0 left-0 w-full h-20 z-10`}>
 			<div className="flex items-center h-full px-6 py-4 bg-t-gray-dark">
-				<a className="flex items-center">
+				<Link to="/" className="flex items-center">
 					<FontAwesomeIcon
 						icon={logo}
 						className="text-white text-3xl mr-3 relative top-0.5"
@@ -52,7 +53,7 @@ const Header = function(): React.Node {
 							HELL WALK UP
 						</span>
 					</h1>
-				</a>
+				</Link>
 				<ConnectedButton />
 			</div>
 		</header>

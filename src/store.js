@@ -179,7 +179,7 @@ type UIStateType = {
 };
 // 紀錄使用者個人狀態的 state
 const initUserState = {
-	isLogin: false,
+	isLogin: true,
 };
 type userStateType = {
 	isLogin: boolean,

@@ -13,18 +13,20 @@ const UserLoginEntry = ({
 			<p className="mb-6 text-t-gray-dark">請登入以使用更多功能！</p>
 			<div className="flex justify-between flex-col h-28">
 				<RegularButton
-					text="登入"
 					clickFn={() => {
 						setLoginForm(true);
 					}}
-					customClass={
-						'bg-t-gray-dark text-t-gray-light active:bg-t-green'
-					}
-				/>
+					customClass={'active:bg-t-green'}
+					black
+				>
+					登入
+				</RegularButton>
 				<RegularButton
-					text="註冊"
-					customClass={'text-t-gray-dark active:text-t-green'}
-				/>
+					transparent
+					customClass={'active:border-t-green active:text-t-green'}
+				>
+					註冊
+				</RegularButton>
 			</div>
 		</div>
 	);

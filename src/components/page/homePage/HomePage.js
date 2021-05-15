@@ -54,7 +54,7 @@ const HomePage = function({ UIState, setFns, mapState }): React.Node {
 	const isMapShouldShow = location.pathname === '/' ? true : false;
 	return (
 		<main
-			className={`relative bg-gray-200 flex-grow mt-20 z-20 ${
+			className={`relative bg-gray-200 flex-grow z-20 ${
 				isMapShouldShow ? '' : 'hidden'
 			}`}
 		>

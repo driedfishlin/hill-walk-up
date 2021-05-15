@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen as folder } from '@fortawesome/free-solid-svg-icons/faFolderOpen.js';
@@ -41,9 +42,9 @@ const NavList = ({ isFormOpen, isLoginState }: propsType): React.Node => {
 								className="text-white mr-5"
 							/>
 						</div>
-						<a href="./" className="text-white">
+						<NavLink to="/" className="text-white">
 							{item.text}
-						</a>
+						</NavLink>
 					</li>
 				);
 			})}

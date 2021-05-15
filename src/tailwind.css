@@ -4,6 +4,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap');
 
+@layer components {
+	.h2-style {
+		@apply inline-block text-xl mb-5 tracking-wide font-medium ml-1 border-t-green border-b-4 pb-0.5;
+	}
+}
+
 @layer utilities {
 	@responsive {
 		.scrolling-touch {
@@ -13,4 +19,8 @@
 			-webkit-overflow-scrolling: auto;
 		}
 	}
+}
+
+*::selection {
+	@apply text-white bg-t-green;
 }

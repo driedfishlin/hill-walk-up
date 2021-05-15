@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSubmitMountainDetailAction } from '../../../store';
 import { createActiveMountainAction } from '../../../store';
 
-import MountainCard from './component/MountainCard';
+import MountainPageCard from './component/MountainPageCard';
 
 const mapStateToProps = state => ({
 	mapState: state.mapState,
@@ -28,8 +28,8 @@ const MountainPage = ({
 	mapState: Object,
 }): React.Node => {
 	return (
-		<main className={`relative mt-20 bg-t-gray-light p-7`}>
-			<MountainCard setFns={setFns} mapState={mapState} />
+		<main className={`relative bg-t-gray-light p-7`}>
+			<MountainPageCard setFns={setFns} mapState={mapState} />
 		</main>
 	);
 };

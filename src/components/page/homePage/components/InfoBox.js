@@ -55,7 +55,7 @@ const InfoBox = ({ UIState, setFns }: propsType): React.Node => {
 						>
 							{markTargetInfo?.name || null}
 						</h3>
-						<p className={`text-sm mb-0.5`}>
+						<p className={`text-xs mb-0.5`}>
 							海拔{' '}
 							<span>{markTargetInfo?.elevation || null}</span>{' '}
 							公尺
@@ -78,7 +78,13 @@ const InfoBox = ({ UIState, setFns }: propsType): React.Node => {
 						>
 							移除座標
 						</button>
-						<Link to={`/mountains/${markTargetInfo?.name || null}`}>
+						<Link
+							to={{
+								pathname: `/mountains/${markTargetInfo?.name ||
+									null}`,
+								state: { from: '/' },
+							}}
+						>
 							<button
 								onClick={() => {
 									setFns.setInfoBox(false);
