@@ -47,7 +47,7 @@ const EditRecordForm = (): React.Node => {
 					green
 					onClick={event => event.preventDefault()}
 				>
-					完成
+					完成送出
 				</RegularButton>
 				<div className={`flex`}>
 					<RegularButton

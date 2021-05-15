@@ -180,9 +180,11 @@ type UIStateType = {
 // 紀錄使用者個人狀態的 state
 const initUserState = {
 	isLogin: true,
+	user: {},
 };
 type userStateType = {
 	isLogin: boolean,
+	user: Object,
 };
 // 紀錄地圖與公開資料
 const initMapState = {

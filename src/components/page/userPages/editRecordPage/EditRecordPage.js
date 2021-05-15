@@ -15,7 +15,7 @@ const NewRecordPage = ({ mapState }: propsType): React.Node => {
 		item => item.name === aaaaaaaa
 	);
 	return (
-		<div className={`p-7 text-t-gray-dark`}>
+		<div className={`p-7 text-t-gray-dark z-0`}>
 			<h2 className={`h2-style mb-7`}>新增 / 編輯紀錄</h2>
 			<MountainCard
 				name={mountain.name}

@@ -32,7 +32,7 @@ const MountainCard = ({
 	const Location = useLocation();
 	// console.log(Location);
 	return (
-		<section className={`relative z-0`}>
+		<section className={`relative z-10`}>
 			<div
 				className={`relative bg-white text-t-gray-dark p-7 flex flex-col justify-between rounded-3xl z-10 shadow-lg pb-24 overflow-hidden`}
 			>
@@ -84,6 +84,7 @@ const MountainCard = ({
 							</span>
 						</p>
 					</div>
+
 					<div>
 						<MountainElement />
 					</div>
