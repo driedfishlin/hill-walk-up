@@ -19,6 +19,7 @@ type propsType = {
 		isOpen: boolean,
 	},
 	setLoginForm: Function,
+	setLogOut: Function,
 };
 
 //SECTION> REACT COMPONENT
@@ -27,6 +28,7 @@ const NavBarHeader = ({
 	isLoginState,
 	NavBarState,
 	setLoginForm,
+	setLogOut,
 }: propsType): React.Node => {
 	return (
 		<div className="flex items-center justify-between mb-8">
@@ -49,7 +51,9 @@ const NavBarHeader = ({
 				) : null}
 
 				{isLoginState ? (
-					<button className={buttonClass}>登出</button>
+					<button onClick={() => setLogOut()} className={buttonClass}>
+						登出
+					</button>
 				) : null}
 			</div>
 		</div>

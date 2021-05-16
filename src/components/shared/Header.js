@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { createToggleNavBarAction } from '../../store';
 
+import { headerHeight } from '../../index';
+
 import { faMountain as logo } from '@fortawesome/free-solid-svg-icons/faMountain';
 
 //SECTION>
@@ -40,7 +42,7 @@ const ConnectedButton = connect(null, mapDispatchToProps)(Button);
 
 const Header = function(): React.Node {
 	return (
-		<header className={`fixed top-0 left-0 w-full h-20 z-10`}>
+		<header className={`fixed top-0 left-0 w-full z-10 ${headerHeight[1]}`}>
 			<div className="flex items-center h-full px-6 py-4 bg-t-gray-dark">
 				<Link to="/" className="flex items-center">
 					<FontAwesomeIcon

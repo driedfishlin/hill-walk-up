@@ -15,6 +15,8 @@ const ADD_SEARCH_TARGET = 'ADD_SEARCH_TARGET';
 const REMOVE_SEARCH_TARGET = 'REMOVE_SEARCH_TARGET';
 const SPECIFY_ACTIVE_MOUNTAIN = 'SPECIFY_ACTIVE_MOUNTAIN';
 const SUBMIT_MOUNTAIN_DETAIL = 'SUBMIT_MOUNTAIN_DETAIL';
+const USER_LOGOUT = 'USER_LOGOUT';
+const CREATE_NEW_RECORD = 'CREATE_NEW_RECORD';
 
 // type ActionsType =
 // 	| { type: string, command: boolean }
@@ -50,7 +52,19 @@ type ActionsType =
 	| { type: 'ADD_SEARCH_TARGET', command: string }
 	| { type: 'REMOVE_SEARCH_TARGET', command: string }
 	| { type: 'SPECIFY_ACTIVE_MOUNTAIN', command: string }
-	| { type: 'SUBMIT_MOUNTAIN_DETAIL', command: string };
+	| { type: 'SUBMIT_MOUNTAIN_DETAIL', command: string }
+	| { type: 'USER_LOGOUT' }
+	| {
+			type: 'CREATE_NEW_RECORD',
+			data: {
+				title: string,
+				startDate: number,
+				endDate: number,
+				finish: boolean,
+				id: string,
+				text: string,
+			},
+	  };
 
 // toggle navigation bar display
 export const createToggleNavBarAction = (command: boolean): ActionsType => ({
@@ -127,6 +141,13 @@ export const createSubmitMountainDetailAction = (
 	type: SUBMIT_MOUNTAIN_DETAIL,
 	command,
 });
+export const createUserLogoutAction = (): ActionsType => ({
+	type: USER_LOGOUT,
+});
+export const createNewRecordAction = (data: Object): ActionsType => ({
+	type: CREATE_NEW_RECORD,
+	data,
+});
 
 //SECTION> DATA STRUCTURE
 
@@ -180,11 +201,70 @@ type UIStateType = {
 // 紀錄使用者個人狀態的 state
 const initUserState = {
 	isLogin: true,
-	user: {},
+	// userTryOut: true,
+	loginFormInput: {
+		email: '',
+		password: '',
+	},
+	user: {
+		name: '王小明',
+		avatar: 'cat',
+		email: 'ggg@ggg.com',
+		// 最後要用 hash
+		password: '12345',
+		id: 'gg',
+		nickName: '小明',
+		signUpTime: 0,
+		// 非必要 - 資料處理上應該會變麻煩，還是提供好了
+		tables: {
+			records: [],
+			favorites: new Set([]),
+		},
+	},
+	// user: {
+	// 	name: '',
+	// 	avatar: '',
+	// 	email: '',
+	// 	// 最後要用 hash
+	// 	password: '',
+	// 	id: '',
+	// 	nickName: '',
+	// 	signUpTime: 0,
+	// 	// 非必要
+	// 	tables: {
+	// 		records: null,
+	// 		favorites: null,
+	// 	},
+	// },
 };
 type userStateType = {
 	isLogin: boolean,
-	user: Object,
+	loginFormInput: {
+		email: string,
+		password: string,
+	},
+	user?: {
+		userTryOut?: Boolean,
+		name: string,
+		avatar: string,
+		email: string,
+		password: string,
+		id: string,
+		nickName: string,
+		signUpTime: number,
+		tables: {
+			records: Array<{
+				location: string,
+				title: string,
+				startDate: string,
+				endDate: string,
+				finish: boolean,
+				id: string,
+				text: string,
+			}>,
+			favorites: Set<string>,
+		},
+	},
 };
 // 紀錄地圖與公開資料
 const initMapState = {
@@ -251,9 +331,19 @@ const userStateReducer = (
 	prevState: userStateType = initUserState,
 	action: ActionsType
 ) => {
+	console.log(prevState.user);
+	let newState = null;
 	switch (action.type) {
-		case 'TOGGLE_IS_LOGIN':
-			return { ...prevState, isLogin: action.command };
+		// case 'TOGGLE_IS_LOGIN':
+		// 	return { ...prevState, isLogin: action.command };
+		case 'USER_LOGOUT':
+			return { ...prevState, isLogin: false, user: {} };
+		case 'CREATE_NEW_RECORD':
+			newState = JSON.parse(JSON.stringify(prevState));
+			// 未實作資料完整性與安全性檢查
+			newState.user.tables.records.push(action.data);
+			console.log(newState.user.tables.records);
+			return newState;
 		default:
 			return prevState;
 	}

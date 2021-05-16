@@ -51,8 +51,10 @@ const RecordPage = ({ mapState }: propsType): React.Node => {
 						</p>
 						<Link
 							to={{
-								pathname: `/user/:id/edit`,
-								state: { from: `/user/:id/list/:file_id` },
+								pathname: `/user/:user_id/records/:file_id/edit`,
+								state: {
+									from: `/user/:user_id/records/:file_id`,
+								},
 							}}
 						>
 							<FontAwesomeIcon

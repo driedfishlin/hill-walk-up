@@ -4,6 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { createToggleNavBarAction } from '../../../store';
 import { createToggleLoginFormShowAction } from '../../../store';
+import { createUserLogoutAction } from '../../../store';
 
 import Background from './components/Background';
 import NavBarHeader from './components/NavBarHeader';
@@ -11,22 +12,27 @@ import UserLoginBlock from './components/UserLoginBlock';
 import UserCard from './components/UserCard';
 import NavList from './components/NavList';
 
+import { headerHeight } from '../../../index';
+
 //SECTION>
 
 const mapStateToProps = state => {
 	return {
 		NavBarState: state.UIState.navBar,
-		isLoginState: state.userState.isLogin,
+		userState: state.userState,
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setNavBar: command => {
-			dispatch(createToggleNavBarAction(command));
-		},
-		setLoginForm: command => {
-			dispatch(createToggleLoginFormShowAction(command));
+		setFns: {
+			setNavBar: command => {
+				dispatch(createToggleNavBarAction(command));
+			},
+			setLoginForm: command => {
+				dispatch(createToggleLoginFormShowAction(command));
+			},
+			setLogOut: () => dispatch(createUserLogoutAction()),
 		},
 	};
 };
@@ -38,49 +44,49 @@ type propsType = {
 		isOpen: boolean,
 		isFormOpen: boolean,
 	},
+	userState: Object,
+	setFns: Object,
 	setNavBar: Function,
-	isLoginState: boolean,
 	setLoginForm: Function,
 };
 
-const NavBar = function({
-	NavBarState,
-	setNavBar,
-	isLoginState,
-	setLoginForm,
-}: propsType) {
+const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 	return (
-		<div className="z-40">
+		// <div className="z-40">
+		<>
 			<Background NavBarState={NavBarState} />
 			<nav
-				className={`absolute right-0 h-full w-80 bg-t-gray-light  flex flex-col shadow-2xl ${
+				className={`absolute right-0 h-full w-80 bg-t-gray-light  flex flex-col shadow-2xl z-40 transform ${
 					NavBarState.isOpen
-						? 'transform translate-x-0'
-						: 'transform translate-x-full'
+						? `transform translate-x-0  ${headerHeight[3]}`
+						: `transform translate-x-full  ${headerHeight[3]}`
 				} transition-transform`}
 			>
 				<div className="p-8">
 					<NavBarHeader
-						isLoginState={isLoginState}
+						isLoginState={userState.isLogin}
 						NavBarState={NavBarState}
-						setNavBar={setNavBar}
-						setLoginForm={setLoginForm}
+						setNavBar={setFns.setNavBar}
+						setLoginForm={setFns.setLoginForm}
+						setLogOut={setFns.setLogOut}
 					/>
-					{isLoginState ? (
-						<UserCard />
+					{userState.isLogin ? (
+						<UserCard userState={userState} />
 					) : (
 						<UserLoginBlock
 							NavBarState={NavBarState}
-							setLoginForm={setLoginForm}
+							setLoginForm={setFns.setLoginForm}
 						/>
 					)}
 				</div>
 				<NavList
 					isFormOpen={NavBarState.isFormOpen}
-					isLoginState={isLoginState}
+					isLoginState={userState.isLogin}
+					setNavBar={setFns.setNavBar}
 				/>
 			</nav>
-		</div>
+		</>
+		// </div>
 	);
 };
 

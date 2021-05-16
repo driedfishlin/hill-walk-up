@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 // import { MapProvider } from './components/utilities/map/mapAPI';
@@ -27,13 +27,15 @@ const App = function(): React.Node {
 					<Header />
 					<HomePage />
 					<Switch>
+						<Route path="/" exact />
 						<Route path="/mountains/:mountain" exact>
 							<MountainPage />
 						</Route>
 						<Route path="/user">
 							<UserPages />
 						</Route>
-						<Route path="/" />
+						<Route path="/about" exact />
+						<Redirect to="/" />
 					</Switch>
 				</BrowserRouter>
 				{/* </MapProvider> */}

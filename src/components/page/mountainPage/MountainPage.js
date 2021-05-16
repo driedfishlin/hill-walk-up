@@ -11,6 +11,7 @@ import TaiwanPeaksList from '../../utilities/data/100_peaks_of_taiwan';
 
 import MountainPageCard from './component/MountainPageCard';
 import IconArea from './component/IconArea';
+import ErrorPage from '../../shared/components/ErrorPage';
 
 const mapStateToProps = state => ({
 	mapState: state.mapState,
@@ -36,8 +37,8 @@ const MountainPage = ({
 	userState: Object,
 }): React.Node => {
 	const params = useParams();
-	const activeMountain: string = params.mountain;
-	// console.log(activeMountain);
+	const activeMountain: string | null | void = params.mountain;
+
 	const activeMountainInfo = TaiwanPeaksList.filter(item => {
 		return item.name === activeMountain;
 	});
@@ -45,18 +46,29 @@ const MountainPage = ({
 		setFns.setActiveMountain(activeMountain);
 	}, [setFns, activeMountain]);
 
-	//TODO> 要做網址的錯誤處理(非符合條件的網址)
+	if (activeMountainInfo[0])
+		return (
+			<main className={`relative bg-t-gray-light p-7`}>
+				<MountainPageCard
+					setFns={setFns}
+					mapState={mapState}
+					activeMountainInfo={activeMountainInfo[0]}
+				/>
+				{userState.isLogin ? (
+					<IconArea
+						setActiveMountain={setFns.setActiveMountain}
+						activeMountainInfo={activeMountainInfo[0]}
+					/>
+				) : null}
+			</main>
+		);
 	return (
-		<main className={`relative bg-t-gray-light p-7`}>
-			<MountainPageCard
-				setFns={setFns}
-				mapState={mapState}
-				activeMountainInfo={activeMountainInfo[0]}
-			/>
-			{userState.isLogin ? (
-				<IconArea activeMountainInfo={activeMountainInfo[0]} />
-			) : null}
-		</main>
+		<ErrorPage
+			text={'找不到對應的結果！'}
+			statusCode={404}
+			anchor={`去逛逛地圖`}
+			link="/"
+		/>
 	);
 };
 

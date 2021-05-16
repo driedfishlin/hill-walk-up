@@ -11,8 +11,10 @@ const iconStyle = `my-2 mx-1.5`;
 
 const IconArea = ({
 	activeMountainInfo,
+	setActiveMountain,
 }: {
 	activeMountainInfo: Object,
+	setActiveMountain: Function,
 }): React.Node => {
 	return (
 		<div
@@ -33,12 +35,16 @@ const IconArea = ({
 			</button>
 			<Link
 				to={{
-					pathname: '/user/:id/new',
-					state: { from: `/mountains/${activeMountainInfo.name}` },
+					pathname: '/user/:user_id/records/new',
+					state: {
+						from: `/mountains/${activeMountainInfo.name}`,
+						action: 'new',
+					},
 				}}
-				onClick={() =>
-					document.querySelector('body')?.scrollTo({ top: 0 })
-				}
+				onClick={() => {
+					setActiveMountain(activeMountainInfo.name);
+					document.querySelector('body')?.scrollTo({ top: 0 });
+				}}
 				title="撰寫新紀錄"
 				className={`w-10 h-10 hover:text-t-gray-dark`}
 			>

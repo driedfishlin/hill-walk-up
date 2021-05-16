@@ -5,23 +5,38 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen as folder } from '@fortawesome/free-solid-svg-icons/faFolderOpen.js';
 import { faFileAlt as file } from '@fortawesome/free-solid-svg-icons/faFileAlt';
-import { faFileSignature as write } from '@fortawesome/free-solid-svg-icons/faFileSignature';
+// import { faFileSignature as write } from '@fortawesome/free-solid-svg-icons/faFileSignature';
 import { faAddressCard as about } from '@fortawesome/free-solid-svg-icons/faAddressCard';
 
 const list = [
-	{ text: '地圖', icon: file, private: false },
-	{ text: '口袋名單', icon: folder, private: true },
-	{ text: '我的筆記', icon: file, private: true },
-	{ text: '新增筆記', icon: write, private: true },
-	{ text: '關於走走', icon: about, private: false },
+	{ text: '地圖', icon: file, private: false, link: '/' },
+	{
+		text: '口袋名單',
+		icon: folder,
+		private: true,
+		link: '/user/:user_id/list',
+	},
+	{
+		text: '我的筆記',
+		icon: file,
+		private: true,
+		link: '/user/:user_id/records',
+	},
+	// { text: '新增筆記', icon: write, private: true, link:'/'  },
+	{ text: '關於走走', icon: about, private: false, link: '/about' },
 ];
 
 type propsType = {
 	isFormOpen: boolean,
 	isLoginState: boolean,
+	setNavBar: Function,
 };
 
-const NavList = ({ isFormOpen, isLoginState }: propsType): React.Node => {
+const NavList = ({
+	isFormOpen,
+	isLoginState,
+	setNavBar,
+}: propsType): React.Node => {
 	return (
 		<ul
 			className={`bg-t-green flex-grow flex flex-col p-8 overflow-y-auto relative  ${
@@ -42,7 +57,11 @@ const NavList = ({ isFormOpen, isLoginState }: propsType): React.Node => {
 								className="text-white mr-5"
 							/>
 						</div>
-						<NavLink to="/" className="text-white">
+						<NavLink
+							onClick={() => setNavBar(false)}
+							to={item.link}
+							className="text-white"
+						>
 							{item.text}
 						</NavLink>
 					</li>
