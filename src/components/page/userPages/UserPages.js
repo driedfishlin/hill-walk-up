@@ -10,6 +10,7 @@ import RecordsPage from './recordPage/RecordsPage';
 
 import { createNewRecordAction } from './../../../store';
 import { createActiveMountainAction } from './../../../store';
+import { createUpdateRecordAction } from './../../../store';
 
 const mapStateToProps = state => ({
 	mapState: state.mapState,
@@ -22,6 +23,8 @@ const mapDispatchToProps = dispatch => ({
 		setNewRecord: (data: Object) => dispatch(createNewRecordAction(data)),
 		setActiveMountain: (command: string) =>
 			dispatch(createActiveMountainAction(command)),
+		setUpdateRecord: (data, id) =>
+			dispatch(createUpdateRecordAction(data, id)),
 	},
 });
 
@@ -43,16 +46,24 @@ const UserPages = ({ userState, mapState, setFns }: propsType): React.Node => {
 					<ListPages />
 				</Route>
 				<Route path="/user/:user_id/records" exact>
-					<RecordsPage />
+					<RecordsPage userState={userState} />
 				</Route>
 				<Route path="/user/:user_id/records/new" exact>
-					<EditRecordPage mapState={mapState} setFns={setFns} />
+					<EditRecordPage
+						mapState={mapState}
+						setFns={setFns}
+						userState={userState}
+					/>
 				</Route>
 				<Route path="/user/:user_id/records/:file_id" exact>
-					<RecordPage mapState={mapState} />
+					<RecordPage mapState={mapState} userState={userState} />
 				</Route>
 				<Route path="/user/:user_id/records/:file_id/edit" exact>
-					<EditRecordPage mapState={mapState} setFns={setFns} />
+					<EditRecordPage
+						mapState={mapState}
+						setFns={setFns}
+						userState={userState}
+					/>
 				</Route>
 			</Switch>
 		</>

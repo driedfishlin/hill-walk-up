@@ -9,7 +9,7 @@ import { faChevronCircleRight as arrow } from '@fortawesome/free-solid-svg-icons
 type propsType = {
 	text: string,
 	anchor?: string,
-	link?: string,
+	link?: string | void,
 	statusCode?: number,
 };
 
@@ -35,7 +35,7 @@ const ErrorPage = ({
 			</div>
 			{(anchor || link) && (
 				<Link
-					to={link}
+					to={link || '/'}
 					className={`text-sm text-t-gray-normal ${
 						statusCode ? 'mt-5' : 'mt-10'
 					}`}

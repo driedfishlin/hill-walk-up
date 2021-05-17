@@ -38,6 +38,7 @@ const IconArea = ({
 					pathname: '/user/:user_id/records/new',
 					state: {
 						from: `/mountains/${activeMountainInfo.name}`,
+						location: activeMountainInfo.name,
 						action: 'new',
 					},
 				}}

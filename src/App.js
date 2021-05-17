@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 // import { MapProvider } from './components/utilities/map/mapAPI';
 
-// import { initMap } from './components/utilities/map/mapAPI';
+import { initMap } from './components/utilities/map/mapAPI';
 
 import store from './store';
 
@@ -15,7 +15,7 @@ import HomePage from './components/page/homePage/HomePage';
 import MountainPage from './components/page/mountainPage/MountainPage';
 import UserPages from './components/page/userPages/UserPages';
 
-// initMap();
+initMap();
 
 const App = function(): React.Node {
 	return (

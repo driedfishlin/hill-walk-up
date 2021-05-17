@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import MountainElement from '../../../shared/components/UIElement/MountainElement';
@@ -27,10 +27,10 @@ const MountainCard = ({
 	coordinate: { lat: number, lng: number },
 	location: string,
 	link?: string,
-	anchor?: string,
+	anchor?: string | void | null,
 }): React.Node => {
 	const Location = useLocation();
-	// console.log(Location);
+	const history = useHistory();
 	return (
 		<section className={`relative z-10`}>
 			<div
@@ -38,12 +38,22 @@ const MountainCard = ({
 			>
 				{anchor ? (
 					<div>
-						<Link
-							to={Location.state?.from || link || '/'}
-							className={`text-t-gray-dark opacity-70 py-0.5 pl-1 rounded-md text-xs float-right mb-3`}
-						>
-							{anchor} <FontAwesomeIcon icon={arrow} />
-						</Link>
+						{link === 'back' ? (
+							<button
+								onClick={() => history.go(-1)}
+								className={`text-t-gray-dark opacity-70 py-0.5 pl-1 rounded-md text-xs float-right mb-3 focus:outline-none`}
+							>
+								{anchor} <FontAwesomeIcon icon={arrow} />
+							</button>
+						) : (
+							<Link
+								to={link || '/'}
+								// to={Location.state?.from || link || '/'}
+								className={`text-t-gray-dark opacity-70 py-0.5 pl-1 rounded-md text-xs float-right mb-3`}
+							>
+								{anchor} <FontAwesomeIcon icon={arrow} />
+							</Link>
+						)}
 					</div>
 				) : null}
 

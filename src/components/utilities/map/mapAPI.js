@@ -155,6 +155,7 @@ export const createMapMark = (item: createMapMarkTypes): Object => {
 	if (GOOGLE_MAP.map === null) return console.log('無法取得地圖資料');
 	if (setIcon === null) return console.log('圖標設定錯誤');
 	// 如果已經有該地點，不建立新地標
+	console.log(store.getState());
 	if (store.getState().mapState.searchTargets.includes(item.name)) return;
 	store.dispatch(createAddSearchTargetAction(item.name));
 	const mark = new window.google.maps.Marker({

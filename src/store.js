@@ -17,6 +17,7 @@ const SPECIFY_ACTIVE_MOUNTAIN = 'SPECIFY_ACTIVE_MOUNTAIN';
 const SUBMIT_MOUNTAIN_DETAIL = 'SUBMIT_MOUNTAIN_DETAIL';
 const USER_LOGOUT = 'USER_LOGOUT';
 const CREATE_NEW_RECORD = 'CREATE_NEW_RECORD';
+const UPDATE_RECORD = 'UPDATE_RECORD';
 
 // type ActionsType =
 // 	| { type: string, command: boolean }
@@ -64,6 +65,17 @@ type ActionsType =
 				id: string,
 				text: string,
 			},
+	  }
+	| {
+			type: 'UPDATE_RECORD',
+			data: {
+				title: string,
+				startDate: number,
+				endDate: number,
+				finish: boolean,
+				text: string,
+			},
+			id: string,
 	  };
 
 // toggle navigation bar display
@@ -148,6 +160,14 @@ export const createNewRecordAction = (data: Object): ActionsType => ({
 	type: CREATE_NEW_RECORD,
 	data,
 });
+export const createUpdateRecordAction = (
+	data: Object,
+	id: string
+): ActionsType => ({
+	type: UPDATE_RECORD,
+	data,
+	id,
+});
 
 //SECTION> DATA STRUCTURE
 
@@ -209,6 +229,7 @@ const initUserState = {
 	user: {
 		name: '王小明',
 		avatar: 'cat',
+		// 考慮改為帳號以便作為辨識符
 		email: 'ggg@ggg.com',
 		// 最後要用 hash
 		password: '12345',
@@ -217,8 +238,30 @@ const initUserState = {
 		signUpTime: 0,
 		// 非必要 - 資料處理上應該會變麻煩，還是提供好了
 		tables: {
-			records: [],
-			favorites: new Set([]),
+			records: [
+				{
+					location: '玉山',
+					title: '我是標題',
+					startDate: '2020-01-01',
+					endDate: '2020-01-01',
+					finish: true,
+					id: '0dsd543fa',
+					text:
+						'這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容',
+				},
+				{
+					location: '雪山',
+					title:
+						'我是標題我是標題我是標題我是標題我是標題我是標題我是標題',
+					startDate: '2020-01-01',
+					endDate: '2020-01-01',
+					finish: true,
+					id: 'erewqrqw3',
+					text:
+						'這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容',
+				},
+			],
+			favorites: [],
 		},
 	},
 	// user: {
@@ -262,7 +305,7 @@ type userStateType = {
 				id: string,
 				text: string,
 			}>,
-			favorites: Set<string>,
+			favorites: Array<string>,
 		},
 	},
 };
@@ -344,6 +387,19 @@ const userStateReducer = (
 			newState.user.tables.records.push(action.data);
 			console.log(newState.user.tables.records);
 			return newState;
+		case 'UPDATE_RECORD':
+			newState = JSON.parse(JSON.stringify(prevState));
+			{
+				const record = newState.user.tables.records.find(
+					item => item.id === action.id
+				);
+				for (const item in action.data) {
+					record[item] = action.data[item];
+				}
+			}
+			console.log(newState.user.tables.records);
+			return newState;
+
 		default:
 			return prevState;
 	}
@@ -392,4 +448,4 @@ const reducers = combineReducers({
 //SECTION> STORE
 const store: Object = createStore(reducers);
 export default store;
-window.STORE = store;
+// window.STORE = store;

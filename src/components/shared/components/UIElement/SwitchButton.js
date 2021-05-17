@@ -5,14 +5,14 @@ const SwitchButton = ({
 	right,
 	wrong,
 	customClass,
-	accessState,
+	finishState,
 }: {
 	wrong: string,
 	right: string,
 	customClass?: string,
-	accessState: [boolean, Function],
+	finishState: [boolean, Function],
 }): React.Node => {
-	const [state, setState] = accessState;
+	const [state, setState] = finishState;
 	return (
 		<div
 			onClick={() => setState(preState => !preState)}
