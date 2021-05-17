@@ -41,6 +41,14 @@ const onDateInputChange = (event, preState) => {
 };
 
 //SECTION> Component
+type oldRecordType = {
+	title: string,
+	startDate: string,
+	endDate: string,
+	text: string,
+	finish: boolean,
+	id?: string,
+};
 const EditRecordForm = ({
 	action,
 	setFns,
@@ -50,16 +58,17 @@ const EditRecordForm = ({
 	action: string,
 	setFns: Object,
 	targetMountain: string,
-	oldRecord?: {
-		title: string,
-		startDate: string,
-		endDate: string,
-		text: string,
-		finish: boolean,
-	},
+	// null 傳進來會 crash ↓
+	oldRecord?: oldRecordType | {} | null,
 }): React.Node => {
 	const { setNewRecord, setUpdateRecord } = setFns;
-	const { title, startDate, endDate, text, finish } = oldRecord;
+	const {
+		title,
+		startDate,
+		endDate,
+		text,
+		finish,
+	}: oldRecordType = oldRecord;
 	const [finishState, setFinishState] = useState(
 		action === 'edit' ? finish || false : false
 	);

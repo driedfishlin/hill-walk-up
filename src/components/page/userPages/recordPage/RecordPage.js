@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import MountainCard from '../../../shared/components/UIElement/MountainCard';
@@ -14,9 +14,6 @@ import { faEdit as editIcon } from '@fortawesome/free-regular-svg-icons/faEdit.j
 //SECTION> Component
 type propsType = { mapState: Object, userState: Object };
 const RecordPage = ({ mapState, userState }: propsType): React.Node => {
-	const routerFrom = useLocation().state?.from;
-	// console.log('routerFrom: ', routerFrom);
-
 	const recordId = useParams().file_id;
 	// console.log('recordId', recordId);
 	if (!recordId)
@@ -93,7 +90,7 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 							onClick={() =>
 								document
 									.querySelector('body')
-									.scrollTo({ top: 0 })
+									?.scrollTo({ top: 0 })
 							}
 							to={{
 								pathname: `/user/:user_id/records/${recordId}/edit`,

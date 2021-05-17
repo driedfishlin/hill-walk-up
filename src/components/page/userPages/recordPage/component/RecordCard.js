@@ -9,7 +9,7 @@ const RecordCard = ({ record }: { record: Object }): React.Node => {
 	return (
 		<Link
 			to={`/user/:user_id/records/${record.id}`}
-			onClick={() => document.querySelector('body').scrollTo({ top: 0 })}
+			onClick={() => document.querySelector('body')?.scrollTo({ top: 0 })}
 			className={`block bg-white rounded-xl shadow-md mt-7 mx-0.5  tracking-wide overflow-hidden`}
 		>
 			<div className={`bg-t-green text-white  p-5 `}>

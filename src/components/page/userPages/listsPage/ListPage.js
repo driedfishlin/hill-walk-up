@@ -20,7 +20,7 @@ const ListPages = (): React.Node => {
 				<SwitchButton
 					right={`目前紀錄`}
 					wrong={`口袋清單`}
-					accessState={[switchListState, setSwitchState]}
+					finishState={[switchListState, setSwitchState]}
 					customClass={`transform translate-y-1`}
 				/>
 			</div>

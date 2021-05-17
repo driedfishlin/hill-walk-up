@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import TaiwanPeaksList from '../../../utilities/data/100_peaks_of_taiwan';
@@ -17,12 +16,11 @@ const NewRecordPage = ({
 	userState,
 }: propsType): React.Node => {
 	const location = useLocation();
-	console.log(location);
+	// console.log(location);
 	// get action from path（'new' or 'edit'）
 	const action = location.pathname.split('/').pop();
-	console.log(action);
+	// console.log(action);
 
-	// ＥＤＩＴ >
 	const prams = useParams();
 	const recordId = prams.file_id;
 	console.log(recordId);
@@ -33,9 +31,7 @@ const NewRecordPage = ({
 		console.log(records);
 		if (records) record = records.find(item => item.id === recordId);
 	}
-	//TODO> if(!record) ...
-	console.log(record?.location);
-	console.log(location.state?.location);
+
 	const targetMountain = TaiwanPeaksList.find(
 		item => item.name === (record?.location || location.state?.location)
 	);
@@ -65,38 +61,6 @@ const NewRecordPage = ({
 			</div>
 		);
 
-	// //
-	// // 下面的行為應該也可以改由路由來做
-	// const prevPageAction = useLocation().state?.action;
-	// const [mountain] = TaiwanPeaksList.filter(
-	// 	item => item.name === mapState.activeMountain
-	// );
-	// useEffect(() => {
-	// 	// 設定這個狀態的必要性？
-	// 	mountain?.name && setFns.setActiveMountain(mountain?.name);
-	// }, [mountain?.name, setFns]);
-
-	// if (mountain?.name)
-	// 	return (
-	// 		<div className={`p-7 text-t-gray-dark z-0`}>
-	// 			<h2 className={`h2-style mb-7`}>
-	// 				{prevPageAction === 'new' && '新增'}
-	// 				{prevPageAction === 'edit' && '編輯'}紀錄
-	// 			</h2>
-	// 			<MountainCard
-	// 				name={mountain?.name}
-	// 				elevation={mountain?.elevation}
-	// 				coordinate={mountain?.coordinate}
-	// 				location={mountain?.location}
-	// 				anchor={'回上一頁'}
-	// 			/>
-	// 			<EditRecordForm
-	// 				setFns={setFns}
-	// 				prevPageAction={prevPageAction}
-	// 				mountainNameFromLink={mountain?.name}
-	// 			/>
-	// 		</div>
-	// 	);
 	if (action === 'new') {
 		return (
 			<ErrorPage text={'未選擇地點！'} anchor={`去逛逛地圖`} link="/" />

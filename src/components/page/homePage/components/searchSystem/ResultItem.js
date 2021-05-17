@@ -20,7 +20,7 @@ const onItemClick = (event, setFns) => {
 		createMapMark(searchResult);
 
 		let openInfoBoxDelay = 1600;
-		switch (GOOGLE_MAP.map.getZoom()) {
+		switch (GOOGLE_MAP.map?.getZoom()) {
 			case 8:
 				openInfoBoxDelay = 1600;
 				break;
