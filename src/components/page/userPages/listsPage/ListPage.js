@@ -4,14 +4,13 @@ import { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook as bookIcon } from '@fortawesome/free-solid-svg-icons/faBook.js';
-// import { faBookmark as hollowMarkIcon } from '@fortawesome/free-solid-svg-icons/faBookmark.js';
 import { faBookmark as solidMarkIcon } from '@fortawesome/free-solid-svg-icons/faBookmark.js';
 
 import ListItem from './component/ListItem';
 import SwitchButton from '../../../shared/components/UIElement/SwitchButton';
 import YearsLine from './component/YearsLine';
 
-//SECTION>
+//SECTION> Function
 // 將 records 資料按時間倒序排列，並於畫面上以年份分區渲染多個 <ul>
 const createRecordsList = arr => {
 	const sorted = arr.sort(
@@ -58,16 +57,16 @@ const createRecordsList = arr => {
 	return result;
 };
 
-//SECTION>
-type propsType = { userState: Object };
+//SECTION> Component
+type propsType = { userState: Object, setFns: Object };
 
-const ListPages = ({ userState }: propsType): React.Node => {
-	const [switchListState, setSwitchState] = useState(true);
+const ListPages = ({ userState, setFns }: propsType): React.Node => {
+	const [switchListState, setSwitchState] = useState(false);
 	const tables = userState.user.tables;
 	return (
 		<div className={`p-7`}>
 			<div className={`flex justify-between`}>
-				<h2 className={`h2-style`}>我的筆記</h2>
+				<h2 className={`h2-style text-t-gray-dark`}>我的筆記</h2>
 				<SwitchButton
 					right={`目前紀錄`}
 					wrong={`口袋清單`}
@@ -75,34 +74,28 @@ const ListPages = ({ userState }: propsType): React.Node => {
 					customClass={`transform translate-y-1`}
 				/>
 			</div>
-			<div className={`${switchListState ? 'block' : 'hidden'}`}>
+			<div
+				className={`${
+					switchListState ? 'block' : 'hidden'
+				}  text-t-gray-dark`}
+			>
 				<div className={`flex items-center ml-1`}>
 					<FontAwesomeIcon
 						icon={bookIcon}
-						className={`text-xl relative -top-0.5 mr-1`}
+						className={`text-xl relative -top-0.5 mr-1 `}
 					/>
 					<h3 className={`text-md font-medium mb-4 ml-1 mt-3`}>
 						目前紀錄
 					</h3>
 				</div>
-				{/* <YearsLine /> */}
-				{/* <ul className={`bg-white rounded-lg overflow-hidden`}> */}
-				{/* //TODO> link, years */}
-				{/* {tables.records.map(item => (
-						<ListItem
-							type={'record'}
-							key={item.id}
-							location={item.location}
-							start={item.startDate}
-							end={item.endDate}
-							id={item.id}
-						/>
-					))} */}
 				{createRecordsList(tables.records)}
-				{/* </ul> */}
 			</div>
 			{/**/}
-			<div className={`${switchListState ? 'hidden' : 'block'}`}>
+			<div
+				className={`${
+					switchListState ? 'hidden' : 'block'
+				}  text-t-gray-dark`}
+			>
 				<div className={`flex items-center ml-1`}>
 					<FontAwesomeIcon
 						icon={solidMarkIcon}
@@ -113,7 +106,14 @@ const ListPages = ({ userState }: propsType): React.Node => {
 					</h3>
 				</div>
 				<ul className={`bg-white rounded-lg overflow-hidden`}>
-					<ListItem type={'favorite'} />
+					{tables.favorites.map(item => (
+						<ListItem
+							setFns={setFns}
+							key={item}
+							location={item}
+							type={'favorite'}
+						/>
+					))}
 				</ul>
 			</div>
 		</div>

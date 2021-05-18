@@ -18,18 +18,8 @@ const SUBMIT_MOUNTAIN_DETAIL = 'SUBMIT_MOUNTAIN_DETAIL';
 const USER_LOGOUT = 'USER_LOGOUT';
 const CREATE_NEW_RECORD = 'CREATE_NEW_RECORD';
 const UPDATE_RECORD = 'UPDATE_RECORD';
-
-// type ActionsType =
-// 	| { type: string, command: boolean }
-// 	| { type: 'SEARCH_INPUT_CHANGE', command: string }
-// 	| {
-// 			type: 'TOGGLE_INFO_BOX_SHOW',
-// 			position: {
-// 				x: number,
-// 				y: number,
-// 			},
-// 			command: boolean,
-// 	  };
+const ADD_FAVORITE_MOUNTAIN = 'ADD_FAVORITE_MOUNTAIN';
+const REMOVE_FAVORITE_MOUNTAIN = 'REMOVE_FAVORITE_MOUNTAIN';
 
 type ActionsType =
 	| { type: 'TOGGLE_NAV_BAR', command: boolean }
@@ -76,7 +66,9 @@ type ActionsType =
 				text: string,
 			},
 			id: string,
-	  };
+	  }
+	| { type: 'ADD_FAVORITE_MOUNTAIN', command: string }
+	| { type: 'REMOVE_FAVORITE_MOUNTAIN', command: string };
 
 // toggle navigation bar display
 export const createToggleNavBarAction = (command: boolean): ActionsType => ({
@@ -167,6 +159,19 @@ export const createUpdateRecordAction = (
 	type: UPDATE_RECORD,
 	data,
 	id,
+});
+export const createAddFavoriteMountainAction = (
+	command: string
+): ActionsType => ({
+	type: ADD_FAVORITE_MOUNTAIN,
+	command,
+});
+
+export const createRemoveFavoriteMountainAction = (
+	command: string
+): ActionsType => ({
+	type: REMOVE_FAVORITE_MOUNTAIN,
+	command,
 });
 
 //SECTION> DATA STRUCTURE
@@ -271,7 +276,7 @@ const initUserState = {
 						'這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容',
 				},
 			],
-			favorites: [],
+			favorites: ['玉山', '玉山東峰', '石門山'],
 		},
 	},
 	// user: {
@@ -384,21 +389,20 @@ const userStateReducer = (
 	prevState: userStateType = initUserState,
 	action: ActionsType
 ) => {
-	console.log(prevState.user);
-	let newState = null;
+	let newState = JSON.parse(JSON.stringify(prevState));
 	switch (action.type) {
 		// case 'TOGGLE_IS_LOGIN':
 		// 	return { ...prevState, isLogin: action.command };
 		case 'USER_LOGOUT':
 			return { ...prevState, isLogin: false, user: {} };
 		case 'CREATE_NEW_RECORD':
-			newState = JSON.parse(JSON.stringify(prevState));
+			// newState = JSON.parse(JSON.stringify(prevState));
 			// 未實作資料完整性與安全性檢查
 			newState.user.tables.records.push(action.data);
 			console.log(newState.user.tables.records);
 			return newState;
 		case 'UPDATE_RECORD':
-			newState = JSON.parse(JSON.stringify(prevState));
+			// newState = JSON.parse(JSON.stringify(prevState));
 			{
 				const record = newState.user.tables.records.find(
 					item => item.id === action.id
@@ -407,9 +411,22 @@ const userStateReducer = (
 					record[item] = action.data[item];
 				}
 			}
-			console.log(newState.user.tables.records);
 			return newState;
-
+		case ADD_FAVORITE_MOUNTAIN:
+			newState.user.tables.favorites.push(action.command);
+			newState.user.tables.favorites = [
+				...new Set(newState.user.tables.favorites),
+			];
+			return newState;
+		case REMOVE_FAVORITE_MOUNTAIN:
+			newState.user.tables.favorites = new Set([
+				...newState.user.tables.favorites,
+			]);
+			newState.user.tables.favorites.delete(action.command);
+			newState.user.tables.favorites = [
+				...newState.user.tables.favorites,
+			];
+			return newState;
 		default:
 			return prevState;
 	}

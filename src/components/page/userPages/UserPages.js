@@ -11,6 +11,7 @@ import RecordsPage from './recordPage/RecordsPage';
 import { createNewRecordAction } from './../../../store';
 import { createActiveMountainAction } from './../../../store';
 import { createUpdateRecordAction } from './../../../store';
+import { createRemoveFavoriteMountainAction } from './../../../store';
 
 const mapStateToProps = state => ({
 	mapState: state.mapState,
@@ -25,6 +26,8 @@ const mapDispatchToProps = dispatch => ({
 			dispatch(createActiveMountainAction(command)),
 		setUpdateRecord: (data, id) =>
 			dispatch(createUpdateRecordAction(data, id)),
+		setRemoveFavorite: (command: string) =>
+			dispatch(createRemoveFavoriteMountainAction(command)),
 	},
 });
 
@@ -43,7 +46,7 @@ const UserPages = ({ userState, mapState, setFns }: propsType): React.Node => {
 				{userState.isLogin ? null : <Redirect to="/" />}
 				<Route path="/user/:user_id" exact></Route>
 				<Route path="/user/:user_id/list" exact>
-					<ListPages userState={userState} />
+					<ListPages setFns={setFns} userState={userState} />
 				</Route>
 				<Route path="/user/:user_id/records" exact>
 					<RecordsPage userState={userState} />

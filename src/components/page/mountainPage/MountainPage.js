@@ -1,11 +1,13 @@
 // @flow
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { createSubmitMountainDetailAction } from '../../../store';
 import { createActiveMountainAction } from '../../../store';
+import { createAddFavoriteMountainAction } from '../../../store';
+import { createRemoveFavoriteMountainAction } from '../../../store';
 
 import TaiwanPeaksList from '../../utilities/data/100_peaks_of_taiwan';
 
@@ -24,6 +26,10 @@ const mapDispatchToProps = dispatch => ({
 			dispatch(createSubmitMountainDetailAction(command)),
 		setActiveMountain: command =>
 			dispatch(createActiveMountainAction(command)),
+		setAddFavoriteMountain: command =>
+			dispatch(createAddFavoriteMountainAction(command)),
+		setRemoveFavoriteMountain: command =>
+			dispatch(createRemoveFavoriteMountainAction(command)),
 	},
 });
 
@@ -37,14 +43,23 @@ const MountainPage = ({
 	userState: Object,
 }): React.Node => {
 	const params = useParams();
-	const activeMountain: string | null | void = params.mountain;
 
+	const activeMountain: string | null | void = params.mountain;
 	const activeMountainInfo = TaiwanPeaksList.filter(item => {
 		return item.name === activeMountain;
 	});
 	useEffect(() => {
 		setFns.setActiveMountain(activeMountain);
 	}, [setFns, activeMountain]);
+
+	// 判斷 favorites 中是否有該項目，決定 icon 的顏色
+	const favorites = userState.user?.tables?.favorites;
+	const [isFavorite, setIsFavorite] = useState(false);
+	useEffect(() => {
+		if (favorites && activeMountain) {
+			setIsFavorite(favorites.includes(activeMountain));
+		}
+	}, [activeMountain, favorites]);
 
 	if (activeMountainInfo[0])
 		return (
@@ -56,7 +71,8 @@ const MountainPage = ({
 				/>
 				{userState.isLogin ? (
 					<IconArea
-						setActiveMountain={setFns.setActiveMountain}
+						isFavorite={isFavorite}
+						setFns={setFns}
 						activeMountainInfo={activeMountainInfo[0]}
 					/>
 				) : null}
@@ -78,4 +94,3 @@ const connectedComponentCreator: Function = connect(
 );
 const ConnectedComponent: Object = connectedComponentCreator(MountainPage);
 export default ConnectedComponent;
-// export default MountainPage;
