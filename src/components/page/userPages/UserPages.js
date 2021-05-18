@@ -43,7 +43,7 @@ const UserPages = ({ userState, mapState, setFns }: propsType): React.Node => {
 				{userState.isLogin ? null : <Redirect to="/" />}
 				<Route path="/user/:user_id" exact></Route>
 				<Route path="/user/:user_id/list" exact>
-					<ListPages />
+					<ListPages userState={userState} />
 				</Route>
 				<Route path="/user/:user_id/records" exact>
 					<RecordsPage userState={userState} />

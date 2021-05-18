@@ -37,6 +37,7 @@ const SearchBar = ({ UIState, setFns, mapState }: propsType): React.Node => {
 							onClick={() => {
 								setFns.setSearchBar(false);
 								setFns.setSearchInput('');
+								setFns.setBackground(false, false);
 							}}
 							className={`h-12 w-8 pl-3 -mr-1 relative bottom-0.5 text-2xl text-t-gray-normal focus:outline-none transition-opacity delay-400 duration-300 ${
 								searchBarState ? 'opacity-1' : 'opacity-0'

@@ -54,6 +54,7 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 	const [mountainInfo] = taiwanPacksInfo.filter(
 		item => item.name === activeMountain
 	);
+	// console.log(activeMountain);
 
 	return (
 		<div className={`relative p-7 z-0`}>
