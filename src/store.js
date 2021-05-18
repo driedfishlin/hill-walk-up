@@ -20,6 +20,7 @@ const CREATE_NEW_RECORD = 'CREATE_NEW_RECORD';
 const UPDATE_RECORD = 'UPDATE_RECORD';
 const ADD_FAVORITE_MOUNTAIN = 'ADD_FAVORITE_MOUNTAIN';
 const REMOVE_FAVORITE_MOUNTAIN = 'REMOVE_FAVORITE_MOUNTAIN';
+const DELETE_OLD_RECORD = 'DELETE_OLD_RECORD';
 
 type ActionsType =
 	| { type: 'TOGGLE_NAV_BAR', command: boolean }
@@ -68,7 +69,8 @@ type ActionsType =
 			id: string,
 	  }
 	| { type: 'ADD_FAVORITE_MOUNTAIN', command: string }
-	| { type: 'REMOVE_FAVORITE_MOUNTAIN', command: string };
+	| { type: 'REMOVE_FAVORITE_MOUNTAIN', command: string }
+	| { type: 'DELETE_OLD_RECORD', id: string };
 
 // toggle navigation bar display
 export const createToggleNavBarAction = (command: boolean): ActionsType => ({
@@ -172,6 +174,10 @@ export const createRemoveFavoriteMountainAction = (
 ): ActionsType => ({
 	type: REMOVE_FAVORITE_MOUNTAIN,
 	command,
+});
+export const createDeleteOldRecordAction = (id: string): ActionsType => ({
+	type: DELETE_OLD_RECORD,
+	id,
 });
 
 //SECTION> DATA STRUCTURE
@@ -346,23 +352,23 @@ const UIStateReducer = (
 ) => {
 	let newState = null;
 	switch (action.type) {
-		case 'TOGGLE_NAV_BAR':
+		case TOGGLE_NAV_BAR:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.navBar.isOpen = action.command;
 			return newState;
-		case 'TOGGLE_LOGIN_FORM_SHOW':
+		case TOGGLE_LOGIN_FORM_SHOW:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.navBar.isFormOpen = action.command;
 			return newState;
-		case 'HOMEPAGE_BUBBLE_MESSAGE_SHOW':
+		case HOMEPAGE_BUBBLE_MESSAGE_SHOW:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.homePage.bubble = action.command;
 			return newState;
-		case 'TOGGLE_SEARCH_BAR':
+		case TOGGLE_SEARCH_BAR:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.homePage.searchMode = action.command;
 			return newState;
-		case 'TOGGLE_INFO_BOX_SHOW':
+		case TOGGLE_INFO_BOX_SHOW:
 			newState = JSON.parse(JSON.stringify(prevState));
 			if (action.position)
 				newState.homePage.infoBox.position = {
@@ -373,7 +379,7 @@ const UIStateReducer = (
 			if (action.targetInfo !== undefined)
 				newState.homePage.infoBox.targetInfo = action.targetInfo;
 			return newState;
-		case 'TOGGLE_BACKGROUND_SHOW':
+		case TOGGLE_BACKGROUND_SHOW:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.homePage.background.show = action.command;
 			newState.homePage.background.clickable = action.clickable;
@@ -391,18 +397,16 @@ const userStateReducer = (
 ) => {
 	let newState = JSON.parse(JSON.stringify(prevState));
 	switch (action.type) {
-		// case 'TOGGLE_IS_LOGIN':
+		// case TOGGLE_IS_LOGIN:
 		// 	return { ...prevState, isLogin: action.command };
-		case 'USER_LOGOUT':
+		case USER_LOGOUT:
 			return { ...prevState, isLogin: false, user: {} };
-		case 'CREATE_NEW_RECORD':
-			// newState = JSON.parse(JSON.stringify(prevState));
+		case CREATE_NEW_RECORD:
 			// 未實作資料完整性與安全性檢查
 			newState.user.tables.records.push(action.data);
 			console.log(newState.user.tables.records);
 			return newState;
-		case 'UPDATE_RECORD':
-			// newState = JSON.parse(JSON.stringify(prevState));
+		case UPDATE_RECORD:
 			{
 				const record = newState.user.tables.records.find(
 					item => item.id === action.id
@@ -427,6 +431,15 @@ const userStateReducer = (
 				...newState.user.tables.favorites,
 			];
 			return newState;
+		case DELETE_OLD_RECORD: {
+			let index = newState.user.tables.records.findIndex(
+				item => item.id === action.id
+			);
+			console.log(index);
+			newState.user.tables.records.splice(index, 1);
+			console.log(newState);
+			return newState;
+		}
 		default:
 			return prevState;
 	}
@@ -438,26 +451,26 @@ const mapStateReducer = (
 ) => {
 	let newState = null;
 	switch (action.type) {
-		case 'SEARCH_INPUT_CHANGE':
+		case SEARCH_INPUT_CHANGE:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.searchInput = action.command;
 			return newState;
-		case 'ADD_SEARCH_TARGET':
+		case ADD_SEARCH_TARGET:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.searchTargets.push(action.command);
 			return newState;
-		case 'REMOVE_SEARCH_TARGET':
+		case REMOVE_SEARCH_TARGET:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.searchTargets.splice(
 				newState.searchTargets.indexOf(action.command),
 				1
 			);
 			return newState;
-		case 'SPECIFY_ACTIVE_MOUNTAIN':
+		case SPECIFY_ACTIVE_MOUNTAIN:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.activeMountain = action.command;
 			return newState;
-		case 'SUBMIT_MOUNTAIN_DETAIL':
+		case SUBMIT_MOUNTAIN_DETAIL:
 			newState = JSON.parse(JSON.stringify(prevState));
 			newState.mountainDetailText = action.command;
 			return newState;

@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-const YearsLine = ({ year }): React.Node => {
+const YearsLine = ({ year }: { year: number }): React.Node => {
 	return (
 		<div className={`flex justify-center items-center mb-3 px-10`}>
 			<hr className={`flex-grow border-t-green mx-1`} />

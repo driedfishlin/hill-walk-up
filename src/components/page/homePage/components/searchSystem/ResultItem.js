@@ -44,8 +44,6 @@ const onItemClick = (event, setFns) => {
 		}
 
 		zoomMap(searchResult.coordinate, true);
-		// Map.panTo(searchResult.coordinate);
-		//
 
 		setFns.setSearchBar(false);
 		setFns.setSearchInput('');
@@ -76,7 +74,6 @@ const onItemClick = (event, setFns) => {
 			}, 200);
 
 		searchMarkDOM();
-		// let markDOM = searchMarkDOM(searchTarget)
 	}
 };
 
@@ -90,15 +87,6 @@ const ResultItem = ({ item, setFns }: propsType): React.Node => {
 		<li className={`py-1`}>
 			<button
 				onClick={event => onItemClick(event, setFns)}
-				// onClick={event => {
-				// 	onItemClick(event);
-				// setFns.setSearchBar(false);
-				// setFns.setSearchInput('');
-				// setFns.setBackground(true, false, true);
-				// setTimeout(() => {
-				// 	setFns.setBackground(true, true, false);
-				// }, 2000); // 決定何時開啟彈窗
-				// }}
 				className={`flex items-end justify-between w-full py-1 tracking-widest font-light focus:outline-none`}
 			>
 				<p

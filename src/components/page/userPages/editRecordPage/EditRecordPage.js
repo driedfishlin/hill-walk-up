@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import TaiwanPeaksList from '../../../utilities/data/100_peaks_of_taiwan';
@@ -15,27 +16,23 @@ const NewRecordPage = ({
 	setFns,
 	userState,
 }: propsType): React.Node => {
+	const [warningBoardState, setWarningBoardState] = useState(false);
 	const location = useLocation();
-	// console.log(location);
 	// get action from path（'new' or 'edit'）
 	const action = location.pathname.split('/').pop();
-	// console.log(action);
 
 	const prams = useParams();
 	const recordId = prams.file_id;
-	console.log(recordId);
 
 	let record = null;
 	if (action === 'edit') {
 		const records = userState.user?.tables.records;
-		console.log(records);
 		if (records) record = records.find(item => item.id === recordId);
 	}
 
 	const targetMountain = TaiwanPeaksList.find(
 		item => item.name === (record?.location || location.state?.location)
 	);
-	console.log(targetMountain);
 
 	if (targetMountain)
 		return (
@@ -57,6 +54,10 @@ const NewRecordPage = ({
 					action={action}
 					targetMountain={targetMountain.name}
 					oldRecord={action === 'edit' ? record : {}}
+					useWarningBoardState={[
+						warningBoardState,
+						setWarningBoardState,
+					]}
 				/>
 			</div>
 		);

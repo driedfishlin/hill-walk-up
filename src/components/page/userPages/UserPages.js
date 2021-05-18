@@ -12,6 +12,7 @@ import { createNewRecordAction } from './../../../store';
 import { createActiveMountainAction } from './../../../store';
 import { createUpdateRecordAction } from './../../../store';
 import { createRemoveFavoriteMountainAction } from './../../../store';
+import { createDeleteOldRecordAction } from './../../../store';
 
 const mapStateToProps = state => ({
 	mapState: state.mapState,
@@ -28,6 +29,8 @@ const mapDispatchToProps = dispatch => ({
 			dispatch(createUpdateRecordAction(data, id)),
 		setRemoveFavorite: (command: string) =>
 			dispatch(createRemoveFavoriteMountainAction(command)),
+		setRemoveOldRecord: (id: string) =>
+			dispatch(createDeleteOldRecordAction(id)),
 	},
 });
 

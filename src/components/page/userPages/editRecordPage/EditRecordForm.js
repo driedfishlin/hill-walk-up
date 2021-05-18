@@ -2,11 +2,12 @@
 import * as React from 'react';
 import { useState } from 'react';
 import store from '../../../../store';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useHistory } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import SwitchButton from '../../../shared/components/UIElement/SwitchButton';
 import RegularButton from '../../../shared/components/UIElement/RegularButton';
+import WarningBoard from './component/WarningBoard';
 
 //SECTION> CSS class
 const label_class = `block text-sm mb-2 mt-5 font-medium`;
@@ -40,7 +41,7 @@ const onDateInputChange = (event, preState) => {
 	return arr.join('');
 };
 
-//SECTION> Component
+//SECTION> Component Type
 type oldRecordType = {
 	title: string,
 	startDate: string,
@@ -49,18 +50,24 @@ type oldRecordType = {
 	finish: boolean,
 	id?: string,
 };
+
+type propsType = {
+	action: string,
+	setFns: Object,
+	useWarningBoardState: [boolean, Function],
+	targetMountain: string,
+	// null 傳進來會 crash ↓
+	oldRecord?: oldRecordType | {} | null,
+};
+//SECTION> Component
 const EditRecordForm = ({
 	action,
 	setFns,
 	targetMountain,
 	oldRecord,
-}: {
-	action: string,
-	setFns: Object,
-	targetMountain: string,
-	// null 傳進來會 crash ↓
-	oldRecord?: oldRecordType | {} | null,
-}): React.Node => {
+	useWarningBoardState,
+}: propsType): React.Node => {
+	const [warningBoardState, setWarningBoardState] = useWarningBoardState;
 	const { setNewRecord, setUpdateRecord } = setFns;
 	const {
 		title,
@@ -92,126 +99,137 @@ const EditRecordForm = ({
 	if (currentPath === 'new') id = createNewId();
 	if (currentPath === 'edit') id = oldRecord?.id;
 
-	return (
-		<form
-			className={`p-3 text-t-gray-dark`}
-			onSubmit={event => event.preventDefault()}
-		>
-			<div className={`flex justify-center mt-8`}>
-				<SwitchButton
-					wrong={'再接再厲'}
-					right={`成功攀登`}
-					finishState={[finishState, setFinishState]}
-				/>
-			</div>
+	const history = useHistory();
 
-			<label className={`${label_class}`}>標題</label>
-			<input
-				type="text"
-				className={`${input_class} ${sm_input_class}`}
-				value={titleState}
-				onChange={event => {
-					let title = event.target.value;
-					if (title > 20) title = title.slice(0, 20);
-					setTitleState(title);
-				}}
-			/>
-			<label className={`${label_class}`}>日期區間</label>
-			<input
-				//TODO> 須實作驗證：小於目前日期、出發日小於回程日
-				type="text"
-				className={`${input_class} ${sm_input_class}`}
-				value={startDateState}
-				placeholder={new Date().toISOString().split('T')[0]}
-				onChange={event =>
-					setStartDateState(prevState =>
-						onDateInputChange(event, prevState)
-					)
-				}
-			/>
-			<input
-				type="text"
-				className={`${input_class} ${sm_input_class}`}
-				value={endDateState}
-				placeholder={new Date().toISOString().split('T')[0]}
-				onChange={event =>
-					setEndDateState(prevState =>
-						onDateInputChange(event, prevState)
-					)
-				}
-			/>
-			<label className={`${label_class}`}>紀錄</label>
-			<hr className={`${hr_class} mt-3`} />
-			<textarea
-				rows="6"
-				placeholder="寫下你的健行記述吧！"
-				className={`${input_class} ${record_class}`}
-				value={textState}
-				onChange={event => {
-					let text = event.target.value;
-					if (text > 500) text = text.slice(0, 500);
-					setTextState(text);
-				}}
-			></textarea>
-			<p className={`float-right text-xs`}>{textState.length}/500</p>
-			<p className="clear-both" />
-			<hr className={`${hr_class} mt-0.5 mb-7`} />
-			<div className={`p-3`}>
-				<Link
-					replace
-					to={{
-						pathname: `/user/:user_id/records/${id}`,
-						state: { from: currentPath },
+	return (
+		<>
+			<form
+				className={`p-3 text-t-gray-dark`}
+				onSubmit={event => event.preventDefault()}
+			>
+				<div className={`flex justify-center mt-8`}>
+					<SwitchButton
+						wrong={'再接再厲'}
+						right={`成功攀登`}
+						finishState={[finishState, setFinishState]}
+					/>
+				</div>
+
+				<label className={`${label_class}`}>標題</label>
+				<input
+					type="text"
+					className={`${input_class} ${sm_input_class}`}
+					value={titleState}
+					onChange={event => {
+						let title = event.target.value;
+						if (title > 20) title = title.slice(0, 20);
+						setTitleState(title);
 					}}
-				>
-					<RegularButton
-						customClass={`${button_class}`}
-						green
-						clickFn={event => {
-							//TODO> 未實作資料驗證
-							const data = {
-								title: titleState,
-								startDate: startDateState,
-								endDate: endDateState,
-								finish: finishState,
-								text: textState,
-								location: targetMountain,
-							};
-							// 新建資料才給予 id
-							if (currentPath === 'new') {
-								data.id = id;
-								setNewRecord(data);
-							}
-							if (currentPath === 'edit') {
-								setUpdateRecord(data, id);
-							}
-							document
-								.querySelector('body')
-								?.scrollTo({ top: 0 });
+				/>
+				<label className={`${label_class}`}>日期區間</label>
+				<input
+					//TODO> 須實作驗證：小於目前日期、出發日小於回程日
+					type="text"
+					className={`${input_class} ${sm_input_class}`}
+					value={startDateState}
+					placeholder={new Date().toISOString().split('T')[0]}
+					onChange={event =>
+						setStartDateState(prevState =>
+							onDateInputChange(event, prevState)
+						)
+					}
+				/>
+				<input
+					type="text"
+					className={`${input_class} ${sm_input_class}`}
+					value={endDateState}
+					placeholder={new Date().toISOString().split('T')[0]}
+					onChange={event =>
+						setEndDateState(prevState =>
+							onDateInputChange(event, prevState)
+						)
+					}
+				/>
+				<label className={`${label_class}`}>紀錄</label>
+				<hr className={`${hr_class} mt-3`} />
+				<textarea
+					rows="6"
+					placeholder="寫下你的健行記述吧！"
+					className={`${input_class} ${record_class}`}
+					value={textState}
+					onChange={event => {
+						let text = event.target.value;
+						if (text > 500) text = text.slice(0, 500);
+						setTextState(text);
+					}}
+				></textarea>
+				<p className={`float-right text-xs`}>{textState.length}/500</p>
+				<p className="clear-both" />
+				<hr className={`${hr_class} mt-0.5 mb-7`} />
+				<div className={`p-3`}>
+					<Link
+						replace
+						to={{
+							pathname: `/user/:user_id/records/${id}`,
+							state: { from: currentPath },
 						}}
 					>
-						完成送出
-					</RegularButton>
-				</Link>
-				<div className={`flex`}>
-					<RegularButton
-						customClass={`${button_class}`}
-						onClick={event => event.preventDefault()}
-						transparent
-					>
-						取消
-					</RegularButton>
-					{action === 'edit' && (
 						<RegularButton
-							customClass={`${button_class}  ml-2`}
-							onClick={event => event.preventDefault()}
+							customClass={`${button_class}`}
+							green
+							clickFn={event => {
+								//TODO> 未實作資料驗證
+								const data = {
+									title: titleState,
+									startDate: startDateState,
+									endDate: endDateState,
+									finish: finishState,
+									text: textState,
+									location: targetMountain,
+								};
+								// 新建資料才給予 id
+								if (currentPath === 'new') {
+									data.id = id;
+									setNewRecord(data);
+								}
+								if (currentPath === 'edit') {
+									setUpdateRecord(data, id);
+								}
+								document
+									.querySelector('body')
+									?.scrollTo({ top: 0 });
+							}}
 						>
-							刪除
+							完成送出
 						</RegularButton>
-					)}
+					</Link>
+					<div className={`flex`}>
+						<RegularButton
+							customClass={`${button_class}`}
+							clickFn={event => history.go(-1)}
+							transparent
+						>
+							取消
+						</RegularButton>
+						{action === 'edit' && (
+							<RegularButton
+								clickFn={() => useWarningBoardState[1](true)}
+								customClass={`${button_class}  ml-2`}
+							>
+								刪除
+							</RegularButton>
+						)}
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+			{warningBoardState && (
+				<WarningBoard
+					setState={setWarningBoardState}
+					setFns={setFns}
+					id={id}
+				/>
+			)}
+		</>
 	);
 };
 
