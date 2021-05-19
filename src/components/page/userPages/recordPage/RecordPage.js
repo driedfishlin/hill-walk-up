@@ -73,7 +73,7 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 				{true ? (
 					<>
 						<h4
-							className={`text-2xl font-medium tracking-wider mb-3`}
+							className={`text-2xl font-medium tracking-wider mb-3 overflow-ellipsis overflow-hidden`}
 						>
 							{activeRecord.title}
 						</h4>
@@ -86,7 +86,9 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 								{activeRecord.endDate}
 							</span>
 						</p>
-						<p className={`mb-5`}>{activeRecord.text}</p>
+						<p className={`mb-5 overflow-ellipsis overflow-hidden`}>
+							{activeRecord.text}
+						</p>
 						<Link
 							onClick={() =>
 								document

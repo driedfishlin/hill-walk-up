@@ -19,7 +19,9 @@ const RecordCard = ({ record }: { record: Object }): React.Node => {
 						className="text-red-400 text-lg ml-0.5 mr-2 relative"
 						style={{ top: '4px' }}
 					/>
-					<h3 className={`text-xl font-medium mb-1.5`}>
+					<h3
+						className={`text-xl font-medium mb-1.5 overflow-ellipsis overflow-hidden`}
+					>
 						{record.title}
 					</h3>
 				</div>
@@ -30,7 +32,7 @@ const RecordCard = ({ record }: { record: Object }): React.Node => {
 					{record.startDate}-{record.endDate}
 				</p>
 			</div>
-			<p className={` p-5 `}>
+			<p className={` p-5 overflow-ellipsis overflow-hidden`}>
 				{record.text.length > 50
 					? record.text.slice(0, 50) + '...'
 					: record.text}

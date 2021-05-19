@@ -35,7 +35,7 @@ const IconArea = ({
 								)
 				}
 				title="新增到口袋清單"
-				className={`w-10 h-10 focus:outline-none  hover:text-t-gray-dark`}
+				className={`w-10 h-10 focus:outline-none  xl:hover:text-t-gray-dark`}
 			>
 				<FontAwesomeIcon
 					icon={solidMarkIcon}
@@ -62,7 +62,7 @@ const IconArea = ({
 					document.querySelector('body')?.scrollTo({ top: 0 });
 				}}
 				title="撰寫新紀錄"
-				className={`w-10 h-10 hover:text-t-gray-dark`}
+				className={`w-10 h-10 xl:hover:text-t-gray-dark`}
 			>
 				<FontAwesomeIcon
 					icon={editIcon}
