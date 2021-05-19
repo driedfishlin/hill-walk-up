@@ -52,14 +52,17 @@ type propsType = {
 
 const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 	return (
-		// <div className="z-40">
-		<>
+		<div
+			className={`fixed top-0 left-0 z-40 h-screen w-screen ${!NavBarState.isOpen &&
+				'pointer-events-none'}`}
+		>
+			{/* <> */}
 			<Background NavBarState={NavBarState} />
 			<nav
 				className={`absolute right-0 h-full w-80 bg-t-gray-light  flex flex-col shadow-2xl z-40 transform ${
 					NavBarState.isOpen
-						? `transform translate-x-0  ${headerHeight[3]}`
-						: `transform translate-x-full  ${headerHeight[3]}`
+						? `transform translate-x-0`
+						: `transform translate-x-full`
 				} transition-transform`}
 			>
 				<div className="p-8">
@@ -85,8 +88,8 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 					setNavBar={setFns.setNavBar}
 				/>
 			</nav>
-		</>
-		// </div>
+			{/* </> */}
+		</div>
 	);
 };
 

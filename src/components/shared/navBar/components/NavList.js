@@ -17,12 +17,11 @@ const list = [
 		link: '/user/:user_id/list',
 	},
 	{
-		text: '我的筆記',
+		text: '我的紀錄',
 		icon: file,
 		private: true,
 		link: '/user/:user_id/records',
 	},
-	// { text: '新增筆記', icon: write, private: true, link:'/'  },
 	{ text: '關於走走', icon: about, private: false, link: '/about' },
 ];
 

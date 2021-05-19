@@ -23,7 +23,6 @@ const App = function(): React.Node {
 			<Provider store={store}>
 				{/* <MapProvider store={store}> */}
 				<BrowserRouter>
-					<NavBar />
 					<Header />
 					<HomePage />
 					<Switch>
@@ -37,6 +36,7 @@ const App = function(): React.Node {
 						<Route path="/about" exact />
 						<Redirect to="/" />
 					</Switch>
+					<NavBar />
 				</BrowserRouter>
 				{/* </MapProvider> */}
 			</Provider>

@@ -25,7 +25,6 @@ const ListItem = ({
 	if (type === 'record')
 		return (
 			<li className={`filter drop-shadow-sm bg-white mb-0.5`}>
-				{console.log(id)}
 				<Link to={{ pathname: `/user/:user_id/records/${id || ''}` }}>
 					<div className={`flex justify-between items-end px-2 py-3`}>
 						<h6 className={`leading-5`}>{location}</h6>

@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import MountainElement from '../../../shared/components/UIElement/MountainElement';
@@ -29,7 +29,6 @@ const MountainCard = ({
 	link?: string,
 	anchor?: string | void | null,
 }): React.Node => {
-	const Location = useLocation();
 	const history = useHistory();
 	return (
 		<section className={`relative z-10`}>
@@ -48,7 +47,6 @@ const MountainCard = ({
 						) : (
 							<Link
 								to={link || '/'}
-								// to={Location.state?.from || link || '/'}
 								className={`text-t-gray-dark opacity-70 py-0.5 pl-1 rounded-md text-xs float-right mb-3`}
 							>
 								{anchor} <FontAwesomeIcon icon={arrow} />

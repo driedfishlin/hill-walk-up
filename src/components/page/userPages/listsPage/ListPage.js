@@ -23,19 +23,22 @@ const createRecordsList = arr => {
 	sorted.forEach((item, index) => {
 		if (year === null) {
 			year = item.startDate.split('/')[0];
-			result.push(<YearsLine year={year} />);
+			result.push(<YearsLine year={year} key={year} />);
 		}
 		if (year !== item.startDate.split('/')[0]) {
 			let children = [...register];
 			let ul = (
-				<ul className={`bg-white rounded-lg overflow-hidden mb-4`}>
+				<ul
+					key={year + '_ul'}
+					className={`bg-white rounded-lg overflow-hidden mb-4`}
+				>
 					{children}
 				</ul>
 			);
 			result.push(ul);
 			register.length = 0;
 			year = item.startDate.split('/')[0];
-			result.push(<YearsLine year={year} />);
+			result.push(<YearsLine year={year} key={year} />);
 		}
 		register.push(
 			<ListItem
@@ -49,7 +52,10 @@ const createRecordsList = arr => {
 		);
 		if (index + 1 === sorted.length)
 			result.push(
-				<ul className={`bg-white rounded-lg overflow-hidden`}>
+				<ul
+					className={`bg-white rounded-lg overflow-hidden`}
+					key={year + '_ul'}
+				>
 					{register}
 				</ul>
 			);
@@ -69,7 +75,7 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 				<h2 className={`h2-style text-t-gray-dark`}>我的筆記</h2>
 				<SwitchButton
 					right={`目前紀錄`}
-					wrong={`口袋清單`}
+					wrong={`口袋名單`}
 					finishState={[switchListState, setSwitchState]}
 					customClass={`transform translate-y-1`}
 				/>
