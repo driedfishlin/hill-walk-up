@@ -1,46 +1,51 @@
 // @flow
 import * as React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { nanoid } from 'nanoid';
-import avatar_1 from '../../../../image/avatars/avatar_1.jpg';
-import avatar_2 from '../../../../image/avatars/avatar_2.jpg';
-import avatar_3 from '../../../../image/avatars/avatar_3.jpg';
-import avatar_4 from '../../../../image/avatars/avatar_4.jpg';
+// import { useState } from 'react';
 
-import RegularButton from '../../../shared/components/UIElement/RegularButton';
+import UserForm from './UserForm';
 
-const avatarList = [
-	{ id: 'avatar_1', image: avatar_1 },
-	{ id: 'avatar_2', image: avatar_2 },
-	{ id: 'avatar_3', image: avatar_3 },
-	{ id: 'avatar_4', image: avatar_4 },
-];
+// import { Link } from 'react-router-dom';
+// import { nanoid } from 'nanoid';
+// import avatar_1 from '../../../../image/avatars/avatar_1.jpg';
+// import avatar_2 from '../../../../image/avatars/avatar_2.jpg';
+// import avatar_3 from '../../../../image/avatars/avatar_3.jpg';
+// import avatar_4 from '../../../../image/avatars/avatar_4.jpg';
+
+// import RegularButton from '../../../shared/components/UIElement/RegularButton';
+
+// const avatarList = [
+// 	{ id: 'avatar_1', image: avatar_1 },
+// 	{ id: 'avatar_2', image: avatar_2 },
+// 	{ id: 'avatar_3', image: avatar_3 },
+// 	{ id: 'avatar_4', image: avatar_4 },
+// ];
 
 const SignUpPage = ({
 	setNewUser,
-	setLogin,
-}: {
+}: // userState,
+{
 	setNewUser: Function,
-	setLogin: Function,
+	// userState: Object,
 }): React.Node => {
-	const [activeAvatar, setActiveAvatar] = useState(null);
-	const [userNameState, setUserNameState] = useState('');
-	const [accountState, setAccountState] = useState('');
-	const [passwordState, setPasswordState] = useState('');
-	const [nicknameInputState, setNicknameInputState] = useState('');
-	const resetForm = () => {
-		setActiveAvatar(null);
-		setUserNameState('');
-		setAccountState('');
-		setPasswordState('');
-		setNicknameInputState('');
-	};
+	// const [activeAvatar, setActiveAvatar] = useState(null);
+	// const [userNameState, setUserNameState] = useState('');
+	// const [accountState, setAccountState] = useState('');
+	// const [passwordState, setPasswordState] = useState('');
+	// const [nicknameInputState, setNicknameInputState] = useState('');
+	// const resetForm = () => {
+	// 	setActiveAvatar(null);
+	// 	setUserNameState('');
+	// 	setAccountState('');
+	// 	setPasswordState('');
+	// 	setNicknameInputState('');
+	// };
 
 	return (
 		<div className={`p-7`}>
 			<h2 className={`h2-style mb-7`}>註冊會員</h2>
-			<form onSubmit={event => event.preventDefault()}>
+
+			<UserForm setNewUser={setNewUser} />
+			{/* <form onSubmit={event => event.preventDefault()}>
 				<label className={`block mb-3 text-sm`}>．選擇你的大頭貼</label>
 				<div className={`grid grid-cols-2 gap-4 mb-10`}>
 					{avatarList.map(item => (
@@ -142,14 +147,10 @@ const SignUpPage = ({
 					</label>
 					<input
 						onFocus={() => {
-							try {
-								const dom = document.querySelector(
-									'#sign_up_radio_type_4'
-								);
-								if (dom && dom.checked) dom.checked = true;
-							} catch (err) {
-								console.log(err);
-							}
+							const dom = document.querySelector(
+								'#sign_up_radio_type_4'
+							);
+							if (dom) dom.checked = true;
 						}}
 						// value={nicknameInputState}
 						onChange={event =>
@@ -196,14 +197,13 @@ const SignUpPage = ({
 									account: accountState,
 									password: passwordState,
 									id: nanoid(),
-									nickName: nicknameInputState,
+									nickname: nicknameInputState,
 									signUpTime: new Date()
 										.toISOString()
 										.split('T')[0],
 								};
 								setNewUser(data);
 								resetForm();
-								// setLogin(true);
 								document
 									.querySelector('body')
 									?.scrollTo({ top: 0 });
@@ -216,7 +216,7 @@ const SignUpPage = ({
 						<RegularButton transparent>取消</RegularButton>
 					</Link>
 				</div>
-			</form>
+			</form> */}
 		</div>
 	);
 };

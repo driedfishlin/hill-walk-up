@@ -22,6 +22,7 @@ const ADD_FAVORITE_MOUNTAIN = 'ADD_FAVORITE_MOUNTAIN';
 const REMOVE_FAVORITE_MOUNTAIN = 'REMOVE_FAVORITE_MOUNTAIN';
 const DELETE_OLD_RECORD = 'DELETE_OLD_RECORD';
 const CREATE_NEW_USER = 'CREATE_NEW_USER';
+const EDIT_USER_DATA = 'EDIT_USER_DATA';
 
 type ActionsType =
 	| { type: 'TOGGLE_NAV_BAR', command: boolean }
@@ -80,8 +81,17 @@ type ActionsType =
 				account: string,
 				password: string,
 				id: string,
-				nickName: string,
+				nickname: string,
 				signUpTime: string,
+			},
+	  }
+	| {
+			type: 'EDIT_USER_DATA',
+			data: {
+				name: string,
+				avatar: string,
+				password: string,
+				nickname: string,
 			},
 	  };
 
@@ -198,7 +208,7 @@ export const createNewUserAction = (data: {
 	account: string,
 	password: string,
 	id: string,
-	nickName: string,
+	nickname: string,
 	signUpTime: string,
 }): ActionsType => ({
 	type: CREATE_NEW_USER,
@@ -208,9 +218,18 @@ export const createNewUserAction = (data: {
 		account: data.account,
 		password: data.password,
 		id: data.id,
-		nickName: data.nickName,
+		nickname: data.nickname,
 		signUpTime: data.signUpTime,
 	},
+});
+export const createEditUserDataAction = (data: {
+	name: string,
+	avatar: string,
+	password: string,
+	nickname: string,
+}): ActionsType => ({
+	type: EDIT_USER_DATA,
+	data,
 });
 
 //SECTION> DATA STRUCTURE
@@ -274,11 +293,11 @@ const initUserState = {
 		name: '王小明',
 		avatar: 'avatar_1',
 		// 考慮改為帳號以便作為辨識符
-		account: '',
+		account: 'sdfgresrg',
 		// 最後要用 hash
 		password: '12345',
 		id: 'gg',
-		nickName: '小明',
+		nickname: '小明',
 		signUpTime: '',
 		// 非必要 - 資料處理上應該會變麻煩，還是提供好了
 		tables: {
@@ -332,7 +351,7 @@ type userStateType = {
 		account: string,
 		password: string,
 		id: string,
-		nickName: string,
+		nickname: string,
 		signUpTime: string,
 		tables: {
 			records: Array<{
@@ -465,9 +484,11 @@ const userStateReducer = (
 				},
 			};
 			newState.isLogin = true;
-			console.log(newState);
 			return newState;
 		}
+		case EDIT_USER_DATA:
+			newState.user = { ...newState.user, ...action.data };
+			return newState;
 		default:
 			return prevState;
 	}

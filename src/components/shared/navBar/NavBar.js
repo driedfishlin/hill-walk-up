@@ -1,5 +1,6 @@
 // @!flow
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { createToggleNavBarAction } from '../../../store';
@@ -11,8 +12,6 @@ import NavBarHeader from './components/NavBarHeader';
 import UserLoginBlock from './components/UserLoginBlock';
 import UserCard from './components/UserCard';
 import NavList from './components/NavList';
-
-import { headerHeight } from '../../../index';
 
 //SECTION>
 
@@ -74,7 +73,12 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 						setLogOut={setFns.setLogOut}
 					/>
 					{userState.isLogin ? (
-						<UserCard userState={userState} />
+						<Link
+							to="/user/:user_id"
+							onClick={() => setFns.setNavBar(false)}
+						>
+							<UserCard userState={userState} />
+						</Link>
 					) : (
 						<UserLoginBlock
 							setNavBar={setFns.setNavBar}

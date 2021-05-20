@@ -8,6 +8,8 @@ import ListPages from './listsPage/ListPage';
 import RecordPage from './recordPage/RecordPage';
 import RecordsPage from './recordPage/RecordsPage';
 import SignUpPage from './userPage/SignUpPage';
+import UserPage from './userPage/UserPage';
+import UserEditPage from './userPage/UserEditPage';
 
 import { createNewRecordAction } from './../../../store';
 import { createActiveMountainAction } from './../../../store';
@@ -15,7 +17,8 @@ import { createUpdateRecordAction } from './../../../store';
 import { createRemoveFavoriteMountainAction } from './../../../store';
 import { createDeleteOldRecordAction } from './../../../store';
 import { createNewUserAction } from './../../../store';
-import { createToggleIsLoginAction } from './../../../store';
+// import { createToggleIsLoginAction } from './../../../store';
+import { createEditUserDataAction } from './../../../store';
 
 const mapStateToProps = state => ({
 	mapState: state.mapState,
@@ -43,8 +46,9 @@ const mapDispatchToProps = dispatch => ({
 			nickName: string,
 			signUpTime: string,
 		}) => dispatch(createNewUserAction(data)),
-		setLogin: (command: boolean): Object =>
-			dispatch(createToggleIsLoginAction(true)),
+		// setLogin: (command: boolean): Object =>
+		// 	dispatch(createToggleIsLoginAction(true)),
+		setEditUserData: data => dispatch(createEditUserDataAction(data)),
 	},
 });
 
@@ -62,11 +66,19 @@ const UserPages = ({ userState, mapState, setFns }: propsType): React.Node => {
 				<Route path="/user/sign" exact>
 					<SignUpPage
 						setNewUser={setFns.setNewUser}
-						setLogin={setFns.setLogin}
+						userState={userState}
 					/>
 				</Route>
 				{userState.isLogin ? null : <Redirect to="/" />}
-				<Route path="/user/:user_id" exact></Route>
+				<Route path="/user/:user_id" exact>
+					<UserPage userState={userState} />
+				</Route>
+				<Route path="/user/:user_id/edit" exact>
+					<UserEditPage
+						userState={userState}
+						setEditUserData={setFns.setEditUserData}
+					/>
+				</Route>
 				<Route path="/user/:user_id/list" exact>
 					<ListPages setFns={setFns} userState={userState} />
 				</Route>

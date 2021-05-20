@@ -26,7 +26,7 @@ const UserCard = ({ userState }: { userState: Object }): React.Node => {
 					{user.name || '使用者'}
 				</button>
 				<p className="text-t-gray-normal text-sm my-1 tracking-wide">
-					{user.nickName || '健行初心者'}
+					{user.nickname || '健行初心者'}
 				</p>
 			</div>
 		</div>

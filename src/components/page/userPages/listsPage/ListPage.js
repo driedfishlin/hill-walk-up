@@ -69,6 +69,11 @@ type propsType = { userState: Object, setFns: Object };
 const ListPages = ({ userState, setFns }: propsType): React.Node => {
 	const [switchListState, setSwitchState] = useState(false);
 	const tables = userState.user.tables;
+	const emptyList = (
+		<div className={`flex items-center justify-center py-28`}>
+			<p>目前沒有紀錄！</p>
+		</div>
+	);
 	return (
 		<div className={`p-7`}>
 			<div className={`flex justify-between`}>
@@ -94,7 +99,9 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 						目前紀錄
 					</h3>
 				</div>
-				{createRecordsList(tables.records)}
+				{tables.records.length
+					? createRecordsList(tables.records)
+					: emptyList}
 			</div>
 			{/**/}
 			<div
@@ -111,16 +118,20 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 						口袋清單
 					</h3>
 				</div>
-				<ul className={`bg-white rounded-lg overflow-hidden`}>
-					{tables.favorites.map(item => (
-						<ListItem
-							setFns={setFns}
-							key={item}
-							location={item}
-							type={'favorite'}
-						/>
-					))}
-				</ul>
+				{tables.favorites.length ? (
+					<ul className={`bg-white rounded-lg overflow-hidden`}>
+						{tables.favorites.map(item => (
+							<ListItem
+								setFns={setFns}
+								key={item}
+								location={item}
+								type={'favorite'}
+							/>
+						))}
+					</ul>
+				) : (
+					emptyList
+				)}
 			</div>
 		</div>
 	);
