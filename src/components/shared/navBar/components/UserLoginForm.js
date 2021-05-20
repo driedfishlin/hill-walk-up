@@ -12,8 +12,8 @@ const UserLoginForm = (): React.Node => {
 			className="bg-white py-8 px-5 rounded-lg shadow-lg"
 			onSubmit={event => event.preventDefault()}
 		>
-			<label className={labelClass}>電子信箱</label>
-			<input type="email" className={inputClass} />
+			<label className={labelClass}>帳號</label>
+			<input type="text" className={inputClass} />
 			<label className={labelClass}>密碼</label>
 			<input type="password" className={inputClass} />
 

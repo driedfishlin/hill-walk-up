@@ -21,6 +21,7 @@ const UPDATE_RECORD = 'UPDATE_RECORD';
 const ADD_FAVORITE_MOUNTAIN = 'ADD_FAVORITE_MOUNTAIN';
 const REMOVE_FAVORITE_MOUNTAIN = 'REMOVE_FAVORITE_MOUNTAIN';
 const DELETE_OLD_RECORD = 'DELETE_OLD_RECORD';
+const CREATE_NEW_USER = 'CREATE_NEW_USER';
 
 type ActionsType =
 	| { type: 'TOGGLE_NAV_BAR', command: boolean }
@@ -70,7 +71,19 @@ type ActionsType =
 	  }
 	| { type: 'ADD_FAVORITE_MOUNTAIN', command: string }
 	| { type: 'REMOVE_FAVORITE_MOUNTAIN', command: string }
-	| { type: 'DELETE_OLD_RECORD', id: string };
+	| { type: 'DELETE_OLD_RECORD', id: string }
+	| {
+			type: 'CREATE_NEW_USER',
+			data: {
+				name: string,
+				avatar: string,
+				account: string,
+				password: string,
+				id: string,
+				nickName: string,
+				signUpTime: string,
+			},
+	  };
 
 // toggle navigation bar display
 export const createToggleNavBarAction = (command: boolean): ActionsType => ({
@@ -179,6 +192,26 @@ export const createDeleteOldRecordAction = (id: string): ActionsType => ({
 	type: DELETE_OLD_RECORD,
 	id,
 });
+export const createNewUserAction = (data: {
+	name: string,
+	avatar: string,
+	account: string,
+	password: string,
+	id: string,
+	nickName: string,
+	signUpTime: string,
+}): ActionsType => ({
+	type: CREATE_NEW_USER,
+	data: {
+		name: data.name,
+		avatar: data.avatar,
+		account: data.account,
+		password: data.password,
+		id: data.id,
+		nickName: data.nickName,
+		signUpTime: data.signUpTime,
+	},
+});
 
 //SECTION> DATA STRUCTURE
 
@@ -234,19 +267,19 @@ const initUserState = {
 	isLogin: true,
 	// userTryOut: true,
 	loginFormInput: {
-		email: '',
+		account: '',
 		password: '',
 	},
 	user: {
 		name: '王小明',
-		avatar: 'cat',
+		avatar: 'avatar_1',
 		// 考慮改為帳號以便作為辨識符
-		email: 'ggg@ggg.com',
+		account: '',
 		// 最後要用 hash
 		password: '12345',
 		id: 'gg',
 		nickName: '小明',
-		signUpTime: 0,
+		signUpTime: '',
 		// 非必要 - 資料處理上應該會變麻煩，還是提供好了
 		tables: {
 			records: [
@@ -285,37 +318,22 @@ const initUserState = {
 			favorites: ['玉山', '玉山東峰', '石門山'],
 		},
 	},
-	// user: {
-	// 	name: '',
-	// 	avatar: '',
-	// 	email: '',
-	// 	// 最後要用 hash
-	// 	password: '',
-	// 	id: '',
-	// 	nickName: '',
-	// 	signUpTime: 0,
-	// 	// 非必要
-	// 	tables: {
-	// 		records: null,
-	// 		favorites: null,
-	// 	},
-	// },
 };
 type userStateType = {
 	isLogin: boolean,
 	loginFormInput: {
-		email: string,
+		account: string,
 		password: string,
 	},
 	user?: {
 		userTryOut?: Boolean,
 		name: string,
 		avatar: string,
-		email: string,
+		account: string,
 		password: string,
 		id: string,
 		nickName: string,
-		signUpTime: number,
+		signUpTime: string,
 		tables: {
 			records: Array<{
 				location: string,
@@ -404,7 +422,6 @@ const userStateReducer = (
 		case CREATE_NEW_RECORD:
 			// 未實作資料完整性與安全性檢查
 			newState.user.tables.records.push(action.data);
-			console.log(newState.user.tables.records);
 			return newState;
 		case UPDATE_RECORD:
 			{
@@ -435,8 +452,19 @@ const userStateReducer = (
 			let index = newState.user.tables.records.findIndex(
 				item => item.id === action.id
 			);
-			console.log(index);
 			newState.user.tables.records.splice(index, 1);
+			return newState;
+		}
+		case CREATE_NEW_USER: {
+			//FIXME> 目前暫無後端，因此未實作帳號與 id 之檢查，以及儲存明碼
+			newState.user = {
+				...action.data,
+				tables: {
+					records: [],
+					favorites: [],
+				},
+			};
+			newState.isLogin = true;
 			console.log(newState);
 			return newState;
 		}

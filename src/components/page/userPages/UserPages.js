@@ -7,12 +7,15 @@ import EditRecordPage from './editRecordPage/EditRecordPage';
 import ListPages from './listsPage/ListPage';
 import RecordPage from './recordPage/RecordPage';
 import RecordsPage from './recordPage/RecordsPage';
+import SignUpPage from './userPage/SignUpPage';
 
 import { createNewRecordAction } from './../../../store';
 import { createActiveMountainAction } from './../../../store';
 import { createUpdateRecordAction } from './../../../store';
 import { createRemoveFavoriteMountainAction } from './../../../store';
 import { createDeleteOldRecordAction } from './../../../store';
+import { createNewUserAction } from './../../../store';
+import { createToggleIsLoginAction } from './../../../store';
 
 const mapStateToProps = state => ({
 	mapState: state.mapState,
@@ -31,6 +34,17 @@ const mapDispatchToProps = dispatch => ({
 			dispatch(createRemoveFavoriteMountainAction(command)),
 		setRemoveOldRecord: (id: string) =>
 			dispatch(createDeleteOldRecordAction(id)),
+		setNewUser: (data: {
+			name: string,
+			avatar: string,
+			account: string,
+			password: string,
+			id: string,
+			nickName: string,
+			signUpTime: string,
+		}) => dispatch(createNewUserAction(data)),
+		setLogin: (command: boolean): Object =>
+			dispatch(createToggleIsLoginAction(true)),
 	},
 });
 
@@ -45,7 +59,12 @@ const UserPages = ({ userState, mapState, setFns }: propsType): React.Node => {
 	return (
 		<>
 			<Switch>
-				<Route path="/user/sign" exact></Route>
+				<Route path="/user/sign" exact>
+					<SignUpPage
+						setNewUser={setFns.setNewUser}
+						setLogin={setFns.setLogin}
+					/>
+				</Route>
 				{userState.isLogin ? null : <Redirect to="/" />}
 				<Route path="/user/:user_id" exact></Route>
 				<Route path="/user/:user_id/list" exact>

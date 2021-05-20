@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Some problems will occur when tree-shaking of fontawesome,
@@ -51,9 +52,17 @@ const NavBarHeader = ({
 				) : null}
 
 				{isLoginState ? (
-					<button onClick={() => setLogOut()} className={buttonClass}>
-						登出
-					</button>
+					<Link to={`/`}>
+						<button
+							onClick={() => {
+								setLogOut();
+								setNavBar(false);
+							}}
+							className={buttonClass}
+						>
+							登出
+						</button>
+					</Link>
 				) : null}
 			</div>
 		</div>

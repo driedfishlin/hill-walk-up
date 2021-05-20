@@ -10,9 +10,7 @@ const RecordsPage = ({ userState }: { userState: Object }): React.Node => {
 	//TODO> lazy logging
 	//TODO> search system
 	const [inputState, setInputState] = useState('');
-	console.log(inputState);
 	const records = userState.user?.tables?.records;
-	// console.log('records', records);
 	if (!records || records.length === 0)
 		return (
 			<ErrorPage

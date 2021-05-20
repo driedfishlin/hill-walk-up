@@ -8,10 +8,12 @@ type propsType = {
 		isFormOpen: boolean,
 		isOpen: boolean,
 	},
+	setNavBar: Function,
 	setLoginForm: Function,
 };
 
 const UserLoginBlock = ({
+	setNavBar,
 	NavBarState,
 	setLoginForm,
 }: propsType): React.Node => {
@@ -20,7 +22,10 @@ const UserLoginBlock = ({
 			{NavBarState.isFormOpen ? (
 				<UserLoginForm />
 			) : (
-				<UserLoginEntry setLoginForm={setLoginForm} />
+				<UserLoginEntry
+					setLoginForm={setLoginForm}
+					setNavBar={setNavBar}
+				/>
 			)}
 		</div>
 	);

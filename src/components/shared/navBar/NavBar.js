@@ -77,6 +77,7 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 						<UserCard userState={userState} />
 					) : (
 						<UserLoginBlock
+							setNavBar={setFns.setNavBar}
 							NavBarState={NavBarState}
 							setLoginForm={setFns.setLoginForm}
 						/>
