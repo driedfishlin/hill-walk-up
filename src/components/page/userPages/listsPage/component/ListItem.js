@@ -12,6 +12,7 @@ type propsType = {
 	end?: string,
 	id?: string,
 	setFns?: Object,
+	gbColor: string,
 };
 
 const ListItem = ({
@@ -21,12 +22,16 @@ const ListItem = ({
 	end,
 	id,
 	setFns,
+	gbColor,
+	textColor,
 }: propsType): React.Node | null => {
 	if (type === 'record')
 		return (
-			<li className={`filter drop-shadow-sm bg-white mb-0.5`}>
+			<li className={`filter drop-shadow-sm ${gbColor} mb-0.5`}>
 				<Link to={{ pathname: `/user/:user_id/records/${id || ''}` }}>
-					<div className={`flex justify-between items-end px-2 py-3`}>
+					<div
+						className={`flex justify-between items-end px-2 py-3 ${textColor}`}
+					>
 						<h6 className={`leading-5`}>{location}</h6>
 						<p className={`text-sm leading-2`}>
 							{(start ? start.slice(5) : '') +
@@ -39,8 +44,10 @@ const ListItem = ({
 		);
 	if (type === 'favorite')
 		return (
-			<li className={`filter drop-shadow-sm bg-white mb-0.5`}>
-				<div className={`flex justify-between items-end px-2 py-3`}>
+			<li className={`filter drop-shadow-sm ${gbColor} mb-0.5`}>
+				<div
+					className={`flex justify-between items-end px-2 py-3 ${textColor}`}
+				>
 					<h6 className={`leading-5 flex-grow`}>{location}</h6>
 					<Link
 						to={{

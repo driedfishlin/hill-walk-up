@@ -22,6 +22,7 @@ const createRecordsList = arr => {
 	let year = null;
 	const result = [];
 	const register = [];
+	let colorCount = 0;
 	sorted.forEach((item, index) => {
 		if (year === null) {
 			year = item.startDate.split('/')[0];
@@ -37,6 +38,7 @@ const createRecordsList = arr => {
 					{children}
 				</ul>
 			);
+			colorCount = 0;
 			result.push(ul);
 			register.length = 0;
 			year = item.startDate.split('/')[0];
@@ -50,6 +52,10 @@ const createRecordsList = arr => {
 				start={item.startDate}
 				end={item.endDate}
 				id={item.id}
+				gbColor={colorCount % 2 === 0 ? 'bg-white' : 'bg-t-green'}
+				textColor={
+					colorCount % 2 === 1 ? 'text-white' : 'text-t-gray-dark'
+				}
 			/>
 		);
 		if (index + 1 === sorted.length)
@@ -61,6 +67,7 @@ const createRecordsList = arr => {
 					{register}
 				</ul>
 			);
+		colorCount += 1;
 	});
 	return result;
 };
@@ -129,17 +136,25 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 						className={`text-xl relative -top-0.5 mr-1`}
 					/>
 					<h3 className={`text-md font-medium mb-4 ml-1 mt-3`}>
-						口袋清單
+						口袋名單
 					</h3>
 				</div>
 				{tables.favorites.length ? (
 					<ul className={`bg-white rounded-lg overflow-hidden`}>
-						{tables.favorites.map(item => (
+						{tables.favorites.map((item, index) => (
 							<ListItem
 								setFns={setFns}
 								key={item}
 								location={item}
 								type={'favorite'}
+								gbColor={
+									index % 2 === 0 ? 'bg-white' : 'bg-t-green'
+								}
+								textColor={
+									index % 2 === 1
+										? 'text-white'
+										: 'text-t-gray-dark'
+								}
 							/>
 						))}
 					</ul>
