@@ -23,10 +23,12 @@ const NewRecordPage = ({
 
 	const prams = useParams();
 	const recordId = prams.file_id;
+	const userIdFromParams = prams.user_id;
+	const { user } = userState;
 
 	let record = null;
 	if (action === 'edit') {
-		const records = userState.user?.tables.records;
+		const records = user.tables.records;
 		if (records) record = records.find(item => item.id === recordId);
 	}
 
@@ -66,16 +68,24 @@ const NewRecordPage = ({
 		return (
 			<ErrorPage text={'未選擇地點！'} anchor={`去逛逛地圖`} link="/" />
 		);
-	} else {
+	}
+	if (userIdFromParams !== user.account)
 		return (
 			<ErrorPage
-				statusCode={500}
-				text={'有東西出錯了！'}
-				anchor={`回到首頁`}
-				link="/"
+				statusCode={404}
+				text={`你沒有登入喔`}
+				link="/user/sign"
+				anchor={`請檢查網址，或註冊新會員`}
 			/>
 		);
-	}
+	return (
+		<ErrorPage
+			statusCode={500}
+			text={'有東西出錯了！'}
+			anchor={`回到首頁`}
+			link="/"
+		/>
+	);
 };
 
 export default NewRecordPage;

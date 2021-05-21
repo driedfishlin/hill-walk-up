@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook as bookIcon } from '@fortawesome/free-solid-svg-icons/faBook.js';
@@ -9,6 +10,7 @@ import { faBookmark as solidMarkIcon } from '@fortawesome/free-solid-svg-icons/f
 import ListItem from './component/ListItem';
 import SwitchButton from '../../../shared/components/UIElement/SwitchButton';
 import YearsLine from './component/YearsLine';
+import ErrorPage from '../../../shared/components/ErrorPage';
 
 //SECTION> Function
 // 將 records 資料按時間倒序排列，並於畫面上以年份分區渲染多個 <ul>
@@ -67,13 +69,25 @@ const createRecordsList = arr => {
 type propsType = { userState: Object, setFns: Object };
 
 const ListPages = ({ userState, setFns }: propsType): React.Node => {
+	const userIdFromParams = useParams().user_id;
+	const { user } = userState;
+
 	const [switchListState, setSwitchState] = useState(false);
-	const tables = userState.user.tables;
+	const tables = user.tables;
 	const emptyList = (
 		<div className={`flex items-center justify-center py-28`}>
 			<p>目前沒有紀錄！</p>
 		</div>
 	);
+	if (user.account !== userIdFromParams)
+		return (
+			<ErrorPage
+				statusCode={404}
+				text={`你沒有登入喔`}
+				link="/user/sign"
+				anchor={`請檢查網址，或註冊新會員`}
+			/>
+		);
 	return (
 		<div className={`p-7`}>
 			<div className={`flex justify-between`}>

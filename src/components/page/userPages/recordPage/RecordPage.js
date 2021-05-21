@@ -15,7 +15,19 @@ import { faEdit as editIcon } from '@fortawesome/free-regular-svg-icons/faEdit.j
 type propsType = { mapState: Object, userState: Object };
 const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 	const recordId = useParams().file_id;
-	// console.log('recordId', recordId);
+	const userIdFromParams = useParams().user_id;
+	const { user } = userState;
+
+	if (userIdFromParams !== user.account)
+		return (
+			<ErrorPage
+				statusCode={404}
+				text={`你沒有登入喔`}
+				link="/user/sign"
+				anchor={`請檢查網址，或註冊新會員`}
+			/>
+		);
+
 	if (!recordId)
 		return (
 			<ErrorPage
@@ -26,8 +38,7 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 			/>
 		);
 
-	const records = userState.user?.tables?.records;
-	// console.log('records', records);
+	const records = userState.user.tables?.records;
 	if (!records)
 		return (
 			<ErrorPage
@@ -39,7 +50,6 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 
 	// 沒有 router 早於 dispatch 的問題？
 	const [activeRecord] = records.filter(item => item.id === recordId);
-	// console.log('activeRecord', activeRecord);
 	if (!activeRecord)
 		return (
 			<ErrorPage
@@ -54,7 +64,6 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 	const [mountainInfo] = taiwanPacksInfo.filter(
 		item => item.name === activeMountain
 	);
-	// console.log(activeMountain);
 
 	return (
 		<div className={`relative p-7 z-0`}>

@@ -18,13 +18,13 @@ const UserCard = ({ userState }: { userState: Object }): React.Node => {
 	const avatar = avatarList.find(item => item.id === user.avatar)?.image;
 	return (
 		<div className="bg-white mt-8 mb-2 px-9 py-8 flex justify-between items-center rounded-xl shadow-xl">
-			<div className="h-20 w-20 bg-red-600 rounded-full overflow-hidden">
+			<div className="h-20 w-20 flex-shrink-0 bg-red-600 rounded-full overflow-hidden">
 				{avatar && <img src={avatar} alt="大頭貼" />}
 			</div>
-			<div>
-				<button className="text-xl tracking-widest my-1">
+			<div className={`flex flex-col flex-grow items-start ml-3`}>
+				<h6 className="text-xl tracking-widest my-1">
 					{user.name || '使用者'}
-				</button>
+				</h6>
 				<p className="text-t-gray-normal text-sm my-1 tracking-wide">
 					{user.nickname || '健行初心者'}
 				</p>

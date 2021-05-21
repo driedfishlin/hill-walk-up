@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch => ({
 			account: string,
 			password: string,
 			id: string,
-			nickName: string,
+			nickname: string,
 			signUpTime: string,
 		}) => dispatch(createNewUserAction(data)),
 		// setLogin: (command: boolean): Object =>

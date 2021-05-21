@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 
 import RegularButton from '../../../shared/components/UIElement/RegularButton';
 
@@ -27,7 +27,7 @@ const isDefaultNickname = string =>
 type propsType = {
 	setNewUser?: Function,
 	userState?: Object,
-	setEditUserData: Function,
+	setEditUserData?: Function,
 };
 
 const UserForm = ({
@@ -207,7 +207,7 @@ const UserForm = ({
 								setEditUserData(data);
 							} else {
 								data.account = accountState;
-								data.id = nanoid();
+								// data.id = nanoid();
 								data.signUpTime = new Date()
 									// that's ok ↑
 									.toISOString()

@@ -292,14 +292,11 @@ const initUserState = {
 	user: {
 		name: '王小明',
 		avatar: 'avatar_1',
-		// 考慮改為帳號以便作為辨識符
-		account: 'sdfgresrg',
+		account: 'gg',
 		// 最後要用 hash
 		password: '12345',
-		id: 'gg',
 		nickname: '小明',
 		signUpTime: '',
-		// 非必要 - 資料處理上應該會變麻煩，還是提供好了
 		tables: {
 			records: [
 				{
@@ -344,13 +341,13 @@ type userStateType = {
 		account: string,
 		password: string,
 	},
-	user?: {
+	user: {
 		userTryOut?: Boolean,
 		name: string,
 		avatar: string,
 		account: string,
 		password: string,
-		id: string,
+		// id: string,
 		nickname: string,
 		signUpTime: string,
 		tables: {

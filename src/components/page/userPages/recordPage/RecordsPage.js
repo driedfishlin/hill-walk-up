@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import RecordSearchBar from './component/RecordSearchBar';
 import RecordCard from './component/RecordCard';
@@ -8,9 +9,19 @@ import ErrorPage from '../../../shared/components/ErrorPage';
 
 const RecordsPage = ({ userState }: { userState: Object }): React.Node => {
 	//TODO> lazy logging
-	//TODO> search system
+	const userIdFromParams = useParams().user_id;
+	const { user } = userState;
 	const [inputState, setInputState] = useState('');
-	const records = userState.user?.tables?.records;
+	const records = user.tables?.records;
+	if (userIdFromParams !== user.account)
+		return (
+			<ErrorPage
+				statusCode={404}
+				text={`你沒有登入喔`}
+				link="/user/sign"
+				anchor={`請檢查網址，或註冊新會員`}
+			/>
+		);
 	if (!records || records.length === 0)
 		return (
 			<ErrorPage

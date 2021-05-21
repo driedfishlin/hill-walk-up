@@ -74,7 +74,11 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 					/>
 					{userState.isLogin ? (
 						<Link
-							to="/user/:user_id"
+							to={
+								userState.user.account
+									? `/user/${userState.user.account}`
+									: '/'
+							}
 							onClick={() => setFns.setNavBar(false)}
 						>
 							<UserCard userState={userState} />
@@ -90,6 +94,7 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 				<NavList
 					isFormOpen={NavBarState.isFormOpen}
 					isLoginState={userState.isLogin}
+					userIdFromStore={userState.user.account}
 					setNavBar={setFns.setNavBar}
 				/>
 			</nav>

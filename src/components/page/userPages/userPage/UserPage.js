@@ -1,9 +1,11 @@
 // @flow
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faEdit as editIcon } from '@fortawesome/free-regular-svg-icons/faEdit.js';
+
+import ErrorPage from '../../../shared/components/ErrorPage';
 
 import avatar_1 from '../../../../image/avatars/avatar_1.jpg';
 import avatar_2 from '../../../../image/avatars/avatar_2.jpg';
@@ -20,7 +22,18 @@ const avatarList = [
 type propsType = { userState: Object };
 
 const UserPage = ({ userState }: propsType): React.Node => {
+	const userIdFromParams = useParams().user_id;
 	const { user } = userState;
+	if (userIdFromParams !== user.account)
+		return (
+			<ErrorPage
+				statusCode={404}
+				text={`你沒有登入喔`}
+				link="/user/sign"
+				anchor={`請檢查網址，或註冊新會員`}
+			/>
+		);
+
 	const avatar = avatarList.find(item => item.id === user.avatar)?.image;
 	return (
 		<div className={`p-7 text-t-gray-dark tracking-wide`}>
@@ -40,7 +53,11 @@ const UserPage = ({ userState }: propsType): React.Node => {
 				</h6>
 				<p className={`text-center text-sm mb-10`}>{user.nickname}</p>
 				<Link
-					to="/user/:user_id/edit"
+					to={
+						userIdFromParams
+							? `/user/${userIdFromParams}/edit`
+							: '/'
+					}
 					className={`text-xs text-t-gray-normal w-max focus:outline-none`}
 				>
 					編輯個人資料
