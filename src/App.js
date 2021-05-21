@@ -14,6 +14,7 @@ import Header from './components/shared/Header';
 import HomePage from './components/page/homePage/HomePage';
 import MountainPage from './components/page/mountainPage/MountainPage';
 import UserPages from './components/page/userPages/UserPages';
+import AboutPage from './components/page/aboutPage/AboutPage';
 
 initMap();
 
@@ -33,7 +34,9 @@ const App = function(): React.Node {
 						<Route path="/user">
 							<UserPages />
 						</Route>
-						<Route path="/about" exact />
+						<Route path="/about" exact>
+							<AboutPage />
+						</Route>
 						<Redirect to="/" />
 					</Switch>
 					<NavBar />
