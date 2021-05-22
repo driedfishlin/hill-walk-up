@@ -2,8 +2,7 @@
 import * as React from 'react';
 import { useRef, useEffect } from 'react';
 
-// dummy info
-const data = 50;
+//PART>
 
 const DragButton = ({ buttonRef, bubbleRef, setBubble }): React.Node => {
 	useEffect(() => {
@@ -113,12 +112,14 @@ const DragButton = ({ buttonRef, bubbleRef, setBubble }): React.Node => {
 	);
 };
 
-const ProgressBar = (): React.Node => {
+//PART>
+
+const ProgressBar = ({ rateNum }): React.Node => {
 	return (
 		<div className="relative h-7 w-full rounded-xl bg-t-gray-light shadow-inner overflow-hidden">
 			<div
 				className="absolute bg-t-green shadow-inner top-0 left-0  h-7 w-full rounded-lg transform rotate-360 overflow-hidden"
-				style={{ left: `-${100 - data}%` }}
+				style={{ left: `-${100 - rateNum}%` }}
 			>
 				<div className="w-max">
 					{Array.from({ length: 10 }, (_, index) => (
@@ -137,12 +138,18 @@ const ProgressBar = (): React.Node => {
 	);
 };
 
+//PART>
+
 type propsType = {
 	setBubble: Function,
 	bubbleState: boolean,
 };
 
-const MessageBubble = ({ setBubble, bubbleState }: propsType): React.Node => {
+const MessageBubble = ({
+	setBubble,
+	bubbleState,
+	rateNum,
+}: propsType): React.Node => {
 	const bubble = useRef(null);
 	const button = useRef(null);
 	return (
@@ -156,11 +163,11 @@ const MessageBubble = ({ setBubble, bubbleState }: propsType): React.Node => {
 				<p className="text-sm text-t-gray-dark opacity-70 font-medium mb-2 ml-1">
 					百岳完攻進度：
 				</p>
-				<ProgressBar />
+				<ProgressBar rateNum={rateNum} />
 			</div>
 			<div>
 				<p className="text-xl text-t-green-dark font-medium transform translate-y-1">
-					<span className="text-3xl">{data}</span>
+					<span className="text-3xl">{rateNum}</span>
 					{' %'}
 				</p>
 			</div>

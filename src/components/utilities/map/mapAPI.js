@@ -8,6 +8,7 @@ import store from '../../../store';
 import { createToggleInfoBoxShowAction } from '../../../store';
 import { createToggleBackgroundAction } from '../../../store';
 import { createAddSearchTargetAction } from '../../../store';
+import { createCloseHomePageBubbleAction } from '../../../store';
 
 import TaiwanPeaksList from '../data/100_peaks_of_taiwan';
 
@@ -36,31 +37,6 @@ const setIcon = () => {
 		scale: 0.03,
 		anchor: new window.google.maps.Point(15, 30),
 	};
-};
-
-// create a new map
-export const initMap = () => {
-	// 沒有錯誤處理？
-	loader.load().then(() => {
-		// 視覺上台灣島的中心點
-		const centerPoint = { lat: 23.80546, lng: 120.98001 };
-		// 物件實體是否可存 Redux？ 考慮建立過程包成 hook？
-		GOOGLE_MAP.map = new window.google.maps.Map(
-			document.getElementById('map'),
-			{
-				mapId: 'ab9ecaef5e591b48',
-				center: centerPoint,
-				zoom: 8,
-				minZoom: 8,
-				maxZoom: 13,
-				streetViewControl: false,
-				mapTypeControl: false,
-				fullscreenControl: false,
-			}
-		);
-
-		setIcon();
-	});
 };
 
 export const zoomMap = (
@@ -118,7 +94,8 @@ const onMapMarkClick = event => {
 		default:
 			openInfoBoxDelay = 1600;
 	}
-	// console.log(GOOGLE_MAP.map.getZoom());
+
+	store.dispatch(createCloseHomePageBubbleAction(false));
 
 	zoomMap(position, true);
 	const targetData = TaiwanPeaksList.filter(item => item.name === targetName);
@@ -155,7 +132,6 @@ export const createMapMark = (item: createMapMarkTypes): Object => {
 	if (GOOGLE_MAP.map === null) return console.log('無法取得地圖資料');
 	if (setIcon === null) return console.log('圖標設定錯誤');
 	// 如果已經有該地點，不建立新地標
-	console.log(store.getState());
 	if (store.getState().mapState.searchTargets.includes(item.name)) return;
 	store.dispatch(createAddSearchTargetAction(item.name));
 	const mark = new window.google.maps.Marker({
@@ -170,6 +146,46 @@ export const createMapMark = (item: createMapMarkTypes): Object => {
 	mark.addListener('click', onMapMarkClick);
 	mapMarksList.push(mark);
 	return mark;
+};
+
+// create a new map
+export const initMap = () => {
+	// 沒有錯誤處理？
+	loader.load().then(() => {
+		// 視覺上台灣島的中心點
+		const centerPoint = { lat: 23.80546, lng: 120.98001 };
+		// 物件實體是否可存 Redux？ 考慮建立過程包成 hook？
+		GOOGLE_MAP.map = new window.google.maps.Map(
+			document.getElementById('map'),
+			{
+				mapId: 'ab9ecaef5e591b48',
+				center: centerPoint,
+				zoom: 8,
+				minZoom: 8,
+				maxZoom: 13,
+				streetViewControl: false,
+				mapTypeControl: false,
+				fullscreenControl: false,
+			}
+		);
+
+		setIcon();
+
+		// create first mark when web loaded
+		setTimeout(
+			() =>
+				createMapMark({
+					name: '玉山',
+					coordinate: { lat: 23.470002, lng: 120.957274 },
+					id: 1,
+					level: 'A',
+					elevation: 3952,
+					location: '南投縣、高雄市、嘉義縣',
+					park: '玉山國家公園',
+				}),
+			3000
+		);
+	});
 };
 
 /* connected component */

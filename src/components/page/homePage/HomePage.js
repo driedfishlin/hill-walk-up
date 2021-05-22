@@ -21,6 +21,7 @@ import { createActiveMountainAction } from '../../../store';
 const mapStateToProps = state => ({
 	UIState: state.UIState,
 	mapState: state.mapState,
+	userState: state.userState,
 });
 const mapDispatchToProps = dispatch => {
 	return {
@@ -48,10 +49,27 @@ const mapDispatchToProps = dispatch => {
 };
 
 //SECTION>
-const HomePage = function({ UIState, setFns, mapState }): React.Node {
+
+//SECTION>
+const HomePage = function({
+	UIState,
+	setFns,
+	mapState,
+	userState,
+}): React.Node {
 	const location = useLocation();
 	// 因為地圖依賴於 id="map"，因此必須渲染至 html 上並參與所有路由
 	const isMapShouldShow = location.pathname === '/' ? true : false;
+
+	// for MessageBubble
+	let achievementCount = 0;
+	const records = userState.user.tables?.records;
+	if (records) {
+		const recordTitles = records.map(item => item.location);
+		const setLocation = [...new Set(recordTitles)];
+		achievementCount = setLocation.length;
+	}
+
 	return (
 		<main
 			className={`relative bg-gray-200 flex-grow z-20 ${
@@ -60,10 +78,13 @@ const HomePage = function({ UIState, setFns, mapState }): React.Node {
 		>
 			<Map />
 			<OverlayBackground UIState={UIState} setFns={setFns} />
-			<MessageBubble
-				setBubble={setFns.setBubble}
-				bubbleState={UIState.homePage.bubble}
-			/>
+			{userState.isLogin && (
+				<MessageBubble
+					setBubble={setFns.setBubble}
+					bubbleState={UIState.homePage.bubble}
+					rateNum={achievementCount || 0}
+				/>
+			)}
 			<SearchSystem
 				UIState={UIState}
 				mapState={mapState}
