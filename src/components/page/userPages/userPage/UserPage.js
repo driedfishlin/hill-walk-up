@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit as editIcon } from '@fortawesome/free-regular-svg-icons/faEdit.js';
 
 import ErrorPage from '../../../shared/components/ErrorPage';
+import DataChart from './dataChart/DataChart';
 
 import avatar_1 from '../../../../image/avatars/avatar_1.jpg';
 import avatar_2 from '../../../../image/avatars/avatar_2.jpg';
@@ -68,6 +69,7 @@ const UserPage = ({ userState }: propsType): React.Node => {
 					/>
 				</Link>
 			</div>
+			<DataChart userState={userState} />
 		</div>
 	);
 };

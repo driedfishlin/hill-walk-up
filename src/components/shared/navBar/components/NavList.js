@@ -2,10 +2,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { faFolderOpen as folder } from '@fortawesome/free-solid-svg-icons/faFolderOpen.js';
-import { faFileAlt as file } from '@fortawesome/free-solid-svg-icons/faFileAlt';
-import { faAddressCard as about } from '@fortawesome/free-solid-svg-icons/faAddressCard';
-
 type propsType = {
 	isFormOpen: boolean,
 	isLoginState: boolean,
@@ -49,16 +45,14 @@ const NavList = ({
 				if (item.private && !isLoginState) return;
 				return (
 					<NavLink
+						key={item.text}
 						onClick={() => setNavBar(false)}
 						to={item.link}
 						className="my-0.5 py-1"
 						activeClassName={`text-t-green bg-black bg-opacity-20`}
 						exact
 					>
-						<li
-							key={item.text}
-							className="pl-14 py-2 text-md tracking-widest "
-						>
+						<li className="pl-14 py-2 text-md tracking-widest ">
 							{item.text}
 						</li>
 					</NavLink>
