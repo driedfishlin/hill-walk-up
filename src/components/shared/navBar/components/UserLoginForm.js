@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import RegularButton from '../../components/UIElement/RegularButton';
 
@@ -15,7 +16,7 @@ const onInputChange = (event, callback) => {
 	if (/^[a-zA-Z0-9]{6,15}$/.test(event.target.value)) callback(true);
 };
 
-const UserLoginForm = (): React.Node => {
+const UserLoginForm = ({ setNavBar }: { setNavBar: Function }): React.Node => {
 	const [accountInputState, setAccountInputState] = useState('');
 	const [passwordInputState, setPasswordInputState] = useState('');
 	const [accountValidationState, setAccountValidationState] = useState(true);
@@ -89,12 +90,16 @@ const UserLoginForm = (): React.Node => {
 			<RegularButton customClass={'mt-4'} green>
 				登入
 			</RegularButton>
-			<RegularButton
-				customClass={'mt-4 active:border-t-green active:text-t-green'}
-				transparent
-			>
-				註冊
-			</RegularButton>
+			<Link to={'/user/sign'} onClick={() => setNavBar(false)}>
+				<RegularButton
+					customClass={
+						'mt-4 active:border-t-green active:text-t-green'
+					}
+					transparent
+				>
+					註冊
+				</RegularButton>
+			</Link>
 		</form>
 	);
 };

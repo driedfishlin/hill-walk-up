@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { nanoid } from 'nanoid';
 
 import RegularButton from '../../../shared/components/UIElement/RegularButton';
 
@@ -24,6 +23,16 @@ const isDefaultNickname = string =>
 	string === defaultNickname[1] ||
 	string === defaultNickname[2];
 
+// input validation Function
+const onInputBlurValidate = (event, callback) => {
+	if (!/^[a-zA-Z0-9]{6,15}$/.test(event.target.value)) callback(false);
+};
+const onInputChangeValidate = (event, callback) => {
+	if (/^[a-zA-Z0-9]{6,15}$/.test(event.target.value)) callback(true);
+};
+
+//SECTION> Component
+
 type propsType = {
 	setNewUser?: Function,
 	userState?: Object,
@@ -37,6 +46,7 @@ const UserForm = ({
 }: propsType): React.Node => {
 	const user = userState?.user;
 
+	// input value state
 	const [activeAvatar, setActiveAvatar] = useState(user?.avatar || null);
 	const [userNameState, setUserNameState] = useState(user?.name || '');
 	const [accountState, setAccountState] = useState(user?.account || '');
@@ -53,6 +63,26 @@ const UserForm = ({
 		setAccountState('');
 		setPasswordState('');
 		setNicknameState('');
+	};
+
+	// input validation state
+	const [nameValidateState, setNameValidateState] = useState(true);
+	const [nicknameValidateState, setNicknameValidateState] = useState(true);
+	const [accountValidateState, setAccountValidateState] = useState(true);
+	const [passwordValidateState, setPasswordValidateState] = useState(true);
+
+	// 用於表單未驗證通過時鎖定按鈕
+	let validationIsValid: boolean = false;
+	// 表單輸入的使用者防呆提示
+	const errorMessage = () => {
+		if (!accountValidateState || !passwordValidateState)
+			return '帳號與密碼為 6-15 位英文字母或數字';
+		if (!nameValidateState) return '未填寫使用者名稱';
+		if (!nicknameValidateState) return '未填寫稱號';
+		if (!userNameState || !accountState || !passwordState) return;
+		if (!activeAvatar) return '未選擇大頭貼';
+		validationIsValid = true;
+		return '';
 	};
 
 	return (
@@ -87,9 +117,19 @@ const UserForm = ({
 			<input
 				id="sign_up_input_username"
 				value={userNameState}
-				onChange={event => setUserNameState(event.target.value)}
+				onBlur={event => {
+					if (!event.target.value.length) setNameValidateState(false);
+				}}
+				onChange={event => {
+					setUserNameState(event.target.value);
+					if (event.target.value.length) setNameValidateState(true);
+				}}
 				type="text"
-				className={`w-full rounded-md h-10 px-3 mb-8 border-none focus:outline-none focus:ring-t-green`}
+				className={`w-full rounded-md h-10 px-3 mb-8 ${
+					nameValidateState
+						? 'border-none focus:outline-none focus:ring-t-green'
+						: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
+				}`}
 			/>
 			<label className={`block mb-5 text-sm`}>．稱號</label>
 			<div className={`flex flex-wrap mb-3`}>
@@ -97,7 +137,10 @@ const UserForm = ({
 					<div className={`flex items-center`} key={item}>
 						<input
 							checked={nicknameState === item ? true : false}
-							onChange={() => setNicknameState(item)}
+							onChange={() => {
+								setNicknameState(item);
+								setNicknameValidateState(true);
+							}}
 							id={`sign_up_radio_type_${index + 1}`}
 							type="radio"
 							name={`nickname`}
@@ -148,9 +191,18 @@ const UserForm = ({
 					onChange={event => {
 						setNicknameInputState(event.target.value);
 						setNicknameState('自訂');
+						setNicknameValidateState(true);
+					}}
+					onBlur={event => {
+						if (!event.target.value)
+							setNicknameValidateState(false);
 					}}
 					type="text"
-					className={`w-full text-center rounded-full h-10 px-3  border-none focus:outline-none focus:ring-t-green`}
+					className={`w-full text-center rounded-full h-10 px-3 ${
+						nicknameValidateState
+							? 'border-none focus:outline-none focus:ring-t-green'
+							: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
+					}`}
 				/>
 			</div>
 			<label
@@ -171,9 +223,19 @@ const UserForm = ({
 				<input
 					id="sign_up_input_account"
 					value={accountState}
-					onChange={event => setAccountState(event.target.value)}
+					onChange={event => {
+						setAccountState(event.target.value);
+						onInputChangeValidate(event, setAccountValidateState);
+					}}
+					onBlur={event =>
+						onInputBlurValidate(event, setAccountValidateState)
+					}
 					type="text"
-					className={`w-full rounded-md h-10 px-3 mb-8 border-none focus:outline-none focus:ring-t-green`}
+					className={`w-full rounded-md h-10 px-3 mb-8 ${
+						accountValidateState
+							? 'border-none focus:outline-none focus:ring-t-green'
+							: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
+					}`}
 				/>
 			)}
 			<label
@@ -185,17 +247,37 @@ const UserForm = ({
 			<input
 				id="sign_up_input_password"
 				value={passwordState}
-				onChange={event => setPasswordState(event.target.value)}
+				onChange={event => {
+					setPasswordState(event.target.value);
+					onInputChangeValidate(event, setPasswordValidateState);
+				}}
+				onBlur={event =>
+					onInputBlurValidate(event, setPasswordValidateState)
+				}
 				type="password"
-				className={`w-full rounded-md h-10 px-3 mb-10 border-none focus:outline-none focus:ring-t-green`}
+				className={`w-full rounded-md h-10 px-3 mb-4 ${
+					passwordValidateState
+						? 'border-none focus:outline-none focus:ring-t-green'
+						: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
+				}`}
 			/>
+			<p className={`text-sm text-red-500 text-center mb-4 h-5`}>
+				{errorMessage()}
+			</p>
 			<div className={`grid grid-rows-2 gap-3`}>
 				<Link
+					className={
+						validationIsValid
+							? ''
+							: `pointer-events-none opacity-50`
+					}
 					to={`/user/${user?.account ? user?.account : accountState}`}
 				>
 					<RegularButton
 						green
 						clickFn={() => {
+							if (!accountValidateState && passwordValidateState)
+								return;
 							const data = {
 								name: userNameState,
 								avatar: activeAvatar,
@@ -205,11 +287,10 @@ const UserForm = ({
 										? nicknameInputState
 										: nicknameState,
 							};
-							if (user) {
+							if (user && setEditUserData) {
 								setEditUserData(data);
-							} else {
+							} else if (setNewUser) {
 								data.account = accountState;
-								// data.id = nanoid();
 								data.signUpTime = new Date()
 									// that's ok ↑
 									.toISOString()

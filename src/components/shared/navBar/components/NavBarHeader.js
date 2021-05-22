@@ -56,7 +56,7 @@ const NavBarHeader = ({
 						<button
 							onClick={() => {
 								setLogOut();
-								setNavBar(false);
+								// setNavBar(false);
 							}}
 							className={buttonClass}
 						>

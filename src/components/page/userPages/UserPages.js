@@ -64,6 +64,7 @@ const UserPages = ({ userState, mapState, setFns }: propsType): React.Node => {
 		<>
 			<Switch>
 				<Route path="/user/sign" exact>
+					{userState.isLogin ? <Redirect to="/" /> : null}
 					<SignUpPage
 						setNewUser={setFns.setNewUser}
 						userState={userState}

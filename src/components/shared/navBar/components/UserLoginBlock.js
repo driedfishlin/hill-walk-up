@@ -20,7 +20,7 @@ const UserLoginBlock = ({
 	return (
 		<div>
 			{NavBarState.isFormOpen ? (
-				<UserLoginForm />
+				<UserLoginForm setNavBar={setNavBar} />
 			) : (
 				<UserLoginEntry
 					setLoginForm={setLoginForm}
