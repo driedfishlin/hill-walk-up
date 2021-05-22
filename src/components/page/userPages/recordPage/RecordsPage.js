@@ -44,7 +44,11 @@ const RecordsPage = ({ userState }: { userState: Object }): React.Node => {
 			<RecordSearchBar useState={[inputState, setInputState]} />
 			{filteredList.length ? (
 				filteredList.map(item => (
-					<RecordCard key={item.id} record={item} />
+					<RecordCard
+						key={item.id}
+						record={item}
+						userIdFromParams={userIdFromParams}
+					/>
 				))
 			) : (
 				<div className={`px-7 py-20`}>

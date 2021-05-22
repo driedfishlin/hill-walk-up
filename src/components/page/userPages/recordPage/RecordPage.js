@@ -70,7 +70,7 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 			<h2 className={`h2-style`}>我的紀錄</h2>
 			<MountainCard
 				anchor={'所有紀錄'}
-				link={'/user/:user_id/records'}
+				link={`/user/${userIdFromParams}/records`}
 				name={mountainInfo?.name}
 				elevation={mountainInfo?.elevation}
 				coordinate={mountainInfo?.coordinate}

@@ -5,10 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faMapMarkerAlt as markerIcon } from '@fortawesome/free-solid-svg-icons/faMapMarkerAlt';
 
-const RecordCard = ({ record }: { record: Object }): React.Node => {
+const RecordCard = ({
+	record,
+	userIdFromParams,
+}: {
+	record: Object,
+	userIdFromParams: string,
+}): React.Node => {
 	return (
 		<Link
-			to={`/user/:user_id/records/${record.id}`}
+			to={`/user/${userIdFromParams}/records/${record.id}`}
 			onClick={() => document.querySelector('body')?.scrollTo({ top: 0 })}
 			className={`block bg-white rounded-xl shadow-md mt-7 mx-0.5  tracking-wide overflow-hidden`}
 		>
