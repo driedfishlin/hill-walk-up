@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import RegularButton from '../../../shared/components/UIElement/RegularButton';
 
@@ -45,6 +45,7 @@ const UserForm = ({
 	setEditUserData,
 }: propsType): React.Node => {
 	const user = userState?.user;
+	const history = useHistory();
 
 	// input value state
 	const [activeAvatar, setActiveAvatar] = useState(user?.avatar || null);
@@ -306,9 +307,16 @@ const UserForm = ({
 						{user ? '確認修改' : '註冊'}
 					</RegularButton>
 				</Link>
-				<Link to={`/`} onClick={() => resetForm()}>
-					<RegularButton transparent>取消</RegularButton>
-				</Link>
+				<RegularButton
+					clickFn={() => {
+						resetForm();
+						history.go(-1);
+						document.querySelector('body').scrollTo({ top: 0 });
+					}}
+					transparent
+				>
+					取消
+				</RegularButton>
 			</div>
 		</form>
 	);

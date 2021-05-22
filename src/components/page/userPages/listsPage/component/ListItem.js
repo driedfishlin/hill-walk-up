@@ -27,7 +27,7 @@ const ListItem = ({
 }: propsType): React.Node | null => {
 	if (type === 'record')
 		return (
-			<li className={`filter drop-shadow-sm ${gbColor} mb-0.5`}>
+			<li className={`filter drop-shadow-sm ${gbColor} `}>
 				<Link to={{ pathname: `/user/:user_id/records/${id || ''}` }}>
 					<div
 						className={`flex justify-between items-end px-2 py-3 ${textColor}`}
@@ -44,7 +44,7 @@ const ListItem = ({
 		);
 	if (type === 'favorite')
 		return (
-			<li className={`filter drop-shadow-sm ${gbColor} mb-0.5`}>
+			<li className={`filter drop-shadow-sm ${gbColor} `}>
 				<div
 					className={`flex justify-between items-end px-2 py-3 ${textColor}`}
 				>

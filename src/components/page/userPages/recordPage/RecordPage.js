@@ -105,7 +105,7 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 									?.scrollTo({ top: 0 })
 							}
 							to={{
-								pathname: `/user/:user_id/records/${recordId}/edit`,
+								pathname: `/user/${userIdFromParams}/records/${recordId}/edit`,
 								state: {
 									action: `edit`,
 								},

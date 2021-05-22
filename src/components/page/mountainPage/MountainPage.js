@@ -72,6 +72,7 @@ const MountainPage = ({
 				{userState.isLogin ? (
 					<IconArea
 						isFavorite={isFavorite}
+						userState={userState}
 						setFns={setFns}
 						activeMountainInfo={activeMountainInfo[0]}
 					/>

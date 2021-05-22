@@ -3,9 +3,19 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import RegularButton from '../../../../shared/components/UIElement/RegularButton';
 
-type propsType = { setState: Function, setFns: Object, id: string };
+type propsType = {
+	setState: Function,
+	setFns: Object,
+	id: string,
+	userIdFromParams: string,
+};
 
-const WarningBoard = ({ setState, setFns, id }: propsType): React.Node => {
+const WarningBoard = ({
+	setState,
+	setFns,
+	id,
+	userIdFromParams,
+}: propsType): React.Node => {
 	return (
 		<div className={`fixed top-0 left-0 w-screen h-screen`}>
 			<div
@@ -22,7 +32,7 @@ const WarningBoard = ({ setState, setFns, id }: propsType): React.Node => {
 					</p>
 					<div className={`mt-3`}>
 						<Link
-							to={'/user/:user_id/records'}
+							to={`/user/${userIdFromParams}/records`}
 							onClick={() => {
 								setFns.setRemoveOldRecord(id);
 								setState(false);

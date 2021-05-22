@@ -33,7 +33,7 @@ const createRecordsList = arr => {
 			let ul = (
 				<ul
 					key={year + '_ul'}
-					className={`bg-white rounded-lg overflow-hidden mb-4`}
+					className={`bg-white rounded-lg overflow-hidden mb-4 shadow-md`}
 				>
 					{children}
 				</ul>
@@ -52,7 +52,7 @@ const createRecordsList = arr => {
 				start={item.startDate}
 				end={item.endDate}
 				id={item.id}
-				gbColor={colorCount % 2 === 0 ? 'bg-white' : 'bg-t-green'}
+				gbColor={colorCount % 2 === 0 ? 'bg-white' : 'bg-t-gray-dark'}
 				textColor={
 					colorCount % 2 === 1 ? 'text-white' : 'text-t-gray-dark'
 				}
@@ -61,7 +61,7 @@ const createRecordsList = arr => {
 		if (index + 1 === sorted.length)
 			result.push(
 				<ul
-					className={`bg-white rounded-lg overflow-hidden`}
+					className={`bg-white rounded-lg overflow-hidden shadow-md`}
 					key={year + '_ul'}
 				>
 					{register}
@@ -140,7 +140,9 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 					</h3>
 				</div>
 				{tables.favorites.length ? (
-					<ul className={`bg-white rounded-lg overflow-hidden`}>
+					<ul
+						className={`bg-white rounded-lg overflow-hidden shadow-md`}
+					>
 						{tables.favorites.map((item, index) => (
 							<ListItem
 								setFns={setFns}
@@ -148,7 +150,9 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 								location={item}
 								type={'favorite'}
 								gbColor={
-									index % 2 === 0 ? 'bg-white' : 'bg-t-green'
+									index % 2 === 0
+										? 'bg-white'
+										: 'bg-t-gray-dark'
 								}
 								textColor={
 									index % 2 === 1

@@ -283,57 +283,58 @@ type UIStateType = {
 };
 // 紀錄使用者個人狀態的 state
 const initUserState = {
-	isLogin: true,
+	isLogin: false,
 	// userTryOut: true,
 	loginFormInput: {
 		account: '',
 		password: '',
 	},
-	user: {
-		name: '王小明',
-		avatar: 'avatar_1',
-		account: 'gg',
-		// 最後要用 hash
-		password: '12345',
-		nickname: '小明',
-		signUpTime: '',
-		tables: {
-			records: [
-				{
-					location: '玉山',
-					title: '我是標題',
-					startDate: '2020/01/01',
-					endDate: '2020/01/01',
-					finish: true,
-					id: '0dsd543fa',
-					text:
-						'這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容',
-				},
-				{
-					location: '玉山',
-					title: '我是標題',
-					startDate: '2021/01/01',
-					endDate: '2021/01/01',
-					finish: true,
-					id: 'fghfgdhrtarw',
-					text:
-						'這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容',
-				},
-				{
-					location: '雪山',
-					title:
-						'我是標題我是標題我是標題我是標題我是標題我是標題我是標題',
-					startDate: '2020/01/01',
-					endDate: '2020/01/01',
-					finish: true,
-					id: 'erewqrqw3',
-					text:
-						'這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容',
-				},
-			],
-			favorites: ['玉山', '玉山東峰', '石門山'],
-		},
-	},
+	user: {},
+	// user: {
+	// 	name: '王小明',
+	// 	avatar: 'avatar_1',
+	// 	account: 'gg',
+	// 	// 最後要用 hash
+	// 	password: '12345',
+	// 	nickname: '小明',
+	// 	signUpTime: '',
+	// 	tables: {
+	// 		records: [
+	// 			{
+	// 				location: '玉山',
+	// 				title: '我是標題',
+	// 				startDate: '2020/01/01',
+	// 				endDate: '2020/01/01',
+	// 				finish: true,
+	// 				id: '0dsd543fa',
+	// 				text:
+	// 					'這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容',
+	// 			},
+	// 			{
+	// 				location: '玉山',
+	// 				title: '我是標題',
+	// 				startDate: '2021/01/01',
+	// 				endDate: '2021/01/01',
+	// 				finish: true,
+	// 				id: 'fghfgdhrtarw',
+	// 				text:
+	// 					'這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容',
+	// 			},
+	// 			{
+	// 				location: '雪山',
+	// 				title:
+	// 					'我是標題我是標題我是標題我是標題我是標題我是標題我是標題',
+	// 				startDate: '2020/01/01',
+	// 				endDate: '2020/01/01',
+	// 				finish: true,
+	// 				id: 'erewqrqw3',
+	// 				text:
+	// 					'這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容這邊是內容',
+	// 			},
+	// 		],
+	// 		favorites: ['玉山', '玉山東峰', '石門山'],
+	// 	},
+	// },
 };
 type userStateType = {
 	isLogin: boolean,
@@ -343,14 +344,14 @@ type userStateType = {
 	},
 	user: {
 		userTryOut?: Boolean,
-		name: string,
-		avatar: string,
-		account: string,
-		password: string,
+		name?: string,
+		avatar?: string,
+		account?: string,
+		password?: string,
 		// id: string,
-		nickname: string,
-		signUpTime: string,
-		tables: {
+		nickname?: string,
+		signUpTime?: string,
+		tables?: {
 			records: Array<{
 				location: string,
 				title: string,

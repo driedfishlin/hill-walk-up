@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import store from '../../../../store';
-import { useLocation, Link, useHistory } from 'react-router-dom';
+import { useLocation, Link, useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import SwitchButton from '../../../shared/components/UIElement/SwitchButton';
@@ -22,7 +22,8 @@ const recordsList = store.getState().userState.user.tables?.records;
 // 用於檢查是否有重複 ID
 const createNewId = () => {
 	let newId = nanoid();
-	if (recordsList.includes(item => item.id === newId)) createNewId();
+	if (recordsList && recordsList.includes(item => item.id === newId))
+		createNewId();
 	return newId;
 };
 
@@ -104,6 +105,7 @@ const EditRecordForm = ({
 	oldRecord,
 	useWarningBoardState,
 }: propsType): React.Node => {
+	const userIdFromParams = useParams().user_id;
 	const [warningBoardState, setWarningBoardState] = useWarningBoardState;
 	const { setNewRecord, setUpdateRecord } = setFns;
 	const {
@@ -274,7 +276,7 @@ const EditRecordForm = ({
 						}`}
 						replace
 						to={{
-							pathname: `/user/:user_id/records/${id}`,
+							pathname: `/user/${userIdFromParams}/records/${id}`,
 							state: { from: currentPath },
 						}}
 					>
@@ -331,6 +333,7 @@ const EditRecordForm = ({
 					setState={setWarningBoardState}
 					setFns={setFns}
 					id={id}
+					userIdFromParams={userIdFromParams}
 				/>
 			)}
 		</>

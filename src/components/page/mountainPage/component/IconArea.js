@@ -13,11 +13,14 @@ const IconArea = ({
 	activeMountainInfo,
 	setFns,
 	isFavorite,
+	userState,
 }: {
 	activeMountainInfo: Object,
 	setFns: Object,
 	isFavorite: boolean,
+	userState: Object,
 }): React.Node => {
+	const userAccount = userState.user.account;
 	return (
 		<div
 			className={`text-3xl mr-2 flex justify-end items-center text-t-gray-normal`}
@@ -50,7 +53,7 @@ const IconArea = ({
 			</button>
 			<Link
 				to={{
-					pathname: '/user/:user_id/records/new',
+					pathname: `/user/${userAccount}/records/new`,
 					state: {
 						from: `/mountains/${activeMountainInfo.name}`,
 						location: activeMountainInfo.name,
