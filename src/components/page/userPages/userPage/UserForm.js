@@ -190,7 +190,9 @@ const UserForm = ({
 				className={`w-full rounded-md h-10 px-3 mb-10 border-none focus:outline-none focus:ring-t-green`}
 			/>
 			<div className={`grid grid-rows-2 gap-3`}>
-				<Link to={`/`}>
+				<Link
+					to={`/user/${user?.account ? user?.account : accountState}`}
+				>
 					<RegularButton
 						green
 						clickFn={() => {
