@@ -28,7 +28,7 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 			/>
 		);
 
-	if (!recordId)
+	if (!recordId || !userIdFromParams)
 		return (
 			<ErrorPage
 				text={'發生內部錯誤'}

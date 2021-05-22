@@ -11,14 +11,14 @@ import WarningBoard from './component/WarningBoard';
 
 //SECTION> CSS class
 const label_class = `block text-sm mb-2 mt-5 font-medium`;
-const input_class = `w-full focus:outline-none border-none`;
-const sm_input_class = `focus:ring-t-green rounded-lg my-1`;
+const input_class = `w-full focus:outline-none`;
+const sm_input_class = `rounded-lg my-1`;
 const record_class = `bg-transparent px-0 focus:ring-0 focus:border-0 py-2`;
 const hr_class = `border-t-gray-dark`;
 const button_class = `my-2`;
 
 //SECTION> Function
-const recordsList = store.getState().userState.user?.tables?.records;
+const recordsList = store.getState().userState.user.tables?.records;
 // 用於檢查是否有重複 ID
 const createNewId = () => {
 	let newId = nanoid();
@@ -26,7 +26,41 @@ const createNewId = () => {
 	return newId;
 };
 
-// 自動分割日期字串
+// single date input validation (檢查格式與數值是否合法)
+const dateValidate = input => {
+	if (input.length < 10) return false;
+	const filteredString: Array<string> = input.split('/');
+	const newDate: Array<string> = new Date()
+		.toISOString()
+		.split('T')[0]
+		.split('-');
+	const year: number = Number(filteredString[0]);
+	const month: number = Number(filteredString[1]);
+	const day: number = Number(filteredString[2]);
+	if (!year || year < 1900 || year > +newDate[0]) return false;
+	if (!month || month < 1 || month > 12) return false;
+	if (!day || day < 1 || day > 31) return false;
+	if (year === +newDate[0] && month > +newDate[1]) return false;
+	if (year === +newDate[0] && month === +newDate[1] && day > +newDate[2])
+		return false;
+
+	return true;
+};
+
+// validate both date input（檢查日期先後順序有效）
+const dateValidateBoth = (
+	startDate: string,
+	endDate: string,
+	callback: Array<Function>
+) => {
+	if (startDate.length === 0 || endDate.length === 0) return;
+	const startNum = Number(startDate.split('/').join(''));
+	const endNum = Number(endDate.split('/').join(''));
+	if (endNum - startNum < 0) return callback.forEach(item => item(false));
+	callback.forEach(item => item(true));
+};
+
+// 填寫日期表單時自動分割字串
 const onDateInputChange = (event, preState) => {
 	const input = event.target.value;
 	const filteredString = input
@@ -38,7 +72,9 @@ const onDateInputChange = (event, preState) => {
 	if (arr.length >= 5) arr.splice(4, 0, '/');
 	if (arr.length >= 8) arr.splice(7, 0, '/');
 	if (arr.length > 10) arr.length = 10;
-	return arr.join('');
+	const result = arr.join('');
+	// dateValidate(result);
+	return result;
 };
 
 //SECTION> Component Type
@@ -59,6 +95,7 @@ type propsType = {
 	// null 傳進來會 crash ↓
 	oldRecord?: oldRecordType | {} | null,
 };
+
 //SECTION> Component
 const EditRecordForm = ({
 	action,
@@ -76,6 +113,8 @@ const EditRecordForm = ({
 		text,
 		finish,
 	}: oldRecordType = oldRecord;
+
+	// input state
 	const [finishState, setFinishState] = useState(
 		action === 'edit' ? finish || false : false
 	);
@@ -85,13 +124,34 @@ const EditRecordForm = ({
 	const [startDateState, setStartDateState] = useState(
 		action === 'edit' ? startDate || '' : ''
 	);
-	// console.log(startDateState);
 	const [endDateState, setEndDateState] = useState(
 		action === 'edit' ? endDate || '' : ''
 	);
 	const [textState, setTextState] = useState(
 		action === 'edit' ? text || '' : ''
 	);
+
+	// input validation state
+	const [titleValidateState, setTitleValidateState] = useState(true);
+	const [startDateValidateState, setStartValidateState] = useState(true);
+	const [endDateValidateState, setEndValidateState] = useState(true);
+
+	const errorMessage = () => {
+		if (!titleValidateState) return '請填入標題';
+		if (!startDateValidateState || !endDateValidateState)
+			return '請填寫正確的時間格式';
+		return '';
+	};
+	const submitButtonVisible = () => {
+		if (
+			!titleValidateState ||
+			!startDateValidateState ||
+			!endDateValidateState
+		)
+			return false;
+		if (!titleState || !startDateState || !endDateState) return false;
+		return true;
+	};
 
 	// 'new' or 'edit' from state of Link.
 	const currentPath = useLocation().state?.action;
@@ -118,44 +178,80 @@ const EditRecordForm = ({
 				<label className={`${label_class}`}>標題</label>
 				<input
 					type="text"
-					className={`${input_class} ${sm_input_class}`}
+					className={`${input_class} ${sm_input_class} ${
+						titleValidateState
+							? 'border-transparent focus:border-t-green focus:ring-t-green'
+							: 'focus:ring-red-500 border-red-500 focus:border-red-500'
+					}`}
 					value={titleState}
 					onChange={event => {
 						let title = event.target.value;
-						if (title > 20) title = title.slice(0, 20);
+						if (title.length > 20) title = title.slice(0, 20);
 						setTitleState(title);
+						if (title.length > 0) setTitleValidateState(true);
+					}}
+					onBlur={event => {
+						if (event.target.value.length === 0)
+							setTitleValidateState(false);
 					}}
 				/>
 				<label className={`${label_class}`}>日期區間</label>
 				<input
-					//TODO> 須實作驗證：小於目前日期、出發日小於回程日
 					type="text"
-					className={`${input_class} ${sm_input_class}`}
+					className={`${input_class} ${sm_input_class} ${
+						startDateValidateState
+							? 'border-transparent focus:border-t-green focus:ring-t-green'
+							: 'focus:ring-red-500 border-1 border-red-500 focus:border-red-500'
+					}`}
 					value={startDateState}
 					placeholder={new Date().toISOString().split('T')[0]}
-					onChange={event =>
+					onChange={event => {
 						setStartDateState(prevState =>
 							onDateInputChange(event, prevState)
-						)
-					}
+						);
+						if (dateValidate(event.target.value))
+							setStartValidateState(true);
+					}}
+					onBlur={event => {
+						if (!dateValidate(event.target.value))
+							return setStartValidateState();
+						dateValidateBoth(startDateState, endDateState, [
+							setStartValidateState,
+							setEndValidateState,
+						]);
+					}}
 				/>
 				<input
 					type="text"
-					className={`${input_class} ${sm_input_class}`}
+					className={`${input_class} ${sm_input_class} ${
+						endDateValidateState
+							? 'border-transparent focus:border-t-green focus:ring-t-green'
+							: 'focus:ring-red-500 border-1 border-red-500 focus:border-red-500'
+					}`}
 					value={endDateState}
 					placeholder={new Date().toISOString().split('T')[0]}
-					onChange={event =>
+					onChange={event => {
 						setEndDateState(prevState =>
 							onDateInputChange(event, prevState)
-						)
-					}
+						);
+						if (dateValidate(event.target.value))
+							setEndValidateState(true);
+					}}
+					onBlur={event => {
+						if (!dateValidate(event.target.value))
+							return setEndValidateState();
+						dateValidateBoth(startDateState, endDateState, [
+							setStartValidateState,
+							setEndValidateState,
+						]);
+					}}
 				/>
 				<label className={`${label_class}`}>紀錄</label>
 				<hr className={`${hr_class} mt-3`} />
 				<textarea
 					rows="6"
 					placeholder="寫下你的健行記述吧！"
-					className={`${input_class} ${record_class}`}
+					className={`${input_class} ${record_class}  border-none`}
 					value={textState}
 					onChange={event => {
 						let text = event.target.value;
@@ -166,8 +262,16 @@ const EditRecordForm = ({
 				<p className={`float-right text-xs`}>{textState.length}/500</p>
 				<p className="clear-both" />
 				<hr className={`${hr_class} mt-0.5 mb-7`} />
+				<p className={`text-center text-red-500 text-sm`}>
+					{errorMessage()}
+				</p>
 				<div className={`p-3`}>
 					<Link
+						className={`${
+							submitButtonVisible()
+								? ''
+								: 'opacity-50 pointer-events-none'
+						}`}
 						replace
 						to={{
 							pathname: `/user/:user_id/records/${id}`,
