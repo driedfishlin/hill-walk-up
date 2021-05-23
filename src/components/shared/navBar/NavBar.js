@@ -67,7 +67,7 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 						: `transform translate-x-full`
 				} transition-transform`}
 			>
-				<div className="p-8">
+				<div className="px-7 pt-8 pb-5 h-auto max-h-full">
 					<NavBarHeader
 						isLoginState={userState.isLogin}
 						NavBarState={NavBarState}
@@ -75,6 +75,12 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 						setLoginForm={setFns.setLoginForm}
 						setLogOut={setFns.setLogOut}
 					/>
+				</div>
+				{console.log(NavBarState.isFormOpen)}
+				<div
+					className={`px-7 pt-3 pb-7 ${NavBarState.isFormOpen &&
+						'overflow-y-auto'}`}
+				>
 					{userState.isLogin ? (
 						<Link
 							to={

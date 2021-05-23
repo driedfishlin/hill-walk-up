@@ -17,7 +17,7 @@ const UserCard = ({ userState }: { userState: Object }): React.Node => {
 	const { user } = userState;
 	const avatar = avatarList.find(item => item.id === user.avatar)?.image;
 	return (
-		<div className="bg-white mt-8 mb-2 px-9 py-8 flex justify-between items-center rounded-xl shadow-xl">
+		<div className="bg-white mt-3 px-9 py-8 flex justify-between items-center rounded-xl shadow-xl">
 			<div className="h-20 w-20 flex-shrink-0 bg-red-600 rounded-full overflow-hidden">
 				{avatar && <img src={avatar} alt="大頭貼" />}
 			</div>

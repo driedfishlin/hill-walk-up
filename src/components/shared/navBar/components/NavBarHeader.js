@@ -32,7 +32,7 @@ const NavBarHeader = ({
 	setLogOut,
 }: propsType): React.Node => {
 	return (
-		<div className="flex items-center justify-between mb-8">
+		<div className="flex items-center justify-between">
 			<FontAwesomeIcon
 				onClick={() => {
 					setNavBar(false);
