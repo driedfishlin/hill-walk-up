@@ -23,6 +23,7 @@ const REMOVE_FAVORITE_MOUNTAIN = 'REMOVE_FAVORITE_MOUNTAIN';
 const DELETE_OLD_RECORD = 'DELETE_OLD_RECORD';
 const CREATE_NEW_USER = 'CREATE_NEW_USER';
 const EDIT_USER_DATA = 'EDIT_USER_DATA';
+const GUEST_MODE = 'GUEST_MODE';
 
 type ActionsType =
 	| { type: 'TOGGLE_NAV_BAR', command: boolean }
@@ -93,7 +94,8 @@ type ActionsType =
 				password: string,
 				nickname: string,
 			},
-	  };
+	  }
+	| { type: 'GUEST_MODE', data: Object };
 
 // toggle navigation bar display
 export const createToggleNavBarAction = (command: boolean): ActionsType => ({
@@ -229,6 +231,10 @@ export const createEditUserDataAction = (data: {
 	nickname: string,
 }): ActionsType => ({
 	type: EDIT_USER_DATA,
+	data,
+});
+export const createGuestModeAction = (data: Object): ActionsType => ({
+	type: GUEST_MODE,
 	data,
 });
 
@@ -432,8 +438,8 @@ const userStateReducer = (
 ) => {
 	let newState = JSON.parse(JSON.stringify(prevState));
 	switch (action.type) {
-		// case TOGGLE_IS_LOGIN:
-		// 	return { ...prevState, isLogin: action.command };
+		case TOGGLE_IS_LOGIN:
+			return { ...prevState, isLogin: action.command };
 		case USER_LOGOUT:
 			return { ...prevState, isLogin: false, user: {} };
 		case CREATE_NEW_RECORD:
@@ -486,6 +492,9 @@ const userStateReducer = (
 		}
 		case EDIT_USER_DATA:
 			newState.user = { ...newState.user, ...action.data };
+			return newState;
+		case GUEST_MODE:
+			newState.user = action.data;
 			return newState;
 		default:
 			return prevState;

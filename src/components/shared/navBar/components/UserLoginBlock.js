@@ -8,23 +8,18 @@ type propsType = {
 		isFormOpen: boolean,
 		isOpen: boolean,
 	},
-	setNavBar: Function,
-	setLoginForm: Function,
+	setFns: Object,
 };
 
-const UserLoginBlock = ({
-	setNavBar,
-	NavBarState,
-	setLoginForm,
-}: propsType): React.Node => {
+const UserLoginBlock = ({ NavBarState, setFns }: propsType): React.Node => {
 	return (
 		<div>
 			{NavBarState.isFormOpen ? (
-				<UserLoginForm setNavBar={setNavBar} />
+				<UserLoginForm setFns={setFns} />
 			) : (
 				<UserLoginEntry
-					setLoginForm={setLoginForm}
-					setNavBar={setNavBar}
+					setLoginForm={setFns.setLoginForm}
+					setNavBar={setFns.setNavBar}
 				/>
 			)}
 		</div>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import RegularButton from '../../components/UIElement/RegularButton';
+import GuestMode from './GuestMode';
 
 const labelClass = `block text-t-gray-dark mb-2 text-sm`;
 const inputClass = `block w-full h-10 mb-3 border opacity-80 rounded-lg shadow-inner focus:outline-none focus:ring-1`;
@@ -16,7 +17,7 @@ const onInputChange = (event, callback) => {
 	if (/^[a-zA-Z0-9]{6,15}$/.test(event.target.value)) callback(true);
 };
 
-const UserLoginForm = ({ setNavBar }: { setNavBar: Function }): React.Node => {
+const UserLoginForm = ({ setFns }: { setFns: Object }): React.Node => {
 	const [accountInputState, setAccountInputState] = useState('');
 	const [passwordInputState, setPasswordInputState] = useState('');
 	const [accountValidationState, setAccountValidationState] = useState(true);
@@ -80,6 +81,7 @@ const UserLoginForm = ({ setNavBar }: { setNavBar: Function }): React.Node => {
 					}`
 				}
 			/>
+			<GuestMode setFns={setFns} />
 			<p
 				className={`text-xs text-red-500 pt-1 ${accountValidationState &&
 					passwordValidationState &&
@@ -87,10 +89,20 @@ const UserLoginForm = ({ setNavBar }: { setNavBar: Function }): React.Node => {
 			>
 				請輸入 6 至 15 個字元的英文字母或數字
 			</p>
-			<RegularButton customClass={'mt-4'} green>
+			{/* 因未提供會員功能，故鎖定按鈕 */}
+			<RegularButton
+				customClass={'mt-4 pointer-events-none opacity-50'}
+				green
+			>
 				登入
 			</RegularButton>
-			<Link to={'/user/sign'} onClick={() => setNavBar(false)}>
+			<Link
+				to={'/user/sign'}
+				onClick={() => {
+					setFns.setNavBar(false);
+					setTimeout(() => setFns.setLoginForm(false), 400);
+				}}
+			>
 				<RegularButton
 					customClass={
 						'mt-4 active:border-t-green active:text-t-green'

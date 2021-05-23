@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { createToggleNavBarAction } from '../../../store';
 import { createToggleLoginFormShowAction } from '../../../store';
 import { createUserLogoutAction } from '../../../store';
+import { createGuestModeAction } from '../../../store';
+import { createToggleIsLoginAction } from '../../../store';
 
 import Background from './components/Background';
 import NavBarHeader from './components/NavBarHeader';
@@ -32,6 +34,8 @@ const mapDispatchToProps = dispatch => {
 				dispatch(createToggleLoginFormShowAction(command));
 			},
 			setLogOut: () => dispatch(createUserLogoutAction()),
+			setGuestMode: data => dispatch(createGuestModeAction(data)),
+			setIsLogin: command => dispatch(createToggleIsLoginAction(command)),
 		},
 	};
 };
@@ -55,7 +59,6 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 			className={`fixed top-0 left-0 z-40 h-screen w-screen ${!NavBarState.isOpen &&
 				'pointer-events-none'}`}
 		>
-			{/* <> */}
 			<Background NavBarState={NavBarState} />
 			<nav
 				className={`absolute right-0 h-full w-80 bg-t-gray-light  flex flex-col shadow-2xl z-40 transform ${
@@ -85,9 +88,8 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 						</Link>
 					) : (
 						<UserLoginBlock
-							setNavBar={setFns.setNavBar}
 							NavBarState={NavBarState}
-							setLoginForm={setFns.setLoginForm}
+							setFns={setFns}
 						/>
 					)}
 				</div>
@@ -98,7 +100,6 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 					setNavBar={setFns.setNavBar}
 				/>
 			</nav>
-			{/* </> */}
 		</div>
 	);
 };

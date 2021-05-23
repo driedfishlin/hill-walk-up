@@ -35,10 +35,13 @@ const NavList = ({
 		{ text: '關於走走', private: false, link: '/about' },
 	];
 	return (
+		// <ul
+		// 	className={`bg-t-gray-dark text-t-gray-normal flex-grow flex flex-col py-7 overflow-y-auto relative  ${
+		// 		isFormOpen ? 'transform translate-y-full' : 'translate-y-0'
+		// 	}`}
+		// >
 		<ul
-			className={`bg-t-gray-dark text-t-gray-normal flex-grow flex flex-col py-7 overflow-y-auto relative  ${
-				isFormOpen ? 'transform translate-y-full' : 'translate-y-0'
-			}`}
+			className={`bg-t-gray-dark text-t-gray-normal flex-grow flex flex-col py-7 overflow-y-auto relative`}
 		>
 			{list.map(item => {
 				// eslint-disable-next-line array-callback-return

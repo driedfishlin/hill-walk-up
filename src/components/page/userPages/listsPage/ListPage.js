@@ -14,7 +14,7 @@ import ErrorPage from '../../../shared/components/ErrorPage';
 
 //SECTION> Function
 // 將 records 資料按時間倒序排列，並於畫面上以年份分區渲染多個 <ul>
-const createRecordsList = arr => {
+const createRecordsList = (arr, userId) => {
 	const sorted = arr.sort(
 		(prev, next) =>
 			next.startDate.split('/')[0] - prev.startDate.split('/')[0]
@@ -56,6 +56,7 @@ const createRecordsList = arr => {
 				textColor={
 					colorCount % 2 === 1 ? 'text-white' : 'text-t-gray-dark'
 				}
+				userIdFromParams={userId}
 			/>
 		);
 		if (index + 1 === sorted.length)
@@ -121,7 +122,7 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 					</h3>
 				</div>
 				{tables.records.length
-					? createRecordsList(tables.records)
+					? createRecordsList(tables.records, userIdFromParams)
 					: emptyList}
 			</div>
 			{/**/}
@@ -159,6 +160,7 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 										? 'text-white'
 										: 'text-t-gray-dark'
 								}
+								userIdFromParams={userIdFromParams}
 							/>
 						))}
 					</ul>

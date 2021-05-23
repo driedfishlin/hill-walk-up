@@ -13,6 +13,8 @@ type propsType = {
 	id?: string,
 	setFns?: Object,
 	gbColor: string,
+	textColor: string,
+	userIdFromParams: string,
 };
 
 const ListItem = ({
@@ -24,11 +26,17 @@ const ListItem = ({
 	setFns,
 	gbColor,
 	textColor,
+	userIdFromParams,
 }: propsType): React.Node | null => {
 	if (type === 'record')
 		return (
 			<li className={`filter drop-shadow-sm ${gbColor} `}>
-				<Link to={{ pathname: `/user/:user_id/records/${id || ''}` }}>
+				<Link
+					to={{
+						pathname: `/user/${userIdFromParams}/records/${id ||
+							''}`,
+					}}
+				>
 					<div
 						className={`flex justify-between items-end px-2 py-3 ${textColor}`}
 					>
@@ -51,7 +59,7 @@ const ListItem = ({
 					<h6 className={`leading-5 flex-grow`}>{location}</h6>
 					<Link
 						to={{
-							pathname: `/user/:user_id/records/new`,
+							pathname: `/user/${userIdFromParams}/records/new`,
 							state: { action: 'new', location },
 						}}
 					>
