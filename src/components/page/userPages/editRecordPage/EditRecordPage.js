@@ -36,6 +36,8 @@ const NewRecordPage = ({
 		item => item.name === (record?.location || location.state?.location)
 	);
 
+	const [overwriteFlagState, setOverwriteFlagState] = useState(false);
+
 	if (targetMountain)
 		return (
 			<div className={`p-7 text-t-gray-dark z-0`}>
@@ -50,6 +52,8 @@ const NewRecordPage = ({
 					location={targetMountain.location}
 					anchor={'回上一頁'}
 					link={'back'}
+					userState={userState}
+					overwriteFlagState={overwriteFlagState}
 				/>
 				<EditRecordForm
 					setFns={setFns}
@@ -60,6 +64,7 @@ const NewRecordPage = ({
 						warningBoardState,
 						setWarningBoardState,
 					]}
+					setOverwriteFlagState={setOverwriteFlagState}
 				/>
 			</div>
 		);

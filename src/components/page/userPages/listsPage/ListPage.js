@@ -52,9 +52,15 @@ const createRecordsList = (arr, userId) => {
 				start={item.startDate}
 				end={item.endDate}
 				id={item.id}
-				gbColor={colorCount % 2 === 0 ? 'bg-white' : 'bg-t-gray-dark'}
+				gbColor={
+					colorCount % 2 === 0
+						? 'bg-white'
+						: 'bg-t-green bg-opacity-5'
+				}
 				textColor={
-					colorCount % 2 === 1 ? 'text-white' : 'text-t-gray-dark'
+					colorCount % 2 === 1
+						? 'text-t-gray-dark'
+						: 'text-t-gray-dark'
 				}
 				userIdFromParams={userId}
 			/>
@@ -153,11 +159,11 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 								gbColor={
 									index % 2 === 0
 										? 'bg-white'
-										: 'bg-t-gray-dark'
+										: 'bg-t-green bg-opacity-5'
 								}
 								textColor={
 									index % 2 === 1
-										? 'text-white'
+										? 'text-t-gray-dark'
 										: 'text-t-gray-dark'
 								}
 								userIdFromParams={userIdFromParams}

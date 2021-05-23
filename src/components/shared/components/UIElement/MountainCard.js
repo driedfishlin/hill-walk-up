@@ -12,6 +12,18 @@ const info_p_class = `text-sm flex justify-between mt-1`;
 const info_span_class = `text-t-green`;
 const info_sub_span_class = ``;
 
+type propsType = {
+	children?: Object,
+	name: string,
+	elevation: number,
+	coordinate: { lat: number, lng: number },
+	location: string,
+	link?: string,
+	anchor?: string | void | null,
+	userState: Object,
+	overwriteFlagState?: boolean,
+};
+
 const MountainCard = ({
 	children,
 	name,
@@ -20,15 +32,9 @@ const MountainCard = ({
 	location,
 	link,
 	anchor,
-}: {
-	children?: Object,
-	name: string,
-	elevation: number,
-	coordinate: { lat: number, lng: number },
-	location: string,
-	link?: string,
-	anchor?: string | void | null,
-}): React.Node => {
+	userState,
+	overwriteFlagState,
+}: propsType): React.Node => {
 	const history = useHistory();
 	return (
 		<section className={`relative z-10`}>
@@ -94,7 +100,11 @@ const MountainCard = ({
 					</div>
 
 					<div>
-						<MountainElement />
+						<MountainElement
+							user={userState?.user}
+							mountain={name}
+							overwriteFlagState={overwriteFlagState || null}
+						/>
 					</div>
 				</div>
 			</div>

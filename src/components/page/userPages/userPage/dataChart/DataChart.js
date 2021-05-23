@@ -7,7 +7,8 @@ const DataChart = ({ userState }: { userState: Object }): React.Node => {
 	//PART> Data processing
 	const records = userState.user.tables.records;
 	// for Doughnut chart
-	const recordTitles = records.map(item => item.location);
+	const filterRecords = records.filter(item => item.finish === true);
+	const recordTitles = filterRecords.map(item => item.location);
 	const setLocation = [...new Set(recordTitles)];
 	const achievementCount = setLocation.length;
 	// for Line chart
@@ -109,7 +110,7 @@ const DataChart = ({ userState }: { userState: Object }): React.Node => {
 		labels: ['已完成', '未達成'],
 		datasets: [
 			{
-				label: '百岳達成率',
+				label: '百岳登頂達成率',
 				data: [achievementCount, 100 - achievementCount],
 				backgroundColor: [
 					'rgba(44,225,150,1)',
@@ -144,7 +145,7 @@ const DataChart = ({ userState }: { userState: Object }): React.Node => {
 				/>
 			</div>
 
-			<h4 className={`text-center text-md mb-5`}>百岳達成率</h4>
+			<h4 className={`text-center text-md mb-5`}>百岳登頂達成率</h4>
 			<div className={`relative px-10`}>
 				<p
 					className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}

@@ -75,6 +75,7 @@ const RecordPage = ({ mapState, userState }: propsType): React.Node => {
 				elevation={mountainInfo?.elevation}
 				coordinate={mountainInfo?.coordinate}
 				location={mountainInfo?.location}
+				userState={userState}
 			/>
 			<div
 				className={`relative bg-t-gray-dark text-t-gray-light transform -translate-y-5 rounded-b-3xl w-full px-7 py-12 shadow-lg z-0`}

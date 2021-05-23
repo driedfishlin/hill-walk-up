@@ -8,10 +8,12 @@ const MountainPageCard = ({
 	setFns,
 	mapState,
 	activeMountainInfo,
+	userState,
 }: {
 	setFns: Object,
 	mapState: Object,
 	activeMountainInfo: Object,
+	userState: Object,
 }): React.Node => {
 	return (
 		<section className={`relative z-0`}>
@@ -22,6 +24,7 @@ const MountainPageCard = ({
 				coordinate={activeMountainInfo.coordinate || null}
 				link={'/'}
 				anchor={'返回地圖'}
+				userState={userState}
 			>
 				<DetailBlock
 					mountain={activeMountainInfo.name}

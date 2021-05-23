@@ -24,12 +24,8 @@ module.exports = {
 			},
 			rotate: {
 				'30': '30deg',
+				neg60: '-60deg',
 				'360': '360deg',
-			},
-			height: {
-				'15%': '15%',
-				'85%': '85%',
-				'90%': '90%',
 			},
 			maxWidth: {
 				'25%': '25%',
@@ -71,6 +67,7 @@ module.exports = {
 			},
 			animation: {
 				'jump-out': 'jump-out 0.7s ease-in-out',
+				'jump-out-delay': 'jump-out 0.7s 0.1s ease-in-out',
 			},
 		},
 	},

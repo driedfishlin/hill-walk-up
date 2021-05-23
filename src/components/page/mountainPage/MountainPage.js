@@ -53,7 +53,7 @@ const MountainPage = ({
 	}, [setFns, activeMountain]);
 
 	// 判斷 favorites 中是否有該項目，決定 icon 的顏色
-	const favorites = userState.user?.tables?.favorites;
+	const favorites = userState.user.tables?.favorites;
 	const [isFavorite, setIsFavorite] = useState(false);
 	useEffect(() => {
 		if (favorites && activeMountain) {
@@ -68,6 +68,7 @@ const MountainPage = ({
 					setFns={setFns}
 					mapState={mapState}
 					activeMountainInfo={activeMountainInfo[0]}
+					userState={userState}
 				/>
 				{userState.isLogin ? (
 					<IconArea

@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import store from '../../../../store';
 import { useLocation, Link, useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
@@ -95,6 +95,7 @@ type propsType = {
 	targetMountain: string,
 	// null 傳進來會 crash ↓
 	oldRecord?: oldRecordType | {} | null,
+	setOverwriteFlagState: Function,
 };
 
 //SECTION> Component
@@ -104,6 +105,7 @@ const EditRecordForm = ({
 	targetMountain,
 	oldRecord,
 	useWarningBoardState,
+	setOverwriteFlagState,
 }: propsType): React.Node => {
 	const userIdFromParams = useParams().user_id;
 	const [warningBoardState, setWarningBoardState] = useWarningBoardState;
@@ -162,6 +164,10 @@ const EditRecordForm = ({
 	if (currentPath === 'edit') id = oldRecord?.id;
 
 	const history = useHistory();
+
+	useEffect(() => {
+		setOverwriteFlagState(finishState);
+	}, [finishState, setOverwriteFlagState]);
 
 	return (
 		<>
@@ -284,7 +290,6 @@ const EditRecordForm = ({
 							customClass={`${button_class}`}
 							green
 							clickFn={event => {
-								//TODO> 未實作資料驗證
 								const data = {
 									title: titleState,
 									startDate: startDateState,
