@@ -49,16 +49,12 @@ const dateValidate = input => {
 };
 
 // validate both date input（檢查日期先後順序有效）
-const dateValidateBoth = (
-	startDate: string,
-	endDate: string,
-	callback: Array<Function>
-) => {
+const dateValidateBoth = (startDate: string, endDate: string) => {
 	if (startDate.length === 0 || endDate.length === 0) return;
 	const startNum = Number(startDate.split('/').join(''));
 	const endNum = Number(endDate.split('/').join(''));
-	if (endNum - startNum < 0) return callback.forEach(item => item(false));
-	callback.forEach(item => item(true));
+	if (endNum - startNum < 0) return false;
+	return true;
 };
 
 // 填寫日期表單時自動分割字串
@@ -74,7 +70,6 @@ const onDateInputChange = (event, preState) => {
 	if (arr.length >= 8) arr.splice(7, 0, '/');
 	if (arr.length > 10) arr.length = 10;
 	const result = arr.join('');
-	// dateValidate(result);
 	return result;
 };
 
@@ -222,11 +217,12 @@ const EditRecordForm = ({
 					}}
 					onBlur={event => {
 						if (!dateValidate(event.target.value))
-							return setStartValidateState();
-						dateValidateBoth(startDateState, endDateState, [
-							setStartValidateState,
-							setEndValidateState,
-						]);
+							return setStartValidateState(false);
+						if (!dateValidateBoth(startDateState, endDateState))
+							return setStartValidateState(false);
+						if (dateValidate(endDateState))
+							setEndValidateState(true);
+						setStartValidateState(true);
 					}}
 				/>
 				<input
@@ -247,11 +243,12 @@ const EditRecordForm = ({
 					}}
 					onBlur={event => {
 						if (!dateValidate(event.target.value))
-							return setEndValidateState();
-						dateValidateBoth(startDateState, endDateState, [
-							setStartValidateState,
-							setEndValidateState,
-						]);
+							return setEndValidateState(false);
+						if (!dateValidateBoth(startDateState, endDateState))
+							return setEndValidateState(false);
+						if (dateValidate(startDateState))
+							setStartValidateState(true);
+						setEndValidateState(true);
 					}}
 				/>
 				<label className={`${label_class}`}>紀錄</label>

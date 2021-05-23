@@ -16,7 +16,7 @@ const guestData = {
 				location: '玉山',
 				title: '我登上台灣第一高峰了！！！',
 				startDate: '2019/11/26',
-				endDate: '2020/11/27',
+				endDate: '2019/11/27',
 				finish: true,
 				id: '0dsd543fa',
 				text:
@@ -25,7 +25,7 @@ const guestData = {
 			{
 				location: '向陽山',
 				title: '嘉明湖三日遊',
-				startDate: '2020/05/04',
+				startDate: '2021/05/04',
 				endDate: '2021/05/06',
 				finish: false,
 				id: 'fghfgdhrtarw',
@@ -35,8 +35,8 @@ const guestData = {
 			{
 				location: '合歡山',
 				title: '敏敏開車帶大家出來兜風',
-				startDate: '2021/08/19',
-				endDate: '2021/08/19',
+				startDate: '2020/08/19',
+				endDate: '2020/08/19',
 				finish: true,
 				id: 'fghfskuarw',
 				text:
@@ -45,8 +45,8 @@ const guestData = {
 			{
 				location: '石門山',
 				title: '30 分鐘完成一座百岳',
-				startDate: '2021/03/21',
-				endDate: '2021/03/21',
+				startDate: '2020/03/21',
+				endDate: '2020/03/21',
 				finish: true,
 				id: 'erewqrqw3',
 				text:
