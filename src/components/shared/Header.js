@@ -2,14 +2,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { connect } from 'react-redux';
 import { createToggleNavBarAction } from '../../store';
 
 import { headerHeight } from '../../index';
 
-import { faMountain as logo } from '@fortawesome/free-solid-svg-icons/faMountain';
+import { ReactComponent as Logo } from '../../image/logo.svg';
 
 //SECTION>
 const mapDispatchToProps = dispatch => {
@@ -23,7 +21,7 @@ const mapDispatchToProps = dispatch => {
 //SECTION>
 const Button = function({ setNavBar }): React.Node {
 	return (
-		<div className="flex-grow">
+		<div className="">
 			<button
 				onClick={() => {
 					setNavBar(true);
@@ -43,11 +41,11 @@ const ConnectedButton = connect(null, mapDispatchToProps)(Button);
 const Header = function(): React.Node {
 	return (
 		<header className={`fixed top-0 left-0 w-full z-10 ${headerHeight[1]}`}>
-			<div className="flex items-center h-full px-6 py-4 bg-t-gray-dark">
-				<Link to="/" className="flex items-center">
-					<FontAwesomeIcon
-						icon={logo}
-						className="text-white text-3xl mr-3 relative top-0.5"
+			<div className="flex items-center justify-between h-full px-6 py-4 bg-t-gray-dark">
+				<Link to="/" className="flex items-center flex-grow">
+					<Logo
+						className={`mr-3 relative`}
+						style={{ fill: 'white', width: '43px', top: '2px' }}
 					/>
 					<h1 className="text-xl text-white tracking-wider noto-sans font-medium">
 						走走山岳

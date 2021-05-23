@@ -76,7 +76,6 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 						setLogOut={setFns.setLogOut}
 					/>
 				</div>
-				{console.log(NavBarState.isFormOpen)}
 				<div
 					className={`px-7 pt-3 pb-7 ${NavBarState.isFormOpen &&
 						'overflow-y-auto'}`}

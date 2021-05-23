@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactComponent as Logo } from '../../../image/logo.svg';
 import { faGithub as githubIcon } from '@fortawesome/free-brands-svg-icons/faGithub.js';
 import { faInstagram as igIcon } from '@fortawesome/free-brands-svg-icons/faInstagram.js';
 import { faFacebook as fbIcon } from '@fortawesome/free-brands-svg-icons/faFacebook.js';
@@ -10,7 +11,8 @@ const AboutPage = (): React.Node => {
 			className={`p-7 text-t-gray-dark flex flex-col justify-between h-full`}
 		>
 			<h2 className={`h2-style w-max`}>關於走走</h2>
-			<p className={`p-1 tracking-wide text-justify`}>
+			<Logo className={`w-36 mx-auto fill-current -my-3`} />
+			<p className={`p-1 tracking-wide text-justify text-sm`}>
 				這是一個網頁工程學習者因為對山林的愛好而誕生的小小 Side
 				Project，雖然目前的成品與功能都和自己的健行經歷一樣還不夠成熟，但希望在這兩個方面都可以隨著自己的成長而不斷完善與茁壯。
 			</p>
