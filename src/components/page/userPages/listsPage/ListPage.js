@@ -96,83 +96,89 @@ const ListPages = ({ userState, setFns }: propsType): React.Node => {
 	if (user.account !== userIdFromParams)
 		return (
 			<ErrorPage
-				statusCode={404}
+				// statusCode={404}
 				text={`你沒有登入喔`}
 				link="/user/sign"
 				anchor={`請檢查網址，或註冊新會員`}
 			/>
 		);
 	return (
-		<div className={`p-7`}>
-			<div className={`flex justify-between`}>
-				<h2 className={`h2-style text-t-gray-dark`}>我的筆記</h2>
-				<SwitchButton
-					right={`目前紀錄`}
-					wrong={`口袋名單`}
-					finishState={[switchListState, setSwitchState]}
-					customClass={`transform translate-y-1`}
-				/>
-			</div>
-			<div
-				className={`${
-					switchListState ? 'block' : 'hidden'
-				}  text-t-gray-dark`}
-			>
-				<div className={`flex items-center ml-1`}>
-					<FontAwesomeIcon
-						icon={bookIcon}
-						className={`text-xl relative -top-0.5 mr-1 `}
+		<div>
+			<div className={`p-7 lg:max-w-5xl lg:mx-auto`}>
+				<div className={`flex justify-between`}>
+					<h2 className={`h2-style text-t-gray-dark`}>我的筆記</h2>
+					<SwitchButton
+						right={`目前紀錄`}
+						wrong={`口袋名單`}
+						finishState={[switchListState, setSwitchState]}
+						customClass={`transform translate-y-1`}
 					/>
-					<h3 className={`text-md font-medium mb-4 ml-1 mt-3`}>
-						目前紀錄
-					</h3>
 				</div>
-				{tables.records.length
-					? createRecordsList(tables.records, userIdFromParams)
-					: emptyList}
-			</div>
-			{/**/}
-			<div
-				className={`${
-					switchListState ? 'hidden' : 'block'
-				}  text-t-gray-dark`}
-			>
-				<div className={`flex items-center ml-1`}>
-					<FontAwesomeIcon
-						icon={solidMarkIcon}
-						className={`text-xl relative -top-0.5 mr-1`}
-					/>
-					<h3 className={`text-md font-medium mb-4 ml-1 mt-3`}>
-						口袋名單
-					</h3>
+				<div
+					className={`${
+						switchListState ? 'block' : 'hidden'
+					}  text-t-gray-dark md:w-1/2 md:mx-auto`}
+				>
+					<div className={`flex items-center ml-1`}>
+						<FontAwesomeIcon
+							icon={bookIcon}
+							className={`text-xl relative -top-0.5 mr-1 `}
+						/>
+						<h3
+							className={`text-md font-medium mb-4 ml-1 mt-3 md:mb-10`}
+						>
+							目前紀錄
+						</h3>
+					</div>
+					{tables.records.length
+						? createRecordsList(tables.records, userIdFromParams)
+						: emptyList}
 				</div>
-				{tables.favorites.length ? (
-					<ul
-						className={`bg-white rounded-lg overflow-hidden shadow-md`}
-					>
-						{tables.favorites.map((item, index) => (
-							<ListItem
-								setFns={setFns}
-								key={item}
-								location={item}
-								type={'favorite'}
-								gbColor={
-									index % 2 === 0
-										? 'bg-white'
-										: 'bg-t-green bg-opacity-5'
-								}
-								textColor={
-									index % 2 === 1
-										? 'text-t-gray-dark'
-										: 'text-t-gray-dark'
-								}
-								userIdFromParams={userIdFromParams}
-							/>
-						))}
-					</ul>
-				) : (
-					emptyList
-				)}
+				{/**/}
+				<div
+					className={`${
+						switchListState ? 'hidden' : 'block'
+					}  text-t-gray-dark md:w-1/2 md:mx-auto`}
+				>
+					<div className={`flex items-center ml-1`}>
+						<FontAwesomeIcon
+							icon={solidMarkIcon}
+							className={`text-xl relative -top-0.5 mr-1`}
+						/>
+						<h3
+							className={`text-md font-medium mb-4 ml-1 mt-3 md:mb-10`}
+						>
+							口袋名單
+						</h3>
+					</div>
+					{tables.favorites.length ? (
+						<ul
+							className={`bg-white rounded-lg overflow-hidden shadow-md`}
+						>
+							{tables.favorites.map((item, index) => (
+								<ListItem
+									setFns={setFns}
+									key={item}
+									location={item}
+									type={'favorite'}
+									gbColor={
+										index % 2 === 0
+											? 'bg-white'
+											: 'bg-t-green bg-opacity-5'
+									}
+									textColor={
+										index % 2 === 1
+											? 'text-t-gray-dark'
+											: 'text-t-gray-dark'
+									}
+									userIdFromParams={userIdFromParams}
+								/>
+							))}
+						</ul>
+					) : (
+						emptyList
+					)}
+				</div>
 			</div>
 		</div>
 	);

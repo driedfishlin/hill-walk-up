@@ -87,236 +87,269 @@ const UserForm = ({
 	};
 
 	return (
-		<form onSubmit={event => event.preventDefault()}>
-			<label className={`block mb-3 text-sm`}>．選擇你的大頭貼</label>
-			<div className={`grid grid-cols-2 gap-4 mb-10`}>
-				{avatarList.map(item => (
-					<button
-						className={` focus:outline-none`}
-						key={item.id}
-						onClick={() => setActiveAvatar(item.id)}
+		<form
+			onSubmit={event => event.preventDefault()}
+			// className={`md:flex-grow md:flex md:items-center`}
+		>
+			<div className={`md:flex lg:justify-between`}>
+				<div className={`md:w-1/2 lg:w-1/2`}>
+					<label className={`block mb-3 text-sm`}>
+						．選擇你的大頭貼
+					</label>
+					<div className={`grid grid-cols-2 gap-4 mb-10 md:pr-14`}>
+						{avatarList.map(item => (
+							<button
+								className={` focus:outline-none`}
+								key={item.id}
+								onClick={() => setActiveAvatar(item.id)}
+							>
+								<img
+									className={`rounded-md ${
+										activeAvatar === null ||
+										activeAvatar === item.id
+											? 'opacity-100'
+											: 'opacity-50'
+									}`}
+									src={item.image}
+									alt={item.id}
+								/>
+							</button>
+						))}
+					</div>
+				</div>
+				<div className={`md:w-1/2`}>
+					<label
+						htmlFor="sign_up_input_username"
+						className={`block mb-3 text-sm`}
 					>
-						<img
-							className={`rounded-md ${
-								activeAvatar === null ||
-								activeAvatar === item.id
-									? 'opacity-100'
-									: 'opacity-50'
-							}`}
-							src={item.image}
-							alt={item.id}
-						/>
-					</button>
-				))}
-			</div>
-			<label
-				htmlFor="sign_up_input_username"
-				className={`block mb-3 text-sm`}
-			>
-				．使用者名稱
-			</label>
-			<input
-				id="sign_up_input_username"
-				value={userNameState}
-				onBlur={event => {
-					if (!event.target.value.length) setNameValidateState(false);
-				}}
-				onChange={event => {
-					setUserNameState(event.target.value);
-					if (event.target.value.length) setNameValidateState(true);
-				}}
-				type="text"
-				className={`w-full rounded-md h-10 px-3 mb-8 ${
-					nameValidateState
-						? 'border-none focus:outline-none focus:ring-t-green'
-						: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
-				}`}
-			/>
-			<label className={`block mb-5 text-sm`}>．稱號</label>
-			<div className={`flex flex-wrap mb-3`}>
-				{defaultNickname.map((item, index) => (
-					<div className={`flex items-center`} key={item}>
+						．使用者名稱
+					</label>
+					<input
+						id="sign_up_input_username"
+						value={userNameState}
+						onBlur={event => {
+							if (!event.target.value.length)
+								setNameValidateState(false);
+						}}
+						onChange={event => {
+							setUserNameState(event.target.value);
+							if (event.target.value.length)
+								setNameValidateState(true);
+						}}
+						type="text"
+						className={`w-full rounded-md h-10 px-3 mb-8 ${
+							nameValidateState
+								? 'border-none focus:outline-none focus:ring-t-green'
+								: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
+						}`}
+					/>
+					<label className={`block mb-5 text-sm`}>．稱號</label>
+					<div className={`flex flex-wrap mb-3`}>
+						{defaultNickname.map((item, index) => (
+							<div className={`flex items-center`} key={item}>
+								<input
+									checked={
+										nicknameState === item ? true : false
+									}
+									onChange={() => {
+										setNicknameState(item);
+										setNicknameValidateState(true);
+									}}
+									id={`sign_up_radio_type_${index + 1}`}
+									type="radio"
+									name={`nickname`}
+									value={item}
+									className={`mr-1 text-t-green focus:border-t-green focus:ring-t-green`}
+								/>
+								<label
+									htmlFor={`sign_up_radio_type_${index + 1}`}
+									className={`text-xs mr-4`}
+								>
+									{item}
+								</label>
+							</div>
+						))}
+					</div>
+					<div className={`flex items-center mb-8`}>
 						<input
-							checked={nicknameState === item ? true : false}
-							onChange={() => {
-								setNicknameState(item);
-								setNicknameValidateState(true);
-							}}
-							id={`sign_up_radio_type_${index + 1}`}
+							id="sign_up_radio_type_4"
 							type="radio"
 							name={`nickname`}
-							value={item}
+							value={``}
 							className={`mr-1 text-t-green focus:border-t-green focus:ring-t-green`}
+							checked={
+								nicknameState === '自訂' ||
+								!isDefaultNickname(nicknameState)
+									? true
+									: false
+							}
+							onChange={() => {
+								setNicknameState('自訂');
+							}}
 						/>
 						<label
-							htmlFor={`sign_up_radio_type_${index + 1}`}
-							className={`text-xs mr-4`}
+							htmlFor="sign_up_radio_type_4"
+							className={`text-xs flex-grow whitespace-nowrap mr-2 md:flex-grow-0`}
 						>
-							{item}
+							自訂：
 						</label>
+						<input
+							onFocus={() => {
+								const dom = document.querySelector(
+									'#sign_up_radio_type_4'
+								);
+								if (dom) dom.checked = true;
+								setNicknameState('自訂');
+							}}
+							value={nicknameInputState}
+							onChange={event => {
+								setNicknameInputState(event.target.value);
+								setNicknameState('自訂');
+								setNicknameValidateState(true);
+							}}
+							onBlur={event => {
+								if (!event.target.value)
+									setNicknameValidateState(false);
+							}}
+							type="text"
+							className={`w-full text-center rounded-full h-10 px-3 ${
+								nicknameValidateState
+									? 'border-none focus:outline-none focus:ring-t-green'
+									: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
+							} md:w-2/3 lg:w-3/5`}
+						/>
 					</div>
-				))}
-			</div>
-			<div className={`flex items-center mb-8`}>
-				<input
-					id="sign_up_radio_type_4"
-					type="radio"
-					name={`nickname`}
-					value={``}
-					className={`mr-1 text-t-green focus:border-t-green focus:ring-t-green`}
-					checked={
-						nicknameState === '自訂' ||
-						!isDefaultNickname(nicknameState)
-							? true
-							: false
-					}
-					onChange={() => {
-						setNicknameState('自訂');
-					}}
-				/>
-				<label
-					htmlFor="sign_up_radio_type_4"
-					className={`text-xs flex-grow whitespace-nowrap mr-2`}
-				>
-					自訂：
-				</label>
-				<input
-					onFocus={() => {
-						const dom = document.querySelector(
-							'#sign_up_radio_type_4'
-						);
-						if (dom) dom.checked = true;
-						setNicknameState('自訂');
-					}}
-					value={nicknameInputState}
-					onChange={event => {
-						setNicknameInputState(event.target.value);
-						setNicknameState('自訂');
-						setNicknameValidateState(true);
-					}}
-					onBlur={event => {
-						if (!event.target.value)
-							setNicknameValidateState(false);
-					}}
-					type="text"
-					className={`w-full text-center rounded-full h-10 px-3 ${
-						nicknameValidateState
-							? 'border-none focus:outline-none focus:ring-t-green'
-							: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
-					}`}
-				/>
-			</div>
-			<label
-				htmlFor="sign_up_input_account"
-				className={`block mb-3 text-sm`}
-			>
-				．帳號
-			</label>
-			{user ? (
-				<input
-					disabled
-					id="sign_up_input_account"
-					value={accountState}
-					type="text"
-					className={`w-full rounded-md h-10 px-3 mb-8 border-none focus:outline-none focus:ring-t-green`}
-				/>
-			) : (
-				<input
-					id="sign_up_input_account"
-					value={accountState}
-					onChange={event => {
-						setAccountState(event.target.value);
-						onInputChangeValidate(event, setAccountValidateState);
-					}}
-					onBlur={event =>
-						onInputBlurValidate(event, setAccountValidateState)
-					}
-					type="text"
-					className={`w-full rounded-md h-10 px-3 mb-8 ${
-						accountValidateState
-							? 'border-none focus:outline-none focus:ring-t-green'
-							: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
-					}`}
-				/>
-			)}
-			<label
-				className={`block mb-3 text-sm`}
-				htmlFor="sign_up_input_password"
-			>
-				．密碼
-			</label>
-			<input
-				id="sign_up_input_password"
-				value={passwordState}
-				onChange={event => {
-					setPasswordState(event.target.value);
-					onInputChangeValidate(event, setPasswordValidateState);
-				}}
-				onBlur={event =>
-					onInputBlurValidate(event, setPasswordValidateState)
-				}
-				type="password"
-				className={`w-full rounded-md h-10 px-3 mb-4 ${
-					passwordValidateState
-						? 'border-none focus:outline-none focus:ring-t-green'
-						: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
-				}`}
-			/>
-			<p className={`text-sm text-red-500 text-center mb-4 h-5`}>
-				{errorMessage()}
-			</p>
-			<div className={`grid grid-rows-2 gap-3`}>
-				<Link
-					className={
-						validationIsValid
-							? ''
-							: `pointer-events-none opacity-50`
-					}
-					to={`/user/${user?.account ? user?.account : accountState}`}
-				>
-					<RegularButton
-						green
-						clickFn={() => {
-							if (!accountValidateState && passwordValidateState)
-								return;
-							const data = {
-								name: userNameState,
-								avatar: activeAvatar,
-								password: passwordState,
-								nickname:
-									nicknameState === '自訂'
-										? nicknameInputState
-										: nicknameState,
-							};
-							if (user && setEditUserData) {
-								setEditUserData(data);
-							} else if (setNewUser) {
-								data.account = accountState;
-								data.signUpTime = new Date()
-									// that's ok ↑
-									.toISOString()
-									.split('T')[0];
-								setNewUser(data);
-							}
-							resetForm();
-							document
-								.querySelector('body')
-								?.scrollTo({ top: 0 });
-						}}
+					<label
+						htmlFor="sign_up_input_account"
+						className={`block mb-3 text-sm`}
 					>
-						{user ? '確認修改' : '註冊'}
-					</RegularButton>
-				</Link>
-				<RegularButton
-					clickFn={() => {
-						resetForm();
-						history.go(-1);
-						document.querySelector('body').scrollTo({ top: 0 });
-					}}
-					transparent
-				>
-					取消
-				</RegularButton>
+						．帳號
+					</label>
+					{user ? (
+						<input
+							disabled
+							id="sign_up_input_account"
+							value={accountState}
+							type="text"
+							className={`w-full rounded-md h-10 px-3 mb-8 border-none focus:outline-none focus:ring-t-green`}
+						/>
+					) : (
+						<input
+							id="sign_up_input_account"
+							value={accountState}
+							onChange={event => {
+								setAccountState(event.target.value);
+								onInputChangeValidate(
+									event,
+									setAccountValidateState
+								);
+							}}
+							onBlur={event =>
+								onInputBlurValidate(
+									event,
+									setAccountValidateState
+								)
+							}
+							type="text"
+							className={`w-full rounded-md h-10 px-3 mb-8 ${
+								accountValidateState
+									? 'border-none focus:outline-none focus:ring-t-green'
+									: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
+							}`}
+						/>
+					)}
+					<label
+						className={`block mb-3 text-sm`}
+						htmlFor="sign_up_input_password"
+					>
+						．密碼
+					</label>
+					<input
+						id="sign_up_input_password"
+						value={passwordState}
+						onChange={event => {
+							setPasswordState(event.target.value);
+							onInputChangeValidate(
+								event,
+								setPasswordValidateState
+							);
+						}}
+						onBlur={event =>
+							onInputBlurValidate(event, setPasswordValidateState)
+						}
+						type="password"
+						className={`w-full rounded-md h-10 px-3 mb-4 ${
+							passwordValidateState
+								? 'border-none focus:outline-none focus:ring-t-green'
+								: 'border border-red-500 focus:border-red-500 focus:outline-none focus:ring-red-500'
+						}`}
+					/>
+					<p className={`text-sm text-red-500 text-center mb-4 h-5`}>
+						{errorMessage()}
+					</p>
+					<div
+						className={`grid grid-rows-2 gap-3 md:grid-rows-1 md:grid-cols-2 lg:w-1/2`}
+					>
+						<Link
+							className={
+								validationIsValid
+									? ''
+									: `pointer-events-none opacity-50`
+							}
+							to={`/user/${
+								user?.account ? user?.account : accountState
+							}`}
+						>
+							<RegularButton
+								green
+								clickFn={() => {
+									if (
+										!accountValidateState &&
+										passwordValidateState
+									)
+										return;
+									const data = {
+										name: userNameState,
+										avatar: activeAvatar,
+										password: passwordState,
+										nickname:
+											nicknameState === '自訂'
+												? nicknameInputState
+												: nicknameState,
+									};
+									if (user && setEditUserData) {
+										setEditUserData(data);
+									} else if (setNewUser) {
+										data.account = accountState;
+										data.signUpTime = new Date()
+											// that's ok ↑
+											.toISOString()
+											.split('T')[0];
+										setNewUser(data);
+									}
+									resetForm();
+									document
+										.querySelector('body')
+										?.scrollTo({ top: 0 });
+								}}
+							>
+								{user ? '確認修改' : '註冊'}
+							</RegularButton>
+						</Link>
+						<RegularButton
+							clickFn={() => {
+								resetForm();
+								history.go(-1);
+								document
+									.querySelector('body')
+									?.scrollTo({ top: 0 });
+							}}
+							transparent
+						>
+							取消
+						</RegularButton>
+					</div>
+				</div>
 			</div>
 		</form>
 	);

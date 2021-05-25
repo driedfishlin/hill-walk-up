@@ -21,7 +21,9 @@ const greetingMessages = [
 const Message = ({ inputState, searchMode }) => {
 	return (
 		<div
-			className={`h-full py-12 ${searchMode ? 'opacity-1' : 'opacity-0'}`}
+			className={`h-full pt-12 ${
+				searchMode ? 'opacity-1' : 'opacity-0'
+			} md:pt-36 lg:pt-24`}
 		>
 			<p className={`text-center text-t-gray-dark tracking-wide`}>
 				{inputState.length === 0
@@ -73,7 +75,7 @@ const ResultBoard = ({
 				searchMode
 					? 'translate-y-0'
 					: '-translate-y-full transition-transform delay-1200'
-			}`}
+			} lg:w-1/3 lg:ml-5`}
 		>
 			{/* main */}
 			<div

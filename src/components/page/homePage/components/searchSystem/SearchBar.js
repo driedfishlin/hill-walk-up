@@ -24,7 +24,7 @@ const SearchBar = ({ UIState, setFns, mapState }: propsType): React.Node => {
 					ref={barDOM}
 					className={`w-full h-12 overflow-hidden rounded-full transition-shadow delay-300 ${
 						searchBarState ? 'shadow-md' : 'shadow-none'
-					}`}
+					} lg:w-1/3`}
 				>
 					<div
 						className={`flex items-center relative h-12 w-full bg-white shadow-xl transition-transform duration-400 transform ${

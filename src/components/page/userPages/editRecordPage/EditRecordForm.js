@@ -177,80 +177,81 @@ const EditRecordForm = ({
 						finishState={[finishState, setFinishState]}
 					/>
 				</div>
-
-				<label className={`${label_class}`}>標題</label>
-				<input
-					type="text"
-					className={`${input_class} ${sm_input_class} ${
-						titleValidateState
-							? 'border-transparent focus:border-t-green focus:ring-t-green'
-							: 'focus:ring-red-500 border-red-500 focus:border-red-500'
-					}`}
-					value={titleState}
-					onChange={event => {
-						let title = event.target.value;
-						if (title.length > 20) title = title.slice(0, 20);
-						setTitleState(title);
-						if (title.length > 0) setTitleValidateState(true);
-					}}
-					onBlur={event => {
-						if (event.target.value.length === 0)
-							setTitleValidateState(false);
-					}}
-				/>
-				<label className={`${label_class}`}>日期區間</label>
-				<input
-					type="text"
-					className={`${input_class} ${sm_input_class} ${
-						startDateValidateState
-							? 'border-transparent focus:border-t-green focus:ring-t-green'
-							: 'focus:ring-red-500 border-1 border-red-500 focus:border-red-500'
-					}`}
-					value={startDateState}
-					placeholder={new Date().toISOString().split('T')[0]}
-					onChange={event => {
-						setStartDateState(prevState =>
-							onDateInputChange(event, prevState)
-						);
-						if (dateValidate(event.target.value))
+				<div className={'md:w-1/2 md:mx-auto'}>
+					<label className={`${label_class}`}>標題</label>
+					<input
+						type="text"
+						className={`${input_class} ${sm_input_class} ${
+							titleValidateState
+								? 'border-transparent focus:border-t-green focus:ring-t-green'
+								: 'focus:ring-red-500 border-red-500 focus:border-red-500'
+						}`}
+						value={titleState}
+						onChange={event => {
+							let title = event.target.value;
+							if (title.length > 20) title = title.slice(0, 20);
+							setTitleState(title);
+							if (title.length > 0) setTitleValidateState(true);
+						}}
+						onBlur={event => {
+							if (event.target.value.length === 0)
+								setTitleValidateState(false);
+						}}
+					/>
+					<label className={`${label_class}`}>日期區間</label>
+					<input
+						type="text"
+						className={`${input_class} ${sm_input_class} ${
+							startDateValidateState
+								? 'border-transparent focus:border-t-green focus:ring-t-green'
+								: 'focus:ring-red-500 border-1 border-red-500 focus:border-red-500'
+						}`}
+						value={startDateState}
+						placeholder={new Date().toISOString().split('T')[0]}
+						onChange={event => {
+							setStartDateState(prevState =>
+								onDateInputChange(event, prevState)
+							);
+							if (dateValidate(event.target.value))
+								setStartValidateState(true);
+						}}
+						onBlur={event => {
+							if (!dateValidate(event.target.value))
+								return setStartValidateState(false);
+							if (!dateValidateBoth(startDateState, endDateState))
+								return setStartValidateState(false);
+							if (dateValidate(endDateState))
+								setEndValidateState(true);
 							setStartValidateState(true);
-					}}
-					onBlur={event => {
-						if (!dateValidate(event.target.value))
-							return setStartValidateState(false);
-						if (!dateValidateBoth(startDateState, endDateState))
-							return setStartValidateState(false);
-						if (dateValidate(endDateState))
+						}}
+					/>
+					<input
+						type="text"
+						className={`${input_class} ${sm_input_class} ${
+							endDateValidateState
+								? 'border-transparent focus:border-t-green focus:ring-t-green'
+								: 'focus:ring-red-500 border-1 border-red-500 focus:border-red-500'
+						}`}
+						value={endDateState}
+						placeholder={new Date().toISOString().split('T')[0]}
+						onChange={event => {
+							setEndDateState(prevState =>
+								onDateInputChange(event, prevState)
+							);
+							if (dateValidate(event.target.value))
+								setEndValidateState(true);
+						}}
+						onBlur={event => {
+							if (!dateValidate(event.target.value))
+								return setEndValidateState(false);
+							if (!dateValidateBoth(startDateState, endDateState))
+								return setEndValidateState(false);
+							if (dateValidate(startDateState))
+								setStartValidateState(true);
 							setEndValidateState(true);
-						setStartValidateState(true);
-					}}
-				/>
-				<input
-					type="text"
-					className={`${input_class} ${sm_input_class} ${
-						endDateValidateState
-							? 'border-transparent focus:border-t-green focus:ring-t-green'
-							: 'focus:ring-red-500 border-1 border-red-500 focus:border-red-500'
-					}`}
-					value={endDateState}
-					placeholder={new Date().toISOString().split('T')[0]}
-					onChange={event => {
-						setEndDateState(prevState =>
-							onDateInputChange(event, prevState)
-						);
-						if (dateValidate(event.target.value))
-							setEndValidateState(true);
-					}}
-					onBlur={event => {
-						if (!dateValidate(event.target.value))
-							return setEndValidateState(false);
-						if (!dateValidateBoth(startDateState, endDateState))
-							return setEndValidateState(false);
-						if (dateValidate(startDateState))
-							setStartValidateState(true);
-						setEndValidateState(true);
-					}}
-				/>
+						}}
+					/>
+				</div>
 				<label className={`${label_class}`}>紀錄</label>
 				<hr className={`${hr_class} mt-3`} />
 				<textarea

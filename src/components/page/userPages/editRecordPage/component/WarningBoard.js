@@ -17,20 +17,20 @@ const WarningBoard = ({
 	userIdFromParams,
 }: propsType): React.Node => {
 	return (
-		<div className={`fixed top-0 left-0 w-screen h-screen`}>
+		<div className={`fixed top-0 left-0 w-screen h-screen z-40`}>
 			<div
 				className={`bg-black absolute top-0 left-0 w-full h-full opacity-20`}
 			></div>
 			<div
 				className={`relative w-full h-full flex items-center justify-center`}
 			>
-				<div className={`bg-t-gray-light p-7 rounded-xl`}>
+				<div className={`bg-t-gray-light p-7 rounded-xl md:w-1/2`}>
 					<p
-						className={`text-lg text-t-gray-dark tracking-wide py-3`}
+						className={`text-lg text-t-gray-dark tracking-wide py-3 text-center`}
 					>
 						確定刪除紀錄嗎？
 					</p>
-					<div className={`mt-3`}>
+					<div className={`mt-3 md:grid md:grid-cols-2 md:gap-3`}>
 						<Link
 							to={`/user/${userIdFromParams}/records`}
 							onClick={() => {

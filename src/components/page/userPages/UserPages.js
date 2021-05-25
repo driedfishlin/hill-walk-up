@@ -17,7 +17,6 @@ import { createUpdateRecordAction } from './../../../store';
 import { createRemoveFavoriteMountainAction } from './../../../store';
 import { createDeleteOldRecordAction } from './../../../store';
 import { createNewUserAction } from './../../../store';
-// import { createToggleIsLoginAction } from './../../../store';
 import { createEditUserDataAction } from './../../../store';
 
 const mapStateToProps = state => ({
@@ -46,8 +45,6 @@ const mapDispatchToProps = dispatch => ({
 			nickname: string,
 			signUpTime: string,
 		}) => dispatch(createNewUserAction(data)),
-		// setLogin: (command: boolean): Object =>
-		// 	dispatch(createToggleIsLoginAction(true)),
 		setEditUserData: data => dispatch(createEditUserDataAction(data)),
 	},
 });

@@ -69,7 +69,6 @@ const GuestMode = ({ setFns }: Object): React.Node => {
 			<Link
 				to={`/user/GUEST`}
 				onClick={() => {
-					console.log(123);
 					setFns.setGuestMode(guestData);
 					setFns.setNavBar(false);
 					setFns.setIsLogin(true);

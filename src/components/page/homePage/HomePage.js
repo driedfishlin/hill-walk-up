@@ -72,7 +72,7 @@ const HomePage = function({
 
 	return (
 		<main
-			className={`relative bg-gray-200 flex-grow z-20 ${
+			className={`relative bg-gray-200 flex-grow z-30 ${
 				isMapShouldShow ? '' : 'hidden'
 			}`}
 		>
@@ -103,5 +103,3 @@ const connectedComponentCreator: Function = connect(
 const ConnectedComponent: Object = connectedComponentCreator(HomePage);
 
 export default ConnectedComponent;
-
-// export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

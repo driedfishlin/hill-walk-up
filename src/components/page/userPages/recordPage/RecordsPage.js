@@ -39,22 +39,30 @@ const RecordsPage = ({ userState }: { userState: Object }): React.Node => {
 	});
 
 	return (
-		<div className={`p-7`}>
-			<h2 className={`h2-style`}>我的紀錄</h2>
-			<RecordSearchBar useState={[inputState, setInputState]} />
-			{filteredList.length ? (
-				filteredList.map(item => (
-					<RecordCard
-						key={item.id}
-						record={item}
-						userIdFromParams={userIdFromParams}
-					/>
-				))
-			) : (
-				<div className={`px-7 py-20`}>
-					<p className={`text-center`}>未找到項目！</p>
+		<div>
+			<div className={`p-7 lg:max-w-5xl lg:mx-auto`}>
+				<h2 className={`h2-style md:mb-10`}>我的紀錄</h2>
+				<RecordSearchBar useState={[inputState, setInputState]} />
+				<div
+					className={`md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3`}
+				>
+					{filteredList.length ? (
+						filteredList.map(item => (
+							<RecordCard
+								key={item.id}
+								record={item}
+								userIdFromParams={userIdFromParams}
+							/>
+						))
+					) : (
+						<div
+							className={`px-7 py-20 md:col-span-2 lg:col-span-3`}
+						>
+							<p className={`text-center`}>未找到項目！</p>
+						</div>
+					)}
 				</div>
-			)}
+			</div>
 		</div>
 	);
 };

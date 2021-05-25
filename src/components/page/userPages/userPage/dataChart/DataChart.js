@@ -135,29 +135,34 @@ const DataChart = ({ userState }: { userState: Object }): React.Node => {
 		},
 	};
 	return (
-		<div className={`py-10 mt-10 px-3 bg-white rounded-sm`}>
-			<h4 className={`text-center text-md mb-5`}>歷年健行紀錄統計</h4>
-			<div className={`mb-14`}>
-				<Line
-					data={historicalRecordsData}
-					options={historicalRecordsOptions}
-					id={`user_data_chart_1`}
-				/>
+		<div
+			className={`py-10 mt-10 px-3 bg-white rounded-sm md:w-2/3 md:mx-auto lg:w-1/2 lg:mx-0 lg:grid lg:grid-cols-5 lg:gap-5`}
+		>
+			<div className={`lg:col-span-3 lg:ml-5`}>
+				<h4 className={`text-center text-md mb-5`}>歷年健行紀錄統計</h4>
+				<div className={`mb-14 lg:mb-0`}>
+					<Line
+						data={historicalRecordsData}
+						options={historicalRecordsOptions}
+						id={`user_data_chart_1`}
+					/>
+				</div>
 			</div>
-
-			<h4 className={`text-center text-md mb-5`}>百岳登頂達成率</h4>
-			<div className={`relative px-10`}>
-				<p
-					className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
-				>
-					<span className={`text-3xl`}>{achievementCount}</span>
-					<span className={`font-medium text-sm`}> / 100</span>
-				</p>
-				<Doughnut
-					data={achievementRateData}
-					options={achievementRateOptions}
-					className={`relative`}
-				/>
+			<div className={`lg:col-span-2`}>
+				<h4 className={`text-center text-md mb-5`}>百岳登頂達成率</h4>
+				<div className={`relative px-10 lg:py-3`}>
+					<p
+						className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
+					>
+						<span className={`text-3xl`}>{achievementCount}</span>
+						<span className={`font-medium text-sm`}> / 100</span>
+					</p>
+					<Doughnut
+						data={achievementRateData}
+						options={achievementRateOptions}
+						className={`relative`}
+					/>
+				</div>
 			</div>
 		</div>
 	);

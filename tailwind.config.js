@@ -67,7 +67,7 @@ module.exports = {
 			},
 			animation: {
 				'jump-out': 'jump-out 0.7s ease-in-out',
-				'jump-out-delay': 'jump-out 0.7s 0.1s ease-in-out',
+				'jump-out-delay': 'jump-out 0.7s 0.6s ease-in-out',
 			},
 		},
 	},

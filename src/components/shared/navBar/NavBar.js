@@ -59,9 +59,12 @@ const NavBar = function({ NavBarState, userState, setFns }: propsType) {
 			className={`fixed top-0 left-0 z-40 h-screen w-screen ${!NavBarState.isOpen &&
 				'pointer-events-none'}`}
 		>
-			<Background NavBarState={NavBarState} />
+			<Background
+				NavBarState={NavBarState}
+				setNavBar={setFns.setNavBar}
+			/>
 			<nav
-				className={`absolute right-0 h-full w-80 bg-t-gray-light  flex flex-col shadow-2xl z-40 transform ${
+				className={`absolute right-0 h-full w-80 bg-t-gray-light  flex flex-col shadow-2xl z-40 transform md:w-96 ${
 					NavBarState.isOpen
 						? `transform translate-x-0`
 						: `transform translate-x-full`

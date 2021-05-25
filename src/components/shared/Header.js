@@ -40,20 +40,22 @@ const ConnectedButton = connect(null, mapDispatchToProps)(Button);
 
 const Header = function(): React.Node {
 	return (
-		<header className={`fixed top-0 left-0 w-full z-10 ${headerHeight[1]}`}>
+		<header className={`fixed top-0 left-0 w-full z-30 ${headerHeight[1]}`}>
 			<div className="flex items-center justify-between h-full px-6 py-4 bg-t-gray-dark">
-				<Link to="/" className="flex items-center flex-grow">
-					<Logo
-						className={`mr-3 relative`}
-						style={{ fill: 'white', width: '43px', top: '2px' }}
-					/>
-					<h1 className="text-xl text-white tracking-wider noto-sans font-medium">
-						走走山岳
-						<span className="block text-xs tracking-wide">
-							HELL WALK UP
-						</span>
-					</h1>
-				</Link>
+				<div>
+					<Link to="/" className="flex items-center">
+						<Logo
+							className={`mr-3 relative`}
+							style={{ fill: 'white', width: '43px', top: '2px' }}
+						/>
+						<h1 className="text-xl text-white tracking-wider noto-sans font-medium">
+							走走山岳
+							<span className="block text-xs tracking-wide">
+								HELL WALK UP
+							</span>
+						</h1>
+					</Link>
+				</div>
 				<ConnectedButton />
 			</div>
 		</header>

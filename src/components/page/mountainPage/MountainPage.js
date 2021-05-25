@@ -63,21 +63,25 @@ const MountainPage = ({
 
 	if (activeMountainInfo[0])
 		return (
-			<main className={`relative bg-t-gray-light p-7`}>
-				<MountainPageCard
-					setFns={setFns}
-					mapState={mapState}
-					activeMountainInfo={activeMountainInfo[0]}
-					userState={userState}
-				/>
-				{userState.isLogin ? (
-					<IconArea
-						isFavorite={isFavorite}
-						userState={userState}
+			<main className={`relative bg-t-gray-light`}>
+				<div
+					className={`p-7 md:w-4/5 md:mx-auto md:p-12 lg:w-1/2 lg:p-14`}
+				>
+					<MountainPageCard
 						setFns={setFns}
+						mapState={mapState}
 						activeMountainInfo={activeMountainInfo[0]}
+						userState={userState}
 					/>
-				) : null}
+					{userState.isLogin ? (
+						<IconArea
+							isFavorite={isFavorite}
+							userState={userState}
+							setFns={setFns}
+							activeMountainInfo={activeMountainInfo[0]}
+						/>
+					) : null}
+				</div>
 			</main>
 		);
 	return (

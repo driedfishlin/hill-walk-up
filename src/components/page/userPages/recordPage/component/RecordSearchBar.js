@@ -9,7 +9,7 @@ const RecordSearchBar = ({ useState }: propsType): React.Node => {
 	const [inputState, setInputState] = useState;
 	return (
 		<div
-			className={`flex justify-between items-center w-full h-10 rounded-full overflow-hidden bg-white`}
+			className={`flex justify-between items-center w-full h-10 rounded-full overflow-hidden bg-white md:mb-5 lg:w-1/2 lg:float-right`}
 		>
 			<input
 				className={`h-full flex-grow pl-3.5 focus:outline-none `}

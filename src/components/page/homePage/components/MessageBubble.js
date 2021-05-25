@@ -157,7 +157,7 @@ const MessageBubble = ({
 			ref={bubble}
 			className={`absolute bottom-0 bg-white w-full flex justify-between items-center p-7 px-6 opacity-90 ${
 				bubbleState ? '' : 'hidden'
-			}`}
+			} md:w-2/3 md:rounded-3xl md:ml-7 md:mb-5 lg:w-2/5`}
 		>
 			<div className="flex-grow pr-5">
 				<p className="text-sm text-t-gray-dark opacity-70 font-medium mb-2 ml-1">

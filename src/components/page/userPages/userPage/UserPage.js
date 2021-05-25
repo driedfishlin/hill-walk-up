@@ -28,7 +28,7 @@ const UserPage = ({ userState }: propsType): React.Node => {
 	if (userIdFromParams !== user.account)
 		return (
 			<ErrorPage
-				statusCode={404}
+				// statusCode={404}
 				text={`你沒有登入喔`}
 				link="/user/sign"
 				anchor={`請檢查網址，或註冊新會員`}
@@ -37,39 +37,51 @@ const UserPage = ({ userState }: propsType): React.Node => {
 
 	const avatar = avatarList.find(item => item.id === user.avatar)?.image;
 	return (
-		<div className={`p-7 text-t-gray-dark tracking-wide`}>
-			<h2 className={`h2-style`}>個人資料</h2>
-			<div className={`flex flex-col justify-center items-center`}>
-				<div className={`flex justify-center mt-3 mb-5`}>
-					<img
-						className={`rounded-full  w-40`}
-						alt="會員圖片"
-						src={avatar}
-					/>
+		<div className={`h-full`}>
+			<div
+				className={`p-7 text-t-gray-dark tracking-wide lg:h-full lg:flex lg:flex-col lg:max-w-5xl lg:mx-auto`}
+			>
+				<h2 className={`h2-style lg:w-max`}>個人資料</h2>
+				<div
+					className={`lg:flex lg:justify-center lg:flex-grow  lg:items-center`}
+				>
+					<div
+						className={`flex flex-col justify-center items-center lg:mr-32 lg:transform lg:scale-125 lg:relative lg:bottom-3.5`}
+					>
+						<div className={`flex justify-center mt-3 mb-5`}>
+							<img
+								className={`rounded-full  w-40`}
+								alt="會員圖片"
+								src={avatar}
+							/>
+						</div>
+						<h6
+							className={`text-center text-2xl font-medium mb-2  tracking-wider`}
+						>
+							{user.name}
+						</h6>
+						<p className={`text-center text-sm mb-10`}>
+							{user.nickname}
+						</p>
+						<Link
+							to={
+								userIdFromParams
+									? `/user/${userIdFromParams}/edit`
+									: '/'
+							}
+							className={`text-xs text-t-gray-normal w-max focus:outline-none`}
+						>
+							編輯個人資料
+							<FontAwesomeIcon
+								icon={editIcon}
+								className={`ml-2 relative`}
+								style={{ top: '-1px' }}
+							/>
+						</Link>
+					</div>
+					<DataChart userState={userState} />
 				</div>
-				<h6
-					className={`text-center text-2xl font-medium mb-2  tracking-wider`}
-				>
-					{user.name}
-				</h6>
-				<p className={`text-center text-sm mb-10`}>{user.nickname}</p>
-				<Link
-					to={
-						userIdFromParams
-							? `/user/${userIdFromParams}/edit`
-							: '/'
-					}
-					className={`text-xs text-t-gray-normal w-max focus:outline-none`}
-				>
-					編輯個人資料
-					<FontAwesomeIcon
-						icon={editIcon}
-						className={`ml-2 relative`}
-						style={{ top: '-1px' }}
-					/>
-				</Link>
 			</div>
-			<DataChart userState={userState} />
 		</div>
 	);
 };

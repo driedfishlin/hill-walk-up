@@ -25,10 +25,8 @@ const MountainElement = ({
 			const searchResult = user?.tables?.records.some(
 				item => item.location === mountain && item.finish === true
 			);
-			console.log(searchResult);
 			setFlagState(Boolean(searchResult));
 		}
-		console.log(user?.tables?.records?.length);
 	}, [user, flagState, setFlagState, mountain, overwriteFlagState]);
 
 	return (
@@ -48,7 +46,7 @@ const MountainElement = ({
 					<div
 						className={`relative transition-all transform origin-bottom ${
 							flagState
-								? 'opacity-100 duration-300 animate-jump-out-delay'
+								? 'opacity-100 duration-300 animate-jump-out-delay delay-500'
 								: 'opacity-0 duration-500'
 						}`}
 					>
