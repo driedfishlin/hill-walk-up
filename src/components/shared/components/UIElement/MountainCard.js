@@ -103,7 +103,7 @@ const MountainCard = ({
 						<MountainElement
 							user={userState?.user}
 							mountain={name}
-							overwriteFlagState={overwriteFlagState || null}
+							overwriteFlagState={overwriteFlagState}
 						/>
 					</div>
 				</div>

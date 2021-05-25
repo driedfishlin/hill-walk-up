@@ -28,9 +28,9 @@ const Button = function({ setNavBar }): React.Node {
 				}}
 				className="float-right flex flex-col justify-between py-2 px-1.5 text-white w-8 h-8 focus:outline-none"
 			>
-				<div className="w-full h-0.5 bg-white rounded-sm" />
-				<div className="w-full h-0.5 bg-white rounded-sm" />
-				<div className="w-full h-0.5 bg-white rounded-sm" />
+				<div className="w-8 h-0.5 bg-white rounded-sm" />
+				<div className="w-8 h-0.5 bg-white rounded-sm" />
+				<div className="w-8 h-0.5 bg-white rounded-sm" />
 			</button>
 		</div>
 	);

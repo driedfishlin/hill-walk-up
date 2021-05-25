@@ -72,7 +72,7 @@ const HomePage = function({
 
 	return (
 		<main
-			className={`relative bg-gray-200 flex-grow z-30 ${
+			className={`relative bg-gray-200 flex-grow z-30 h-full w-full ${
 				isMapShouldShow ? '' : 'hidden'
 			}`}
 		>

@@ -9,7 +9,7 @@ import LoadingText from '../../../shared/components/UIElement/LoadingText';
 //SECTION> React Component
 const Map = function(): React.Node {
 	return (
-		<article id="map" className="h-full">
+		<article id="map" className="h-full w-full">
 			<div className="flex items-center justify-center w-full h-full  text-gray-400">
 				<LoadingText text={'地圖載入中'} />
 			</div>

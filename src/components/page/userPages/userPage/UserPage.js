@@ -50,7 +50,7 @@ const UserPage = ({ userState }: propsType): React.Node => {
 					>
 						<div className={`flex justify-center mt-3 mb-5`}>
 							<img
-								className={`rounded-full  w-40`}
+								className={`rounded-full w-40 h-40`}
 								alt="會員圖片"
 								src={avatar}
 							/>

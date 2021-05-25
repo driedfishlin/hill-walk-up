@@ -12,15 +12,16 @@ const MountainElement = ({
 }: {
 	user?: Object | void,
 	mountain?: Object | void,
-	overwriteFlagState?: boolean | null,
+	overwriteFlagState?: boolean | void,
 }): React.Node => {
 	// make sure the flag icon should be visible
 	const [flagState, setFlagState] = useState(false);
 	useEffect(() => {
-		if (overwriteFlagState) {
+		if (overwriteFlagState || overwriteFlagState === false) {
 			setFlagState(overwriteFlagState);
 			return;
 		}
+
 		if (user?.tables?.records?.length) {
 			const searchResult = user?.tables?.records.some(
 				item => item.location === mountain && item.finish === true

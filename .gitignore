@@ -26,4 +26,4 @@ yarn-error.log*
 .vscode
 
 # google maps api key
-/src/components/utilities/google_key.js
+# /src/components/utilities/private/google_key.js

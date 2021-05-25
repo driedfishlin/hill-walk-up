@@ -68,7 +68,10 @@ export const zoomMap = (
 
 const onMapMarkClick = event => {
 	if (GOOGLE_MAP.map === null) return console.log('無法取得地圖資料');
-	const targetName = event.domEvent.path[1].title;
+	const target = event.domEvent.target;
+	const parent = target.parentElement;
+	const targetName = parent.title;
+	// const targetName = event.domEvent.path[1].title;
 	const position = event.latLng.toJSON();
 
 	let openInfoBoxDelay = 1600;
