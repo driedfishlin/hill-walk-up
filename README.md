@@ -22,14 +22,13 @@
 
 ### 建置應用技術
 
-・HTML、CSS、Javascript  
 ・React  
-・Frontend Routing  
 ・Redux  
-・ES6+  
+・Frontend Routing  
 ・Javascript type check
 ・tailwindCSS  
 ・Google、Wikipedia API
+・mobile first RWD
 
 ### 主要使用套件
 

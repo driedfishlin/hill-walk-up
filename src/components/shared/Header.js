@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => {
 //SECTION>
 const Button = function({ setNavBar }): React.Node {
 	return (
-		<div className="">
+		<div className="pr-3">
 			<button
 				onClick={() => {
 					setNavBar(true);

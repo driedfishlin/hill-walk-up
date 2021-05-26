@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const guestData = {
 	name: '陳小明',
-	avatar: 'avatar_1',
+	avatar: 'avatar_2',
 	account: 'GUEST',
 	// 最後要用 hash
 	password: 'guestlogin',
@@ -14,7 +14,7 @@ const guestData = {
 		records: [
 			{
 				location: '玉山',
-				title: '我登上台灣第一高峰了！！！',
+				title: '登上台灣第一高峰！！！',
 				startDate: '2019/11/26',
 				endDate: '2019/11/27',
 				finish: true,
@@ -34,7 +34,7 @@ const guestData = {
 			},
 			{
 				location: '合歡山',
-				title: '敏敏開車帶大家出來兜風',
+				title: '週末的兜風',
 				startDate: '2020/08/19',
 				endDate: '2020/08/19',
 				finish: true,

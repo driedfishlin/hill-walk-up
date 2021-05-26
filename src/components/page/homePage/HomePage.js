@@ -8,6 +8,7 @@ import SearchSystem from './components/searchSystem/SearchSystem';
 import MessageBubble from './components/MessageBubble';
 import InfoBox from './components/InfoBox';
 import OverlayBackground from '../../shared/components/OverlayBackground';
+import PromptFilter from './PromptFilter';
 
 import { createCloseHomePageBubbleAction } from '../../../store';
 import { createToggleSearchBarAction } from '../../../store';
@@ -91,6 +92,7 @@ const HomePage = function({
 				setFns={setFns}
 			/>
 			<InfoBox UIState={UIState} setFns={setFns} />
+			<PromptFilter />
 		</main>
 	);
 };

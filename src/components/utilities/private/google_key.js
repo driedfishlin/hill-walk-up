@@ -1,4 +1,4 @@
 // 需存放於 .gitignore
 
-const KEY = 'AIzaSyAadvBz3Cl4TU02i78VpxjOa7JKnxfg6iw';
+const KEY = 'AIzaSyA1nEu1m_EplTgg4ImmxkbbwYYmIJipPJQ';
 export default KEY;

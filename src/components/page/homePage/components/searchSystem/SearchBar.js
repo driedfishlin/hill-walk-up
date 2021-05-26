@@ -27,7 +27,7 @@ const SearchBar = ({ UIState, setFns, mapState }: propsType): React.Node => {
 					} lg:w-1/3`}
 				>
 					<div
-						className={`flex items-center relative h-12 w-full bg-white shadow-xl transition-transform duration-400 transform ${
+						className={`flex items-center relative h-12 w-full rounded-full bg-white shadow-xl transition-transform duration-400 transform ${
 							searchBarState
 								? 'translate-x-0'
 								: '-translate-x-full'
