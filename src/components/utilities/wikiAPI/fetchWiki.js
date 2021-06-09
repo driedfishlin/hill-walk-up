@@ -9,7 +9,10 @@ const revisionString = [
 	['白石山', '白石山_(台灣)'],
 	['鹿山', '鹿山_(台灣)'],
 ];
-const revisionNum = [['大霸尖山', 2]];
+const revisionNum = [
+	['玉山', 2],
+	['大霸尖山', 2],
+];
 
 const fetchWiki = async (key, callback) => {
 	let order = 1;

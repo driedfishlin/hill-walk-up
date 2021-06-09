@@ -26,9 +26,9 @@
 ・React  
 ・Redux  
 ・Frontend Routing  
-・Javascript type check
+・Javascript type check  
 ・tailwindCSS  
-・Google、Wikipedia API
+・Google、Wikipedia API  
 ・mobile first RWD
 
 ### 主要使用套件

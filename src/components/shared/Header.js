@@ -7,7 +7,7 @@ import { createToggleNavBarAction } from '../../store';
 
 import { headerHeight } from '../../index';
 
-import { ReactComponent as Logo } from '../../image/logo.svg';
+import { ReactComponent as Logo } from '../../image/mountain_logo.svg';
 
 //SECTION>
 const mapDispatchToProps = dispatch => {
@@ -26,8 +26,7 @@ const Button = function({ setNavBar }): React.Node {
 				onClick={() => {
 					setNavBar(true);
 				}}
-				className="float-right flex flex-col justify-between py-2 px-1.5 text-white w-8 h-8 focus:outline-none"
-			>
+				className="float-right flex flex-col justify-between py-2 px-1.5 text-white w-8 h-8 focus:outline-none">
 				<div className="w-8 h-0.5 bg-white rounded-sm" />
 				<div className="w-8 h-0.5 bg-white rounded-sm" />
 				<div className="w-8 h-0.5 bg-white rounded-sm" />
